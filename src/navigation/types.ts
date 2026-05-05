@@ -18,6 +18,14 @@ export type ProfileStackParamList = {
 
 export type DebugStackParamList = {
   DebugHome: undefined;
+  HapticDemo: undefined;
+  LocationDemo: undefined;
+  BiometricDemo: undefined;
+  CameraDemo: undefined;
+  MicrophoneDemo: undefined;
+  CalendarDemo: undefined;
+  ShareDemo: undefined;
+  NotificationsDemo: undefined;
 };
 
 export type RootTabParamList = {

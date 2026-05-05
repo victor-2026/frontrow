@@ -1,0 +1,27 @@
+# Open the haptic demo and exercise each haptic.
+appId: app.frontrow.qa
+---
+- launchApp:
+    clearState: true
+
+- tapOn: 'Debug'
+- assertVisible:
+    id: 'screen.debug'
+
+- scrollUntilVisible:
+    element: 'Haptics'
+    direction: DOWN
+- tapOn: 'Haptics'
+
+- assertVisible:
+    id: 'screen.capability.haptic'
+- tapOn:
+    id: 'haptic.impact.light'
+- tapOn:
+    id: 'haptic.impact.medium'
+- tapOn:
+    id: 'haptic.impact.heavy'
+- tapOn:
+    id: 'haptic.notification.success'
+- tapOn:
+    id: 'haptic.selection'

@@ -8,6 +8,14 @@ import { MyTicketsListScreen } from '../screens/MyTicketsListScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { DebugScreen } from '../screens/DebugScreen';
+import { HapticDemo } from '../screens/capabilities/HapticDemo';
+import { LocationDemo } from '../screens/capabilities/LocationDemo';
+import { BiometricDemo } from '../screens/capabilities/BiometricDemo';
+import { CameraDemo } from '../screens/capabilities/CameraDemo';
+import { MicrophoneDemo } from '../screens/capabilities/MicrophoneDemo';
+import { CalendarDemo } from '../screens/capabilities/CalendarDemo';
+import { ShareDemo } from '../screens/capabilities/ShareDemo';
+import { NotificationsDemo } from '../screens/capabilities/NotificationsDemo';
 import type {
   DebugStackParamList,
   EventsStackParamList,
@@ -80,6 +88,34 @@ function DebugNavigator() {
         name="DebugHome"
         component={DebugScreen}
         options={{ title: 'QA Debug Menu' }}
+      />
+      <DebugStack.Screen name="HapticDemo" component={HapticDemo} options={{ title: 'Haptics' }} />
+      <DebugStack.Screen
+        name="LocationDemo"
+        component={LocationDemo}
+        options={{ title: 'Location' }}
+      />
+      <DebugStack.Screen
+        name="BiometricDemo"
+        component={BiometricDemo}
+        options={{ title: 'Biometric' }}
+      />
+      <DebugStack.Screen name="CameraDemo" component={CameraDemo} options={{ title: 'Camera' }} />
+      <DebugStack.Screen
+        name="MicrophoneDemo"
+        component={MicrophoneDemo}
+        options={{ title: 'Microphone' }}
+      />
+      <DebugStack.Screen
+        name="CalendarDemo"
+        component={CalendarDemo}
+        options={{ title: 'Calendar' }}
+      />
+      <DebugStack.Screen name="ShareDemo" component={ShareDemo} options={{ title: 'Share' }} />
+      <DebugStack.Screen
+        name="NotificationsDemo"
+        component={NotificationsDemo}
+        options={{ title: 'Notifications' }}
       />
     </DebugStack.Navigator>
   );

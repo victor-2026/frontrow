@@ -102,6 +102,41 @@ export function DebugScreen() {
         />
       </Section>
 
+      <Section title="Device capabilities">
+        <Row
+          label="Haptics"
+          onPress={() => nav.dispatch(CommonActions.navigate({ name: 'HapticDemo' }))}
+        />
+        <Row
+          label="Location"
+          onPress={() => nav.dispatch(CommonActions.navigate({ name: 'LocationDemo' }))}
+        />
+        <Row
+          label="Biometric"
+          onPress={() => nav.dispatch(CommonActions.navigate({ name: 'BiometricDemo' }))}
+        />
+        <Row
+          label="Camera"
+          onPress={() => nav.dispatch(CommonActions.navigate({ name: 'CameraDemo' }))}
+        />
+        <Row
+          label="Microphone"
+          onPress={() => nav.dispatch(CommonActions.navigate({ name: 'MicrophoneDemo' }))}
+        />
+        <Row
+          label="Calendar"
+          onPress={() => nav.dispatch(CommonActions.navigate({ name: 'CalendarDemo' }))}
+        />
+        <Row
+          label="Share"
+          onPress={() => nav.dispatch(CommonActions.navigate({ name: 'ShareDemo' }))}
+        />
+        <Row
+          label="Notifications"
+          onPress={() => nav.dispatch(CommonActions.navigate({ name: 'NotificationsDemo' }))}
+        />
+      </Section>
+
       <Section title="Scenarios">
         {(Object.keys(scenarios) as ScenarioId[]).map((id) => (
           <Row
