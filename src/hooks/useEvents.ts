@@ -1,25 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { api } from '../api/client';
-import { endpoints } from '../api/endpoints';
-import type { Event } from '../api/types';
+import { listEvents, getEvent, type EventFilters } from '../api/services/events';
 
-export function useEvents(filters: { q?: string; genre?: string } = {}) {
-  const search = new URLSearchParams();
-  if (filters.q) search.set('q', filters.q);
-  if (filters.genre) search.set('genre', filters.genre);
-  const url = `${endpoints.events.list()}${search.size ? `?${search.toString()}` : ''}`;
-
+export function useEvents(filters: EventFilters = {}) {
   return useQuery({
     queryKey: ['events', filters],
-    queryFn: () => api<Event[]>(url),
+    queryFn: () => listEvents(filters),
   });
 }
 
 export function useEvent(id: string) {
   return useQuery({
     queryKey: ['events', id],
-    queryFn: () => api<Event>(endpoints.events.detail(id)),
+    queryFn: () => getEvent(id),
     enabled: Boolean(id),
   });
 }

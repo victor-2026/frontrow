@@ -1,0 +1,25 @@
+# End-to-end: sign in, browse to an event, buy a ticket, confirm in My Tickets.
+appId: app.frontrow.qa
+---
+- runFlow: ../auth/login.yaml
+
+- tapOn: 'Events'
+- assertVisible:
+    id: 'screen.events'
+- tapOn:
+    id: 'events.item.evt_001'
+- assertVisible:
+    id: 'screen.eventDetail'
+
+- tapOn:
+    id: 'eventDetail.buyButton'
+- assertVisible:
+    id: 'screen.buyTicket'
+- tapOn:
+    id: 'buyTicket.payButton'
+
+- tapOn: 'OK'
+
+- tapOn: 'My Tickets'
+- assertVisible:
+    id: 'screen.myTickets'

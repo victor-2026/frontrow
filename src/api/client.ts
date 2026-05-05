@@ -1,3 +1,5 @@
+import { useQaStore } from '../state/qa';
+
 import type { ApiError } from './types';
 
 export class ApiClientError extends Error {
@@ -5,34 +7,36 @@ export class ApiClientError extends Error {
   readonly code: string;
   constructor(status: number, body: ApiError) {
     super(body.message);
+    this.name = 'ApiClientError';
     this.status = status;
     this.code = body.code;
   }
 }
 
-type RequestInitX = RequestInit & { token?: string | null };
+export async function applyQaDelay(): Promise<void> {
+  const ms = useQaStore.getState().networkDelayMs;
+  if (ms > 0) await new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-export async function api<T>(url: string, init: RequestInitX = {}): Promise<T> {
-  const headers = new Headers(init.headers);
-  headers.set('Accept', 'application/json');
-  if (init.body && !headers.has('Content-Type')) {
-    headers.set('Content-Type', 'application/json');
+export function applyQaForcedError(): void {
+  const mode = useQaStore.getState().forceError;
+  if (mode === 'none') return;
+  if (mode === '4xx') {
+    throw new ApiClientError(400, {
+      code: 'forced_4xx',
+      message: 'Forced 4xx error from QA menu.',
+    });
   }
-  if (init.token) {
-    headers.set('Authorization', `Bearer ${init.token}`);
+  if (mode === '5xx') {
+    throw new ApiClientError(500, {
+      code: 'forced_5xx',
+      message: 'Forced 5xx error from QA menu.',
+    });
   }
-
-  const res = await fetch(url, { ...init, headers });
-  const text = await res.text();
-  const data = text.length > 0 ? (JSON.parse(text) as unknown) : null;
-
-  if (!res.ok) {
-    const errBody: ApiError =
-      data && typeof data === 'object' && 'code' in data && 'message' in data
-        ? (data as ApiError)
-        : { code: 'unknown', message: res.statusText || 'Request failed' };
-    throw new ApiClientError(res.status, errBody);
+  if (mode === 'timeout') {
+    throw new ApiClientError(408, {
+      code: 'forced_timeout',
+      message: 'Forced timeout from QA menu.',
+    });
   }
-
-  return data as T;
 }

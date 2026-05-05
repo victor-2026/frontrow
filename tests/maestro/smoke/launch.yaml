@@ -6,5 +6,4 @@ appId: app.frontrow.qa
     clearState: true
 - assertVisible:
     id: 'screen.events'
-- tapOn:
-    id: 'screen.events'
+- assertVisible: 'Events'

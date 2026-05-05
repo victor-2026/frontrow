@@ -1,0 +1,27 @@
+# Sign in with the demo credentials.
+appId: app.frontrow.qa
+---
+- launchApp:
+    clearState: true
+
+- tapOn: 'Profile'
+- assertVisible:
+    id: 'screen.profile'
+- tapOn:
+    id: 'profile.signInButton'
+
+- tapOn:
+    id: 'login.emailInput'
+- eraseText
+- inputText: 'demo@frontrow.app'
+- tapOn:
+    id: 'login.passwordInput'
+- eraseText
+- inputText: 'demo1234'
+- hideKeyboard
+- tapOn:
+    id: 'profile.signInButton'
+
+- assertVisible: 'Demo User'
+- assertVisible:
+    id: 'profile.signOutButton'

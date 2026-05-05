@@ -1,0 +1,31 @@
+# Browse the events list, search by query, open an event, return.
+appId: app.frontrow.qa
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    id: 'screen.events'
+
+# Search filters the list
+- tapOn:
+    id: 'events.searchInput'
+- inputText: 'Aurora'
+- assertVisible: 'Aurora Symphony'
+- hideKeyboard
+
+# Clear search
+- eraseText
+- assertVisible: 'Midnight Howl'
+
+# Open detail
+- tapOn:
+    id: 'events.item.evt_001'
+- assertVisible:
+    id: 'screen.eventDetail'
+- assertVisible:
+    id: 'eventDetail.buyButton'
+
+# Back to list
+- back
+- assertVisible:
+    id: 'screen.events'

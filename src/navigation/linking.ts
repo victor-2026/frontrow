@@ -7,10 +7,29 @@ export const linking: LinkingOptions<RootTabParamList> = {
   prefixes: [Linking.createURL('/'), 'frontrow://', 'https://frontrow.app'],
   config: {
     screens: {
-      Events: 'events',
-      MyTickets: 'tickets',
-      Profile: 'profile',
-      Debug: 'debug',
+      Events: {
+        screens: {
+          EventsList: 'events',
+          EventDetail: 'events/:id',
+          BuyTicket: 'events/:eventId/buy',
+        },
+      },
+      MyTickets: {
+        screens: {
+          MyTicketsList: 'tickets',
+        },
+      },
+      Profile: {
+        screens: {
+          ProfileHome: 'profile',
+          Login: 'profile/login',
+        },
+      },
+      Debug: {
+        screens: {
+          DebugHome: 'debug',
+        },
+      },
     },
   },
 };

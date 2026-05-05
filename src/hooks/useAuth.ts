@@ -1,8 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { api } from '../api/client';
-import { endpoints } from '../api/endpoints';
-import type { AuthResponse } from '../api/types';
+import { login, logout } from '../api/services/auth';
 import { useAuthStore } from '../state/auth';
 
 export function useLogin() {
@@ -10,10 +8,7 @@ export function useLogin() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (input: { email: string; password: string }) => {
-      const res = await api<AuthResponse>(endpoints.auth.login(), {
-        method: 'POST',
-        body: JSON.stringify(input),
-      });
+      const res = await login(input);
       await setSession(res.token, res.user);
       return res;
     },
@@ -29,12 +24,10 @@ export function useLogout() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async () => {
-      if (token) {
-        try {
-          await api(endpoints.auth.logout(), { method: 'POST', token });
-        } catch {
-          // best-effort; logout always clears local session
-        }
+      try {
+        await logout(token);
+      } catch {
+        // best-effort; logout always clears local session
       }
       await clear();
     },
