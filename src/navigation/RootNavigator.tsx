@@ -7,6 +7,7 @@ import { BuyTicketScreen } from '../screens/BuyTicketScreen';
 import { MyTicketsListScreen } from '../screens/MyTicketsListScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
+import { PremiumScreen } from '../screens/PremiumScreen';
 import { DebugScreen } from '../screens/DebugScreen';
 import { HapticDemo } from '../screens/capabilities/HapticDemo';
 import { LocationDemo } from '../screens/capabilities/LocationDemo';
@@ -76,6 +77,11 @@ function ProfileNavigator() {
         name="Login"
         component={LoginScreen}
         options={{ title: 'Sign in', presentation: 'modal' }}
+      />
+      <ProfileStack.Screen
+        name="Premium"
+        component={PremiumScreen}
+        options={{ title: 'Premium' }}
       />
     </ProfileStack.Navigator>
   );

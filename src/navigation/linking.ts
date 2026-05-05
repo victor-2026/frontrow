@@ -23,6 +23,7 @@ export const linking: LinkingOptions<RootTabParamList> = {
         screens: {
           ProfileHome: 'profile',
           Login: 'profile/login',
+          Premium: 'profile/premium',
         },
       },
       Debug: {

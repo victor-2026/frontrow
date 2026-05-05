@@ -1,0 +1,30 @@
+# Set IAP outcome to Decline via the QA Debug menu, then buy and confirm the failure UI.
+appId: app.frontrow.qa
+---
+- runFlow: ../auth/login.yaml
+
+- tapOn: 'Debug'
+- assertVisible:
+    id: 'screen.debug'
+- scrollUntilVisible:
+    element:
+      id: 'debug.iap.decline'
+    direction: DOWN
+- tapOn:
+    id: 'debug.iap.decline'
+
+- tapOn: 'Profile'
+- tapOn:
+    id: 'profile.premiumButton'
+- assertVisible:
+    id: 'screen.premium'
+
+- tapOn:
+    id: 'premium.buy.frontrow.vip.upgrade'
+- assertVisible:
+    id: 'billing.sheet'
+- tapOn:
+    id: 'billing.sheet.confirm'
+
+- assertVisible: 'Purchase failed'
+- tapOn: 'OK'

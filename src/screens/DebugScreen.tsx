@@ -11,6 +11,7 @@ import { Button } from '../components/Button';
 import { useQaStore } from '../state/qa';
 import { useAuthStore } from '../state/auth';
 import { useAnalyticsStore } from '../state/analytics';
+import { useBillingStore, type PurchaseOutcome } from '../state/billing';
 import { scenarios, type ScenarioId } from '../mocks/seed/scenarios/registry';
 import { resetMockState } from '../mocks/state';
 import { getBuildInfo } from '../utils/buildInfo';
@@ -31,6 +32,13 @@ const FORCE_ERROR_MODES: { label: string; value: 'none' | '4xx' | '5xx' | 'timeo
   { label: 'Timeout', value: 'timeout' },
 ];
 
+const IAP_OUTCOMES: { label: string; value: PurchaseOutcome }[] = [
+  { label: 'Success', value: 'success' },
+  { label: 'Decline', value: 'decline' },
+  { label: 'Cancel', value: 'cancel' },
+  { label: 'Pending', value: 'pending' },
+];
+
 export function DebugScreen() {
   const nav = useNavigation();
   const qc = useQueryClient();
@@ -38,6 +46,7 @@ export function DebugScreen() {
   const clearAuth = useAuthStore((s) => s.clear);
   const events = useAnalyticsStore((s) => s.events);
   const clearEvents = useAnalyticsStore((s) => s.clear);
+  const billing = useBillingStore();
   const buildInfo = getBuildInfo();
 
   const [localeDraft, setLocaleDraft] = useState(qa.locale ?? '');
@@ -53,6 +62,7 @@ export function DebugScreen() {
     resetMockState();
     await qa.reset();
     await clearAuth();
+    await billing.reset();
     qc.clear();
     Alert.alert('Reset', 'All local data and QA settings cleared.');
   };
@@ -214,6 +224,24 @@ export function DebugScreen() {
       <Section title="Notifications & crashes">
         <Row testID={testIds.debug.fakePushButton} label="Fire fake push" onPress={fakePush} />
         <Row testID={testIds.debug.crashButton} label="Trigger crash" onPress={crash} />
+      </Section>
+
+      <Section title="In-app purchases">
+        <Row label="Outcome">
+          <View style={styles.chips}>
+            {IAP_OUTCOMES.map((m) => (
+              <Button
+                key={m.value}
+                title={m.label}
+                variant={billing.outcome === m.value ? 'primary' : 'secondary'}
+                onPress={() => void billing.setOutcome(m.value)}
+                testID={`debug.iap.${m.value}`}
+              />
+            ))}
+          </View>
+        </Row>
+        <Row label="Receipts" value={String(billing.receipts.length)} />
+        <Row testID="debug.iap.reset" label="Reset receipts" onPress={() => void billing.reset()} />
       </Section>
 
       <Section title="Reset">

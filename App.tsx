@@ -11,6 +11,7 @@ import { i18n } from './src/i18n';
 import { queryClient } from './src/hooks/queryClient';
 import { useAuthStore } from './src/state/auth';
 import { useQaStore } from './src/state/qa';
+import { useBillingStore } from './src/state/billing';
 import { useDeepLinkScenario } from './src/hooks/useDeepLinkScenario';
 
 function AppShell() {
@@ -26,11 +27,13 @@ function AppShell() {
 export default function App() {
   const hydrateAuth = useAuthStore((s) => s.hydrate);
   const hydrateQa = useQaStore((s) => s.hydrate);
+  const hydrateBilling = useBillingStore((s) => s.hydrate);
 
   useEffect(() => {
     void hydrateAuth();
     void hydrateQa();
-  }, [hydrateAuth, hydrateQa]);
+    void hydrateBilling();
+  }, [hydrateAuth, hydrateQa, hydrateBilling]);
 
   return (
     <SafeAreaProvider>

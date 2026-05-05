@@ -1,0 +1,22 @@
+# Sign in, navigate to Premium, buy a product with the default Success outcome.
+appId: app.frontrow.qa
+---
+- runFlow: ../auth/login.yaml
+
+- tapOn: 'Profile'
+- assertVisible:
+    id: 'screen.profile'
+- tapOn:
+    id: 'profile.premiumButton'
+- assertVisible:
+    id: 'screen.premium'
+
+- tapOn:
+    id: 'premium.buy.frontrow.vip.upgrade'
+- assertVisible:
+    id: 'billing.sheet'
+- tapOn:
+    id: 'billing.sheet.confirm'
+
+- tapOn: 'OK'
+- assertVisible: 'active'

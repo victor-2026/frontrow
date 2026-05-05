@@ -49,6 +49,12 @@ export function ProfileScreen() {
       </Text>
       <Text style={styles.body}>{user.email}</Text>
       <Button
+        testID="profile.premiumButton"
+        title="Premium"
+        variant="secondary"
+        onPress={() => nav.navigate('Premium')}
+      />
+      <Button
         testID={testIds.profile.signOutButton}
         title={loggingOut ? 'Signing out…' : 'Sign out'}
         variant="secondary"
