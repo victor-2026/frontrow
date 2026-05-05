@@ -1,0 +1,26 @@
+[
+  {
+    "id": "tkt_001",
+    "userId": "usr_demo",
+    "eventId": "evt_001",
+    "quantity": 2,
+    "tier": "General Admission",
+    "purchasedAt": "2026-04-01T12:00:00.000Z",
+    "totalCents": 9000,
+    "currency": "USD",
+    "status": "active",
+    "qrPayload": "FR-tkt_001-evt_001-2"
+  },
+  {
+    "id": "tkt_002",
+    "userId": "usr_demo",
+    "eventId": "evt_006",
+    "quantity": 1,
+    "tier": "General Admission",
+    "purchasedAt": "2025-10-01T12:00:00.000Z",
+    "totalCents": 3500,
+    "currency": "USD",
+    "status": "used",
+    "qrPayload": "FR-tkt_002-evt_006-1"
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "usr_demo",
+    "email": "demo@frontrow.app",
+    "password": "demo1234",
+    "displayName": "Demo User",
+    "avatarUrl": "https://i.pravatar.cc/300?u=usr_demo",
+    "createdAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "usr_locked",
+    "email": "locked@frontrow.app",
+    "password": "wontwork",
+    "displayName": "Locked Out",
+    "avatarUrl": null,
+    "createdAt": "2025-02-01T00:00:00.000Z",
+    "locked": true
+  }
+]

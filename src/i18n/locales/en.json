@@ -1,0 +1,18 @@
+{
+  "events": {
+    "heading": "Events",
+    "placeholder": "Browse upcoming concerts and shows."
+  },
+  "myTickets": {
+    "heading": "My Tickets",
+    "placeholder": "Tickets you've purchased will appear here."
+  },
+  "profile": {
+    "heading": "Profile",
+    "placeholder": "Sign in to manage your account."
+  },
+  "debug": {
+    "heading": "QA Debug Menu",
+    "placeholder": "Seed data, time travel, fake push, and more — Phase 2."
+  }
+}

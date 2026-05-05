@@ -1,0 +1,20 @@
+name: Feature request
+description: Suggest a new capability or improvement
+labels: ['enhancement']
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why does this matter for QA training?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered

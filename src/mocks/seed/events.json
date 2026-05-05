@@ -1,0 +1,134 @@
+[
+  {
+    "id": "evt_001",
+    "title": "Midnight Howl Live in Brooklyn",
+    "artist": "Midnight Howl",
+    "genre": "Indie Rock",
+    "startsAt": "2026-06-12T20:00:00.000Z",
+    "doorsAt": "2026-06-12T19:00:00.000Z",
+    "venue": {
+      "id": "ven_001",
+      "name": "Warsaw",
+      "city": "Brooklyn, NY",
+      "country": "US",
+      "lat": 40.7224,
+      "lng": -73.9544,
+      "capacity": 1000
+    },
+    "priceCents": 4500,
+    "currency": "USD",
+    "imageUrl": "https://picsum.photos/seed/evt_001/800/600",
+    "soldOut": false,
+    "tags": ["indie", "rock", "live"]
+  },
+  {
+    "id": "evt_002",
+    "title": "Aurora Symphony: Nordic Nights",
+    "artist": "Aurora Symphony",
+    "genre": "Classical",
+    "startsAt": "2026-07-04T19:30:00.000Z",
+    "doorsAt": "2026-07-04T18:30:00.000Z",
+    "venue": {
+      "id": "ven_002",
+      "name": "Royal Albert Hall",
+      "city": "London",
+      "country": "GB",
+      "lat": 51.5009,
+      "lng": -0.1773,
+      "capacity": 5272
+    },
+    "priceCents": 8500,
+    "currency": "GBP",
+    "imageUrl": "https://picsum.photos/seed/evt_002/800/600",
+    "soldOut": false,
+    "tags": ["classical", "orchestra"]
+  },
+  {
+    "id": "evt_003",
+    "title": "808 Heatwave Festival — Day 1",
+    "artist": "Various Artists",
+    "genre": "Electronic",
+    "startsAt": "2026-08-15T16:00:00.000Z",
+    "doorsAt": "2026-08-15T14:00:00.000Z",
+    "venue": {
+      "id": "ven_003",
+      "name": "Parc del Fòrum",
+      "city": "Barcelona",
+      "country": "ES",
+      "lat": 41.4128,
+      "lng": 2.2233,
+      "capacity": 65000
+    },
+    "priceCents": 12000,
+    "currency": "EUR",
+    "imageUrl": "https://picsum.photos/seed/evt_003/800/600",
+    "soldOut": true,
+    "tags": ["festival", "electronic", "outdoor"]
+  },
+  {
+    "id": "evt_004",
+    "title": "Quiet Hours — Acoustic Set",
+    "artist": "Quiet Hours",
+    "genre": "Folk",
+    "startsAt": "2026-05-30T20:00:00.000Z",
+    "doorsAt": "2026-05-30T19:00:00.000Z",
+    "venue": {
+      "id": "ven_004",
+      "name": "Cafe du Nord",
+      "city": "San Francisco, CA",
+      "country": "US",
+      "lat": 37.7635,
+      "lng": -122.4291,
+      "capacity": 250
+    },
+    "priceCents": 2800,
+    "currency": "USD",
+    "imageUrl": "https://picsum.photos/seed/evt_004/800/600",
+    "soldOut": false,
+    "tags": ["folk", "acoustic", "intimate"]
+  },
+  {
+    "id": "evt_005",
+    "title": "Zenith Tour — Tokyo Night One",
+    "artist": "Sora Aoyama",
+    "genre": "J-Pop",
+    "startsAt": "2026-09-22T19:00:00.000Z",
+    "doorsAt": "2026-09-22T17:30:00.000Z",
+    "venue": {
+      "id": "ven_005",
+      "name": "Tokyo Dome",
+      "city": "Tokyo",
+      "country": "JP",
+      "lat": 35.7056,
+      "lng": 139.7519,
+      "capacity": 55000
+    },
+    "priceCents": 950000,
+    "currency": "JPY",
+    "imageUrl": "https://picsum.photos/seed/evt_005/800/600",
+    "soldOut": false,
+    "tags": ["jpop", "stadium", "tour"]
+  },
+  {
+    "id": "evt_006",
+    "title": "Last Train Home — Reunion Show",
+    "artist": "Last Train Home",
+    "genre": "Punk",
+    "startsAt": "2025-11-15T21:00:00.000Z",
+    "doorsAt": "2025-11-15T20:00:00.000Z",
+    "venue": {
+      "id": "ven_006",
+      "name": "Bowery Ballroom",
+      "city": "New York, NY",
+      "country": "US",
+      "lat": 40.7202,
+      "lng": -73.9936,
+      "capacity": 575
+    },
+    "priceCents": 3500,
+    "currency": "USD",
+    "imageUrl": "https://picsum.photos/seed/evt_006/800/600",
+    "soldOut": false,
+    "tags": ["punk", "reunion", "past-event"]
+  }
+]

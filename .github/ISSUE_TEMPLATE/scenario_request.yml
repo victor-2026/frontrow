@@ -1,0 +1,23 @@
+name: Seed scenario request
+description: Suggest a new training scenario (a named seed-data state)
+labels: ['scenario']
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Scenario id
+      placeholder: e.g. expired_tickets
+    validations:
+      required: true
+  - type: textarea
+    id: state
+    attributes:
+      label: What state should the app be in when this scenario loads?
+    validations:
+      required: true
+  - type: textarea
+    id: testing
+    attributes:
+      label: What test cases does this enable?
+    validations:
+      required: true

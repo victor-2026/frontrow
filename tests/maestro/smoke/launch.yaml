@@ -1,0 +1,10 @@
+# Smoke flow: app launches and the Events tab is the default.
+# Run: maestro test tests/maestro/smoke/launch.yaml
+appId: app.frontrow.qa
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    id: 'screen.events'
+- tapOn:
+    id: 'screen.events'
