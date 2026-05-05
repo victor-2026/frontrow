@@ -1,32 +1,36 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createMMKV } from 'react-native-mmkv';
+
+const mmkv = createMMKV({ id: 'frontrow.default' });
 
 /**
- * Thin namespaced wrapper over AsyncStorage. Migrate to MMKV in Phase 5.
+ * Namespaced wrapper over MMKV. Keeps the async signature so call sites are
+ * unchanged from the AsyncStorage era — MMKV is synchronous under the hood,
+ * so resolves immediately. The async surface lets us swap implementations
+ * later without touching any consumer.
  */
 export const store = {
   async get<T>(key: string): Promise<T | null> {
-    const raw = await AsyncStorage.getItem(key);
+    const raw = mmkv.getString(key);
     return raw == null ? null : (JSON.parse(raw) as T);
   },
 
   async set<T>(key: string, value: T): Promise<void> {
-    await AsyncStorage.setItem(key, JSON.stringify(value));
+    mmkv.set(key, JSON.stringify(value));
   },
 
   async remove(key: string): Promise<void> {
-    await AsyncStorage.removeItem(key);
+    mmkv.remove(key);
   },
 
   async clearNamespace(prefix: string): Promise<void> {
-    const keys = await AsyncStorage.getAllKeys();
-    const matching = keys.filter((k) => k.startsWith(prefix));
-    if (matching.length > 0) {
-      await AsyncStorage.multiRemove(matching);
+    const keys = mmkv.getAllKeys();
+    for (const k of keys) {
+      if (k.startsWith(prefix)) mmkv.remove(k);
     }
   },
 
   async wipe(): Promise<void> {
-    await AsyncStorage.clear();
+    mmkv.clearAll();
   },
 };
 

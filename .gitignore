@@ -36,9 +36,15 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-# generated native folders
-/ios
-/android
+# generated native folders are now committed (we run prebuild and edit them)
+# build artifacts inside ios/ and android/ are ignored via their own .gitignores
+ios/Pods/
+ios/build/
+ios/DerivedData/
+android/build/
+android/app/build/
+android/.gradle/
+android/.idea/
 
 # test artifacts
 coverage/
