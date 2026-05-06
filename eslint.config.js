@@ -27,4 +27,17 @@ module.exports = defineConfig([
       'react-hooks/exhaustive-deps': 'warn',
     },
   },
+  // Build/tooling files run in Node — let them use __dirname / require.
+  {
+    files: ['plugins/**/*.js', 'eslint-plugin-frontrow/**/*.js'],
+    languageOptions: {
+      globals: {
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        process: 'readonly',
+      },
+    },
+  },
 ]);
