@@ -19,7 +19,13 @@ appId: app.frontrow.qa
 
 - openLink: 'frontrow://e2e/setup'
 
-# After fast-boot, the events screen is the active surface and the
-# demo user is signed in. Children can navigate from here.
+# Wait for the auth state to actually propagate. events.inboxButton
+# only renders when isSignedIn is true — using it as the
+# "fast-boot complete" gate prevents downstream flows from racing
+# the auth+query refresh cascade triggered by the deep link.
+- extendedWaitUntil:
+    visible:
+      id: 'events.inboxButton'
+    timeout: 5000
 - assertVisible:
     id: 'screen.events'

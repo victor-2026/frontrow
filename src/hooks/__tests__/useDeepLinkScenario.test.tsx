@@ -6,6 +6,7 @@ import { useDeepLinkScenario } from '../useDeepLinkScenario';
 import { useQaStore } from '../../state/qa';
 import { useAuthStore } from '../../state/auth';
 import { useSettingsStore } from '../../state/settings';
+import { useBillingStore } from '../../state/billing';
 import { mockState, resetMockState } from '../../mocks/state';
 
 /**
@@ -123,6 +124,42 @@ describe('debug/replayOnboarding', () => {
     renderHook(() => useDeepLinkScenario(), { wrapper: makeWrapper() });
     await fireUrl('frontrow://debug/replayOnboarding');
     expect(useSettingsStore.getState().onboardingPending).toBe(true);
+  });
+});
+
+describe('debug/iap', () => {
+  it('sets the IAP outcome from the URL segment', async () => {
+    renderHook(() => useDeepLinkScenario(), { wrapper: makeWrapper() });
+    await fireUrl('frontrow://debug/iap/decline');
+    expect(useBillingStore.getState().outcome).toBe('decline');
+    await fireUrl('frontrow://debug/iap/success');
+    expect(useBillingStore.getState().outcome).toBe('success');
+  });
+
+  it('ignores unknown outcomes', async () => {
+    useBillingStore.setState({ outcome: 'success' });
+    renderHook(() => useDeepLinkScenario(), { wrapper: makeWrapper() });
+    await fireUrl('frontrow://debug/iap/explode');
+    expect(useBillingStore.getState().outcome).toBe('success');
+  });
+});
+
+describe('debug/forceError', () => {
+  it('sets the forced error mode from the URL segment', async () => {
+    const { useQaStore } = require('../../state/qa');
+    renderHook(() => useDeepLinkScenario(), { wrapper: makeWrapper() });
+    await fireUrl('frontrow://debug/forceError/5xx');
+    expect(useQaStore.getState().forceError).toBe('5xx');
+    await fireUrl('frontrow://debug/forceError/none');
+    expect(useQaStore.getState().forceError).toBe('none');
+  });
+
+  it('ignores unknown error modes', async () => {
+    const { useQaStore } = require('../../state/qa');
+    useQaStore.setState({ forceError: 'none' });
+    renderHook(() => useDeepLinkScenario(), { wrapper: makeWrapper() });
+    await fireUrl('frontrow://debug/forceError/exploded');
+    expect(useQaStore.getState().forceError).toBe('none');
   });
 });
 

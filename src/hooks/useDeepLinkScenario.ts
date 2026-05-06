@@ -6,6 +6,7 @@ import { scenarios, type ScenarioId } from '../mocks/seed/scenarios/registry';
 import { mockState, resetMockState } from '../mocks/state';
 import { useQaStore, type FailureTrigger } from '../state/qa';
 import { useAuthStore } from '../state/auth';
+import { useBillingStore, type PurchaseOutcome } from '../state/billing';
 import { useSettingsStore } from '../state/settings';
 import { track } from '../state/analytics';
 
@@ -67,6 +68,32 @@ export function useDeepLinkScenario(): void {
       if (/(?:^|\/)debug\/replayOnboarding$/.test(segments)) {
         void useSettingsStore.getState().startOnboarding();
         track('debug.onboarding.replay');
+        return;
+      }
+
+      // frontrow://debug/iap/<outcome> — set the in-app-purchase
+      // outcome (success / decline / cancel / pending). Avoids the
+      // scroll-to-IAP-section dance on the now-13-section debug
+      // screen.
+      const iap = /(?:^|\/)debug\/iap\/(success|decline|cancel|pending)$/.exec(segments);
+      if (iap) {
+        const outcome = iap[1] as PurchaseOutcome;
+        void useBillingStore.getState().setOutcome(outcome);
+        track('debug.iap.outcome.set', { outcome });
+        return;
+      }
+
+      // frontrow://debug/forceError/<mode> — set the API-level forced
+      // error mode (none / 4xx / 5xx / timeout / offline). Same
+      // scroll-bypass rationale.
+      const forceErr = /(?:^|\/)debug\/forceError\/(none|4xx|5xx|timeout|offline)$/.exec(
+        segments,
+      );
+      if (forceErr) {
+        const mode = forceErr[1] as 'none' | '4xx' | '5xx' | 'timeout' | 'offline';
+        void useQaStore.getState().setForceError(mode);
+        void qc.invalidateQueries();
+        track('debug.forceError.set', { mode });
         return;
       }
 

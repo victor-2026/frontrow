@@ -3,18 +3,9 @@ appId: app.frontrow.qa
 ---
 - runFlow: ../_setup.yaml
 
-- tapOn:
-    id: 'tab.debug'
-- assertVisible:
-    id: 'screen.debug'
-- scrollUntilVisible:
-    element:
-      id: 'debug.iap.decline'
-    direction: DOWN
-    timeout: 30000
-    speed: 30
-- tapOn:
-    id: 'debug.iap.decline'
+# Skip the scroll-to-IAP-section dance — the deep link sets the
+# outcome directly.
+- openLink: 'frontrow://debug/iap/decline'
 
 - tapOn:
     id: 'tab.profile'

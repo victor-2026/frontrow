@@ -8,16 +8,8 @@ appId: app.frontrow.qa
       id: 'screen.events'
     timeout: 20000
 
-- tapOn:
-    id: 'tab.debug'
-- assertVisible:
-    id: 'screen.debug'
-- scrollUntilVisible:
-    element:
-      id: 'debug.forceError.5xx'
-    direction: DOWN
-- tapOn:
-    id: 'debug.forceError.5xx'
+# Set forceError via deep link (no scroll needed).
+- openLink: 'frontrow://debug/forceError/5xx'
 
 - tapOn:
     id: 'tab.events'
@@ -28,16 +20,8 @@ appId: app.frontrow.qa
 - assertVisible:
     id: 'events.retryButton'
 
-# Clear the force-error and tap Retry — the list should populate.
-- tapOn:
-    id: 'tab.debug'
-- scrollUntilVisible:
-    element: 'None'
-    direction: UP
-    timeout: 5000
-- tapOn: 'None'
-- tapOn:
-    id: 'tab.events'
+# Clear forceError and tap Retry — the list should populate.
+- openLink: 'frontrow://debug/forceError/none'
 - tapOn:
     id: 'events.retryButton'
 - extendedWaitUntil:
