@@ -11,7 +11,8 @@ appId: app.frontrow.qa
 
 - tapOn:
     id: 'tab.profile'
-- tapOn: 'profile.settingsButton'
+- tapOn:
+    id: 'profile.settingsButton'
 - assertVisible:
     id: 'screen.settings'
 

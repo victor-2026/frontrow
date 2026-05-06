@@ -23,7 +23,8 @@ appId: app.frontrow.qa
 # Profile → Following → assert the artist is listed.
 - tapOn:
     id: 'tab.profile'
-- tapOn: 'profile.followingButton'
+- tapOn:
+    id: 'profile.followingButton'
 - assertVisible:
     id: 'screen.following'
 - assertVisible:
