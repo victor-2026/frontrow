@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   FlatList,
+  Modal,
   Pressable,
   ScrollView,
   ActivityIndicator,
@@ -27,11 +28,19 @@ import { EmptyState } from '../components/EmptyState';
 import { EventListItem } from '../components/EventListItem';
 import { EventListSkeleton } from '../components/EventListSkeleton';
 import { HeroEventCard } from '../components/HeroEventCard';
+import type { EventSort } from '../api/services/events';
 import type { EventsStackParamList } from '../navigation/types';
 
 const SEARCH_DEBOUNCE_MS = 300;
 
 const GENRES = ['Indie Rock', 'Classical', 'Electronic', 'Folk', 'J-Pop', 'Punk'] as const;
+
+const SORT_OPTIONS: { id: EventSort; label: string }[] = [
+  { id: 'date_asc', label: 'Date — soonest first' },
+  { id: 'date_desc', label: 'Date — latest first' },
+  { id: 'price_asc', label: 'Price — low to high' },
+  { id: 'price_desc', label: 'Price — high to low' },
+];
 
 export function EventsListScreen() {
   const { t } = useTranslation();
@@ -40,6 +49,8 @@ export function EventsListScreen() {
   const debouncedQ = useDebouncedValue(q.trim(), SEARCH_DEBOUNCE_MS);
   const [genre, setGenre] = useState<string | null>(null);
   const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [sort, setSort] = useState<EventSort>('date_asc');
+  const [sortOpen, setSortOpen] = useState(false);
   const isSignedIn = Boolean(useAuthStore((s) => s.token));
   const {
     data,
@@ -50,7 +61,7 @@ export function EventsListScreen() {
     hasNextPage,
     isFetchingNextPage,
     error,
-  } = useEvents({ q: debouncedQ || undefined, genre: genre ?? undefined });
+  } = useEvents({ q: debouncedQ || undefined, genre: genre ?? undefined, sort });
   const { data: favIds } = useFavoriteEventIds();
 
   const allItems = useMemo(() => data?.pages.flatMap((p) => p.items) ?? [], [data]);
@@ -88,17 +99,27 @@ export function EventsListScreen() {
 
   return (
     <View style={styles.container} testID={testIds.events.screen}>
-      <View style={styles.searchBar}>
+      <View style={[styles.searchBar, styles.searchRow]}>
         <TextInput
           testID={testIds.events.searchInput}
           accessibilityLabel="Search events"
           placeholder={t('events.heading')}
           value={q}
           onChangeText={setQ}
-          style={styles.searchInput}
+          style={[styles.searchInput, { flex: 1 }]}
           autoCapitalize="none"
           autoCorrect={false}
         />
+        <Pressable
+          testID={testIds.events.sortButton}
+          accessibilityRole="button"
+          accessibilityLabel="Sort events"
+          onPress={() => setSortOpen(true)}
+          style={styles.sortButton}
+          hitSlop={8}
+        >
+          <Ionicons name="swap-vertical" size={20} color={theme.colors.text} />
+        </Pressable>
       </View>
       <ScrollView
         testID={testIds.events.filterRow}
@@ -195,6 +216,49 @@ export function EventsListScreen() {
           }}
         />
       )}
+
+      <Modal
+        visible={sortOpen}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setSortOpen(false)}
+      >
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Dismiss sort menu"
+          testID="events.sortBackdrop"
+          style={styles.modalBackdrop}
+          onPress={() => setSortOpen(false)}
+        >
+          <Pressable
+            accessibilityRole="none"
+            accessible={false}
+            testID="events.sortSheet"
+            style={styles.sortSheet}
+            onPress={() => undefined}
+          >
+            <Text style={styles.sortHeading}>Sort by</Text>
+            {SORT_OPTIONS.map((opt) => (
+              <Pressable
+                key={opt.id}
+                testID={testIds.events.sortOption(opt.id)}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: sort === opt.id }}
+                onPress={() => {
+                  setSort(opt.id);
+                  setSortOpen(false);
+                }}
+                style={styles.sortRow}
+              >
+                <Text style={styles.sortLabel}>{opt.label}</Text>
+                {sort === opt.id ? (
+                  <Ionicons name="checkmark" size={20} color={theme.colors.primary} />
+                ) : null}
+              </Pressable>
+            ))}
+          </Pressable>
+        </Pressable>
+      </Modal>
     </View>
   );
 }
@@ -288,4 +352,41 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: '700',
   },
+  searchRow: { flexDirection: 'row', alignItems: 'center', gap: theme.spacing.sm },
+  sortButton: {
+    width: 44,
+    height: 44,
+    borderRadius: theme.radius.md,
+    backgroundColor: theme.colors.surface,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: '#00000077',
+    justifyContent: 'flex-end',
+  },
+  sortSheet: {
+    backgroundColor: theme.colors.background,
+    borderTopLeftRadius: theme.radius.lg,
+    borderTopRightRadius: theme.radius.lg,
+    padding: theme.spacing.lg,
+    paddingBottom: theme.spacing.xl,
+    gap: theme.spacing.sm,
+  },
+  sortHeading: {
+    fontSize: theme.typography.title,
+    fontWeight: '700',
+    color: theme.colors.text,
+    marginBottom: theme.spacing.sm,
+  },
+  sortRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: theme.spacing.sm,
+  },
+  sortLabel: { fontSize: theme.typography.body, color: theme.colors.text },
 });

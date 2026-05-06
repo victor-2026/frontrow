@@ -18,6 +18,12 @@ export type TicketTier = {
   soldOut?: boolean;
 };
 
+export type LineupSlot = {
+  artist: string;
+  startsAt: string; // ISO
+  isHeadliner?: boolean;
+};
+
 export type Event = {
   id: string;
   title: string;
@@ -33,6 +39,7 @@ export type Event = {
   soldOut: boolean;
   tags: string[];
   tiers?: TicketTier[];
+  lineup?: LineupSlot[];
 };
 
 export type TicketStatus = 'active' | 'used' | 'cancelled' | 'refunded' | 'refund_pending';

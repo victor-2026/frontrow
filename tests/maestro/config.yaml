@@ -25,6 +25,7 @@ executionOrder:
     - smoke/onboarding-skip
     - events/browse
     - events/genre-filter
+    - events/sort
     - events/pagination
     - auth/login
     - auth/forgotPassword

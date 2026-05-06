@@ -26,7 +26,7 @@ import {
 } from '../hooks/useArtists';
 import { useAuthStore } from '../state/auth';
 import { Button } from '../components/Button';
-import { formatPrice, formatEventDate } from '../utils/format';
+import { formatPrice, formatEventDate, formatTimeShort } from '../utils/format';
 import type { EventsStackParamList } from '../navigation/types';
 
 type Props = NativeStackScreenProps<EventsStackParamList, 'EventDetail'>;
@@ -135,6 +135,25 @@ export function EventDetailScreen({ route }: Props) {
         <Text style={styles.meta}>
           {event.venue.name} · {event.venue.city}, {event.venue.country}
         </Text>
+        {event.lineup && event.lineup.length > 0 ? (
+          <View testID={testIds.eventDetail.lineup} style={styles.lineupBlock}>
+            <Text style={styles.sectionHeading}>Lineup</Text>
+            {event.lineup.map((slot, i) => (
+              <View
+                key={`${slot.artist}-${slot.startsAt}`}
+                testID={testIds.eventDetail.lineupItem(i)}
+                style={styles.lineupRow}
+              >
+                <Text style={styles.lineupTime}>{formatTimeShort(slot.startsAt)}</Text>
+                <Text style={[styles.lineupArtist, slot.isHeadliner && styles.lineupHeadliner]}>
+                  {slot.artist}
+                  {slot.isHeadliner ? '  ★' : ''}
+                </Text>
+              </View>
+            ))}
+          </View>
+        ) : null}
+
         <View style={styles.actions}>
           <Button
             testID={testIds.eventDetail.buyButton}
@@ -192,6 +211,28 @@ const styles = StyleSheet.create({
   followPillText: { fontSize: theme.typography.caption, fontWeight: '700', color: theme.colors.primary },
   followPillTextActive: { color: theme.colors.primaryText },
   meta: { fontSize: theme.typography.body, color: theme.colors.muted },
+  sectionHeading: {
+    fontSize: theme.typography.title,
+    fontWeight: '700',
+    color: theme.colors.text,
+    marginBottom: theme.spacing.sm,
+  },
+  lineupBlock: { marginTop: theme.spacing.lg, gap: theme.spacing.sm },
+  lineupRow: {
+    flexDirection: 'row',
+    paddingVertical: theme.spacing.sm,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: theme.colors.border,
+    gap: theme.spacing.md,
+  },
+  lineupTime: {
+    fontSize: theme.typography.body,
+    color: theme.colors.muted,
+    minWidth: 64,
+    fontVariant: ['tabular-nums'],
+  },
+  lineupArtist: { flex: 1, fontSize: theme.typography.body, color: theme.colors.text },
+  lineupHeadliner: { fontWeight: '700' },
   actions: { marginTop: theme.spacing.lg },
   error: { color: theme.colors.danger, fontSize: theme.typography.body },
 });

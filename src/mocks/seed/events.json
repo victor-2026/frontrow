@@ -104,7 +104,13 @@
     "currency": "EUR",
     "imageUrl": "https://picsum.photos/seed/evt_003/800/600",
     "soldOut": true,
-    "tags": ["festival", "electronic", "outdoor"]
+    "tags": ["festival", "electronic", "outdoor"],
+    "lineup": [
+      { "artist": "Neon Drift", "startsAt": "2026-08-15T17:00:00.000Z" },
+      { "artist": "Yuki Pop Collective", "startsAt": "2026-08-15T19:00:00.000Z" },
+      { "artist": "Last Train Home", "startsAt": "2026-08-15T21:00:00.000Z" },
+      { "artist": "Aurora Symphony", "startsAt": "2026-08-15T23:00:00.000Z", "isHeadliner": true }
+    ]
   },
   {
     "id": "evt_004",

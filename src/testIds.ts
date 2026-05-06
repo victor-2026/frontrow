@@ -37,6 +37,8 @@ export const testIds = {
     inboxBadge: 'events.inboxBadge',
     skeleton: 'events.skeleton',
     heroCard: 'events.heroCard',
+    sortButton: 'events.sortButton',
+    sortOption: (id: string) => `events.sortOption.${id}`,
   },
   inbox: {
     screen: 'screen.inbox',
@@ -133,6 +135,9 @@ export const testIds = {
     shareButton: 'eventDetail.shareButton',
     reviewsButton: 'eventDetail.reviewsButton',
     followArtistButton: 'eventDetail.followArtistButton',
+    lineup: 'eventDetail.lineup',
+    lineupItem: (i: number) => `eventDetail.lineupItem.${i}`,
+    refundPolicy: 'eventDetail.refundPolicy',
   },
   following: {
     screen: 'screen.following',
