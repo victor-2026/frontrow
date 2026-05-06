@@ -128,6 +128,8 @@ export const testIds = {
     forceErrorToggle: 'debug.forceErrorToggle',
     crashButton: 'debug.crashButton',
     replayOnboardingButton: 'debug.replayOnboardingButton',
+    triggerToggle: (kind: string) => `debug.trigger.${kind}`,
+    clearTriggersButton: 'debug.clearTriggers',
   },
   eventDetail: {
     screen: 'screen.eventDetail',
@@ -158,6 +160,7 @@ export const testIds = {
     privacyRow: 'settings.privacyRow',
     termsRow: 'settings.termsRow',
     paymentMethodsRow: 'settings.paymentMethodsRow',
+    appearanceOption: (id: string) => `settings.appearance.${id}`,
     webview: {
       screen: 'screen.webview',
       content: 'webview.content',

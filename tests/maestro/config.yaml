@@ -32,6 +32,7 @@ executionOrder:
     - events/pagination
     - auth/login
     - auth/forgotPassword
+    - auth/recovery-deeplinks
     - auth/edit-profile
     - auth/language-switch
     - tickets/buy
@@ -48,4 +49,5 @@ executionOrder:
     - debug/scenario-deep-link
     - debug/force-error
     - debug/offline-banner
+    - debug/failure-trigger
     - capabilities/haptic
