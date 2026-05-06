@@ -130,6 +130,7 @@ export const testIds = {
     replayOnboardingButton: 'debug.replayOnboardingButton',
     triggerToggle: (kind: string) => `debug.trigger.${kind}`,
     clearTriggersButton: 'debug.clearTriggers',
+    networkProfile: (id: string) => `debug.networkProfile.${id}`,
   },
   eventDetail: {
     screen: 'screen.eventDetail',
