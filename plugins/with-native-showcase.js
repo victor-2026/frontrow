@@ -120,14 +120,23 @@ function withRegisteredAndroidPackage(config) {
         `$1\n${importLine}\n`,
       );
     }
-    // Register via the standard PackageList override pattern — append
-    // our package to the auto-linked list.
-    const marker = 'val packages = PackageList(this).packages';
-    if (src.includes(marker) && !src.includes('NativeDemoPackage()')) {
-      src = src.replace(
-        marker,
-        `${marker}\n            packages.add(NativeDemoPackage())`,
-      );
+    // Register inside the PackageList(this).packages.apply { ... }
+    // block — the modern Expo/RN template. Falls back to the older
+    // `val packages = ...` form if that's what the template emits.
+    if (!src.includes('NativeDemoPackage()')) {
+      const applyForm = /(PackageList\(this\)\.packages\.apply\s*\{)([^]*?)(\n\s*\})/;
+      const valForm = /(val\s+packages\s*=\s*PackageList\(this\)\.packages)/;
+      if (applyForm.test(src)) {
+        src = src.replace(applyForm, (_m, head, body, tail) => {
+          // Insert a single-line add() before the closing brace.
+          return `${head}${body}\n              add(NativeDemoPackage())${tail}`;
+        });
+      } else if (valForm.test(src)) {
+        src = src.replace(
+          valForm,
+          `$1\n            packages.add(NativeDemoPackage())`,
+        );
+      }
     }
     cfg.modResults.contents = src;
     return cfg;

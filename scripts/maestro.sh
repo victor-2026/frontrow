@@ -11,6 +11,11 @@
 #   DEVICE                          — override the auto-detected device id
 #   MAESTRO_DRIVER_STARTUP_TIMEOUT  — XCTest agent install timeout (iOS, default 300000)
 #   NO_RETRY=1                       — disable the auto-retry of failed flows
+#   PARALLEL=1                       — use --shard-split across all connected
+#                                      devices (e.g. two emulators). Skips
+#                                      single-device retry loop; failures must
+#                                      be re-run manually since shard ownership
+#                                      isn't deterministic across runs.
 set -euo pipefail
 
 PLATFORM="${1:-}"
@@ -35,14 +40,24 @@ if [[ "$PLATFORM" == "android" ]]; then
     echo "no Android device connected (check 'adb devices')" >&2
     exit 1
   fi
-  echo "→ Android device: $DEVICE"
+  if [[ "${PARALLEL:-0}" == "1" ]]; then
+    DEVICE_COUNT=$(adb devices | awk 'NR>1 && $2=="device"' | wc -l | tr -d ' ')
+    echo "→ Android parallel mode: $DEVICE_COUNT device(s)"
+  else
+    echo "→ Android device: $DEVICE"
+  fi
 else
   DEVICE="${DEVICE:-$(xcrun simctl list devices booted | awk -F'[()]' '/Booted/{gsub(/^[ \t]+/, "", $2); print $2; exit}')}"
   if [[ -z "$DEVICE" ]]; then
     echo "no iOS simulator booted (use Xcode or 'xcrun simctl boot <udid>')" >&2
     exit 1
   fi
-  echo "→ iOS simulator: $DEVICE"
+  if [[ "${PARALLEL:-0}" == "1" ]]; then
+    DEVICE_COUNT=$(xcrun simctl list devices booted | awk '/Booted/' | wc -l | tr -d ' ')
+    echo "→ iOS parallel mode: $DEVICE_COUNT simulator(s)"
+  else
+    echo "→ iOS simulator: $DEVICE"
+  fi
   # XCTest agent install can take 60-90s the first time; bump from the default.
   export MAESTRO_DRIVER_STARTUP_TIMEOUT="${MAESTRO_DRIVER_STARTUP_TIMEOUT:-300000}"
 fi
@@ -52,6 +67,14 @@ LOG="$(mktemp -t maestro.XXXXXX.log)"
 trap 'rm -f "$LOG"' EXIT
 
 set +e
+if [[ "${PARALLEL:-0}" == "1" ]]; then
+  # In parallel mode Maestro picks devices itself; we don't pin to one.
+  # Skip the per-flow retry loop because shard ownership isn't stable.
+  maestro test "$TARGET" --shard-split="$DEVICE_COUNT" 2>&1 | tee "$LOG"
+  RC=${PIPESTATUS[0]}
+  exit "$RC"
+fi
+
 maestro --device "$DEVICE" test "$TARGET" 2>&1 | tee "$LOG"
 RC=${PIPESTATUS[0]}
 set -e
