@@ -1,5 +1,14 @@
+# Maestro workspace config — picked up automatically when you run
+# `maestro test tests/maestro/`. Limit to one-deep glob so this file
+# (and future top-level helpers) aren't picked up as flows.
 flows:
-  - '**/*.yaml'
+  - 'auth/*.yaml'
+  - 'billing/*.yaml'
+  - 'capabilities/*.yaml'
+  - 'debug/*.yaml'
+  - 'events/*.yaml'
+  - 'smoke/*.yaml'
+  - 'tickets/*.yaml'
 executionOrder:
   flowsOrder:
     - smoke/launch
