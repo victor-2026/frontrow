@@ -23,6 +23,11 @@ appId: app.frontrow.qa
 # Profile → Following → assert the artist is listed.
 - tapOn:
     id: 'tab.profile'
+- scrollUntilVisible:
+    element:
+      id: 'profile.followingButton'
+    direction: DOWN
+    timeout: 5000
 - tapOn:
     id: 'profile.followingButton'
 - assertVisible:

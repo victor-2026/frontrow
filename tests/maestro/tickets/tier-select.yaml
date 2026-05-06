@@ -32,7 +32,11 @@ appId: app.frontrow.qa
     id: 'buyTicket.payButton'
 - assertVisible: 'Ticket purchased'
 
-# The latest ticket renders with the VIP label.
+# The latest ticket renders with the VIP label. Wait for the
+# tickets-mine query to refresh before asserting — the new ticket
+# only appears after invalidate + refetch completes.
 - tapOn:
     id: 'tab.myTickets'
-- assertVisible: 'VIP + Meet & Greet'
+- extendedWaitUntil:
+    visible: 'VIP + Meet & Greet'
+    timeout: 10000

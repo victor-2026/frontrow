@@ -5,6 +5,11 @@ appId: app.frontrow.qa
 
 - tapOn:
     id: 'tab.profile'
+- scrollUntilVisible:
+    element:
+      id: 'profile.settingsButton'
+    direction: DOWN
+    timeout: 5000
 - tapOn:
     id: 'profile.settingsButton'
 - assertVisible:

@@ -23,6 +23,14 @@ appId: app.frontrow.qa
 - assertVisible:
     id: 'ticketDetail.statusPill'
 
+# Cancel button sits below the QR + details rows on small phones —
+# scroll into view before tapping.
+- scrollUntilVisible:
+    element:
+      id: 'ticketDetail.cancelButton'
+    direction: DOWN
+    timeout: 5000
+
 # Tap cancel, dismiss with "Keep" first to verify the confirm dialog can back out.
 - tapOn:
     id: 'ticketDetail.cancelButton'

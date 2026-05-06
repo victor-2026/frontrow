@@ -67,15 +67,20 @@ LOG="$(mktemp -t maestro.XXXXXX.log)"
 trap 'rm -f "$LOG"' EXIT
 
 set +e
+# Always capture screenshots + view hierarchies for debugging.
+DEBUG_DIR="${DEBUG_DIR:-/tmp/maestro-debug}"
+mkdir -p "$DEBUG_DIR"
+echo "→ debug artifacts: $DEBUG_DIR"
+
 if [[ "${PARALLEL:-0}" == "1" ]]; then
   # In parallel mode Maestro picks devices itself; we don't pin to one.
   # Skip the per-flow retry loop because shard ownership isn't stable.
-  maestro test "$TARGET" --shard-split="$DEVICE_COUNT" 2>&1 | tee "$LOG"
+  maestro test "$TARGET" --shard-split="$DEVICE_COUNT" --debug-output="$DEBUG_DIR" 2>&1 | tee "$LOG"
   RC=${PIPESTATUS[0]}
   exit "$RC"
 fi
 
-maestro --device "$DEVICE" test "$TARGET" 2>&1 | tee "$LOG"
+maestro --device "$DEVICE" test "$TARGET" --debug-output="$DEBUG_DIR" 2>&1 | tee "$LOG"
 RC=${PIPESTATUS[0]}
 set -e
 

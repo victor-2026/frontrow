@@ -35,7 +35,7 @@ appId: app.frontrow.qa
 # 2. valid format but unknown recipient
 - tapOn:
     id: 'ticketDetail.transferEmailInput'
-- eraseText
+- eraseText: 50
 - inputText: 'nobody@example.com'
 - runFlow:
     when:
@@ -50,7 +50,7 @@ appId: app.frontrow.qa
 # 3. valid recipient — succeeds
 - tapOn:
     id: 'ticketDetail.transferEmailInput'
-- eraseText
+- eraseText: 50
 - inputText: 'friend@frontrow.app'
 - runFlow:
     when:
