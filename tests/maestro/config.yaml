@@ -45,8 +45,5 @@ executionOrder:
     - billing/buy-success
     - billing/buy-decline
     - billing/payment-methods-crud
-    - debug/scenario-deep-link
-    - debug/force-error
-    - debug/offline-banner
     - debug/failure-trigger
     - capabilities/haptic
