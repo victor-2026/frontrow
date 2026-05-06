@@ -19,7 +19,27 @@
     "currency": "USD",
     "imageUrl": "https://picsum.photos/seed/evt_001/800/600",
     "soldOut": false,
-    "tags": ["indie", "rock", "live"]
+    "tags": ["indie", "rock", "live"],
+    "tiers": [
+      {
+        "id": "ga",
+        "label": "General Admission",
+        "description": "Standing room, doors at 7 PM.",
+        "priceCents": 4500
+      },
+      {
+        "id": "early",
+        "label": "Early Entry",
+        "description": "Skip the line, doors at 6 PM.",
+        "priceCents": 6500
+      },
+      {
+        "id": "vip",
+        "label": "VIP + Meet & Greet",
+        "description": "Reserved seating, signed poster, post-show meet and greet.",
+        "priceCents": 14500
+      }
+    ]
   },
   {
     "id": "evt_002",
@@ -41,7 +61,28 @@
     "currency": "GBP",
     "imageUrl": "https://picsum.photos/seed/evt_002/800/600",
     "soldOut": false,
-    "tags": ["classical", "orchestra"]
+    "tags": ["classical", "orchestra"],
+    "tiers": [
+      {
+        "id": "balcony",
+        "label": "Balcony",
+        "description": "Upper level, unreserved.",
+        "priceCents": 8500
+      },
+      {
+        "id": "stalls",
+        "label": "Stalls",
+        "description": "Reserved seat in the main hall.",
+        "priceCents": 14500
+      },
+      {
+        "id": "box",
+        "label": "Box Seat",
+        "description": "Private box for two.",
+        "priceCents": 32000,
+        "soldOut": true
+      }
+    ]
   },
   {
     "id": "evt_003",

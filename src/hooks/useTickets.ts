@@ -33,7 +33,7 @@ export function usePurchaseTicket() {
   const token = useAuthStore((s) => s.token);
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (input: { eventId: string; quantity: number; tier?: string }) => {
+    mutationFn: (input: { eventId: string; quantity: number; tierId?: string }) => {
       track('ticket.purchase.intent', input);
       return purchaseTicket(token, input);
     },

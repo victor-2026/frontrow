@@ -199,5 +199,6 @@ export const testIds = {
     promoError: 'buyTicket.promoError',
     promoRemoveButton: 'buyTicket.promoRemoveButton',
     totalAmount: 'buyTicket.totalAmount',
+    tierOption: (id: string) => `buyTicket.tier.${id}`,
   },
 } as const;

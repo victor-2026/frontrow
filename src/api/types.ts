@@ -10,6 +10,14 @@ export type Venue = {
   capacity: number;
 };
 
+export type TicketTier = {
+  id: string;
+  label: string;
+  description?: string;
+  priceCents: number;
+  soldOut?: boolean;
+};
+
 export type Event = {
   id: string;
   title: string;
@@ -24,6 +32,7 @@ export type Event = {
   imageUrl: string;
   soldOut: boolean;
   tags: string[];
+  tiers?: TicketTier[];
 };
 
 export type TicketStatus = 'active' | 'used' | 'cancelled' | 'refunded' | 'refund_pending';
