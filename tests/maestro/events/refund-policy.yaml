@@ -16,7 +16,11 @@ appId: app.frontrow.qa
       id: 'screen.eventDetail'
     timeout: 10000
 
-- assertVisible:
-    id: 'eventDetail.refundPolicy'
+# Refund policy is near the bottom of the event detail page.
+- scrollUntilVisible:
+    element:
+      id: 'eventDetail.refundPolicy'
+    direction: DOWN
+    timeout: 5000
 - assertVisible: 'Refund policy'
 - assertVisible: 'Refundable until'

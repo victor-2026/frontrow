@@ -8,11 +8,15 @@ appId: app.frontrow.qa
 - assertVisible:
     id: 'screen.events'
 
-# Bell appears once signed in. Demo seed has 2 unread notifications.
+# Bell appears once signed in. Demo seed has 2 unread notifications;
+# the badge fires once the notifications query refreshes after the
+# auth-state swap from _setup.yaml.
 - assertVisible:
     id: 'events.inboxButton'
-- assertVisible:
-    id: 'events.inboxBadge'
+- extendedWaitUntil:
+    visible:
+      id: 'events.inboxBadge'
+    timeout: 5000
 
 - tapOn:
     id: 'events.inboxButton'
