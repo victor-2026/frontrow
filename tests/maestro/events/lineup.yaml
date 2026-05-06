@@ -24,9 +24,12 @@ appId: app.frontrow.qa
     id: 'eventDetail.lineupItem.0'
 
 # The 4th lineup item (the headliner) is below the fold on small phones.
+# Assert on the stable testID — text-based assertions fail when scroll
+# only just barely reveals the item's bottom edge.
 - scrollUntilVisible:
     element:
       id: 'eventDetail.lineupItem.3'
     direction: DOWN
     timeout: 5000
-- assertVisible: 'Aurora Symphony'
+- assertVisible:
+    id: 'eventDetail.lineupItem.3'

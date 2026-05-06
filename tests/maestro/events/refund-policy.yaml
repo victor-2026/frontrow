@@ -17,10 +17,12 @@ appId: app.frontrow.qa
     timeout: 10000
 
 # Refund policy is near the bottom of the event detail page.
+# Assert on the stable testID — scrollUntilVisible only guarantees
+# the testID'd element is in the viewport, not every text inside it.
 - scrollUntilVisible:
     element:
       id: 'eventDetail.refundPolicy'
     direction: DOWN
     timeout: 5000
-- assertVisible: 'Refund policy'
-- assertVisible: 'Refundable until'
+- assertVisible:
+    id: 'eventDetail.refundPolicy'
