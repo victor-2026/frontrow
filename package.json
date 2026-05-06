@@ -7,12 +7,16 @@
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
+    "android:release": "expo run:android --variant release",
     "ios": "expo run:ios",
+    "ios:release": "expo run:ios --configuration Release",
     "web": "expo start --web",
     "lint": "expo lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "maestro:android": "scripts/maestro.sh android",
+    "maestro:ios": "scripts/maestro.sh ios"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^7.15.11",

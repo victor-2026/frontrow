@@ -9,6 +9,15 @@ flows:
   - 'events/*.yaml'
   - 'smoke/*.yaml'
   - 'tickets/*.yaml'
+
+# Disable system animations so taps don't land mid-transition. This is the
+# single biggest reliability win — it removes a whole class of races.
+platform:
+  android:
+    disableAnimations: true
+  ios:
+    disableAnimations: true
+
 executionOrder:
   flowsOrder:
     - smoke/launch
