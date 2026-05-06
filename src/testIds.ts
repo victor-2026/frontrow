@@ -36,6 +36,11 @@ export const testIds = {
     inboxButton: 'events.inboxButton',
     inboxBadge: 'events.inboxBadge',
     skeleton: 'events.skeleton',
+    heroCard: 'events.heroCard',
+    sortButton: 'events.sortButton',
+    sortOption: (id: string) => `events.sortOption.${id}`,
+    recentlyViewedStrip: 'events.recentlyViewedStrip',
+    recentlyViewedItem: (id: string) => `events.recentlyViewedItem.${id}`,
   },
   inbox: {
     screen: 'screen.inbox',
@@ -131,6 +136,17 @@ export const testIds = {
     favoriteButton: 'eventDetail.favoriteButton',
     shareButton: 'eventDetail.shareButton',
     reviewsButton: 'eventDetail.reviewsButton',
+    followArtistButton: 'eventDetail.followArtistButton',
+    lineup: 'eventDetail.lineup',
+    lineupItem: (i: number) => `eventDetail.lineupItem.${i}`,
+    refundPolicy: 'eventDetail.refundPolicy',
+  },
+  following: {
+    screen: 'screen.following',
+    list: 'following.list',
+    item: (id: string) => `following.item.${id}`,
+    unfollowButton: (id: string) => `following.unfollow.${id}`,
+    emptyState: 'following.emptyState',
   },
   settings: {
     screen: 'screen.settings',
@@ -190,5 +206,6 @@ export const testIds = {
     promoError: 'buyTicket.promoError',
     promoRemoveButton: 'buyTicket.promoRemoveButton',
     totalAmount: 'buyTicket.totalAmount',
+    tierOption: (id: string) => `buyTicket.tier.${id}`,
   },
 } as const;

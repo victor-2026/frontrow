@@ -29,7 +29,7 @@ export async function listMyTickets(token: string | null): Promise<Ticket[]> {
 
 export async function purchaseTicket(
   token: string | null,
-  input: { eventId: string; quantity: number; tier?: string },
+  input: { eventId: string; quantity: number; tierId?: string },
 ): Promise<Ticket> {
   await applyQaDelay();
   applyQaForcedError();
@@ -41,15 +41,29 @@ export async function purchaseTicket(
   if (event.soldOut) {
     throw new ApiClientError(409, { code: 'sold_out', message: 'This event is sold out.' });
   }
+  let tierLabel = 'General Admission';
+  let unitCents = event.priceCents;
+  if (event.tiers && event.tiers.length > 0) {
+    const explicit = input.tierId ? event.tiers.find((t) => t.id === input.tierId) : undefined;
+    const target = explicit ?? event.tiers[0]!;
+    if (target.soldOut) {
+      throw new ApiClientError(409, {
+        code: 'tier_sold_out',
+        message: `${target.label} is sold out.`,
+      });
+    }
+    tierLabel = target.label;
+    unitCents = target.priceCents;
+  }
   const id = nextTicketId();
   const ticket: Ticket = {
     id,
     userId,
     eventId: event.id,
     quantity: input.quantity,
-    tier: input.tier ?? 'General Admission',
+    tier: tierLabel,
     purchasedAt: now().toISOString(),
-    totalCents: event.priceCents * input.quantity,
+    totalCents: unitCents * input.quantity,
     currency: event.currency,
     status: 'active',
     qrPayload: `FR-${id}-${event.id}-${input.quantity}`,

@@ -2,9 +2,12 @@ import { applyQaDelay, applyQaForcedError, ApiClientError } from '../client';
 import { mockState } from '../../mocks/state';
 import type { Event } from '../types';
 
+export type EventSort = 'date_asc' | 'date_desc' | 'price_asc' | 'price_desc';
+
 export type EventFilters = {
   q?: string;
   genre?: string;
+  sort?: EventSort;
 };
 
 export type EventsPage = {
@@ -37,6 +40,21 @@ export async function listEvents(
   }
   if (genre) {
     results = results.filter((e) => e.genre.toLowerCase() === genre);
+  }
+  switch (filters.sort ?? 'date_asc') {
+    case 'date_desc':
+      results.sort((a, b) => b.startsAt.localeCompare(a.startsAt));
+      break;
+    case 'price_asc':
+      results.sort((a, b) => a.priceCents - b.priceCents);
+      break;
+    case 'price_desc':
+      results.sort((a, b) => b.priceCents - a.priceCents);
+      break;
+    case 'date_asc':
+    default:
+      results.sort((a, b) => a.startsAt.localeCompare(b.startsAt));
+      break;
   }
   const total = results.length;
   const start = page * pageSize;

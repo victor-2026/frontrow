@@ -1,0 +1,38 @@
+# Pick a non-default ticket tier and confirm the tier label flows
+# into the purchased ticket.
+appId: app.frontrow.qa
+---
+- runFlow: ../auth/login.yaml
+
+- tapOn:
+    id: 'tab.events'
+- tapOn:
+    id: 'events.item.evt_001'
+- extendedWaitUntil:
+    visible:
+      id: 'screen.eventDetail'
+    timeout: 10000
+
+- tapOn:
+    id: 'eventDetail.buyButton'
+- assertVisible:
+    id: 'screen.buyTicket'
+
+# Demo event evt_001 has GA / Early Entry / VIP. Pick VIP.
+- assertVisible:
+    id: 'buyTicket.tier.ga'
+- assertVisible:
+    id: 'buyTicket.tier.early'
+- assertVisible:
+    id: 'buyTicket.tier.vip'
+- tapOn:
+    id: 'buyTicket.tier.vip'
+
+- tapOn:
+    id: 'buyTicket.payButton'
+- assertVisible: 'Ticket purchased'
+
+# The latest ticket renders with the VIP label.
+- tapOn:
+    id: 'tab.myTickets'
+- assertVisible: 'VIP + Meet & Greet'

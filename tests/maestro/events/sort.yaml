@@ -1,0 +1,27 @@
+# Switch sort to price-low-to-high and confirm the cheapest event leads.
+appId: app.frontrow.qa
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: 'screen.events'
+    timeout: 60000
+
+- tapOn:
+    id: 'events.sortButton'
+- tapOn:
+    id: 'events.sortOption.price_asc'
+
+# After applying price-asc, the Quiet Hours $25 event is cheapest.
+- assertVisible:
+    id: 'events.item.evt_004'
+
+- tapOn:
+    id: 'events.sortButton'
+- tapOn:
+    id: 'events.sortOption.price_desc'
+
+# Aurora Symphony has the highest base price seeded.
+- assertVisible:
+    id: 'events.item.evt_002'

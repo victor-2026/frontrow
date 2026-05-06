@@ -25,16 +25,19 @@ executionOrder:
     - smoke/onboarding-skip
     - events/browse
     - events/genre-filter
+    - events/sort
     - events/pagination
     - auth/login
     - auth/forgotPassword
     - auth/edit-profile
     - auth/language-switch
     - tickets/buy
+    - tickets/tier-select
     - tickets/detail-cancel
     - tickets/transfer
     - events/reviews
     - events/favorites
+    - events/follow-artist
     - events/inbox
     - billing/buy-success
     - billing/buy-decline

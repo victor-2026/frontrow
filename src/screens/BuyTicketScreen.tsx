@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { View, Text, Pressable, TextInput, StyleSheet, Alert } from 'react-native';
+import { useMemo, useState } from 'react';
+import { View, Text, Pressable, TextInput, ScrollView, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -27,10 +27,18 @@ export function BuyTicketScreen({ route }: Props) {
   const [promoCode, setPromoCode] = useState('');
   const [promo, setPromo] = useState<PromoCodeResult | null>(null);
   const [promoError, setPromoError] = useState<string | null>(null);
+  const [tierId, setTierId] = useState<string | null>(null);
+
+  const tiers = useMemo(() => event?.tiers ?? [], [event]);
+  const selectedTier = useMemo(() => {
+    if (!tiers.length) return null;
+    return tiers.find((t) => t.id === tierId) ?? tiers.find((t) => !t.soldOut) ?? null;
+  }, [tiers, tierId]);
 
   if (!event) return null;
 
-  const subtotal = event.priceCents * qty;
+  const unitCents = selectedTier?.priceCents ?? event.priceCents;
+  const subtotal = unitCents * qty;
   const discount = promo ? promo.discountCents * qty : 0;
   const totalCents = Math.max(0, subtotal - discount);
 
@@ -57,7 +65,11 @@ export function BuyTicketScreen({ route }: Props) {
       return;
     }
     try {
-      await mutateAsync({ eventId: event.id, quantity: qty });
+      await mutateAsync({
+        eventId: event.id,
+        quantity: qty,
+        tierId: selectedTier?.id,
+      });
       nav.goBack();
       showToast('Ticket purchased', 'success');
     } catch (e) {
@@ -66,8 +78,51 @@ export function BuyTicketScreen({ route }: Props) {
   };
 
   return (
-    <View style={styles.container} testID={testIds.buyTicket.screen}>
+    <ScrollView
+      style={{ backgroundColor: theme.colors.background }}
+      contentContainerStyle={styles.container}
+      testID={testIds.buyTicket.screen}
+      keyboardShouldPersistTaps="handled"
+    >
       <Text style={styles.heading}>{event.title}</Text>
+
+      {tiers.length > 0 ? (
+        <View style={styles.tierBlock}>
+          <Text style={styles.label}>Select tier</Text>
+          {tiers.map((t) => {
+            const isSelected = selectedTier?.id === t.id;
+            return (
+              <Pressable
+                key={t.id}
+                testID={testIds.buyTicket.tierOption(t.id)}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: isSelected, disabled: t.soldOut === true }}
+                onPress={() => !t.soldOut && setTierId(t.id)}
+                style={[
+                  styles.tierRow,
+                  isSelected && styles.tierRowSelected,
+                  t.soldOut && styles.tierRowDisabled,
+                ]}
+              >
+                <View style={styles.tierBody}>
+                  <Text style={styles.tierLabel}>{t.label}</Text>
+                  {t.description ? <Text style={styles.tierDesc}>{t.description}</Text> : null}
+                </View>
+                <View style={styles.tierTrailing}>
+                  {t.soldOut ? (
+                    <Text style={styles.tierSoldOut}>Sold out</Text>
+                  ) : (
+                    <Text style={styles.tierPrice}>
+                      {formatPrice(t.priceCents, event.currency)}
+                    </Text>
+                  )}
+                </View>
+              </Pressable>
+            );
+          })}
+        </View>
+      ) : null}
+
       <View testID={testIds.buyTicket.quantityStepper} style={styles.stepper}>
         <Pressable
           testID={testIds.buyTicket.quantityDecrement}
@@ -163,7 +218,7 @@ export function BuyTicketScreen({ route }: Props) {
         onPress={onPay}
         loading={isPending}
       />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -234,4 +289,26 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: theme.colors.text,
   },
+  tierBlock: { gap: theme.spacing.sm },
+  tierRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.md,
+    padding: theme.spacing.md,
+    borderRadius: theme.radius.md,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    backgroundColor: theme.colors.surface,
+  },
+  tierRowSelected: {
+    borderColor: theme.colors.primary,
+    borderWidth: 2,
+  },
+  tierRowDisabled: { opacity: 0.5 },
+  tierBody: { flex: 1 },
+  tierLabel: { fontSize: theme.typography.body, fontWeight: '700', color: theme.colors.text },
+  tierDesc: { fontSize: theme.typography.caption, color: theme.colors.muted, marginTop: 2 },
+  tierTrailing: { alignItems: 'flex-end' },
+  tierPrice: { fontSize: theme.typography.body, fontWeight: '700', color: theme.colors.primary },
+  tierSoldOut: { fontSize: theme.typography.caption, fontWeight: '600', color: theme.colors.danger },
 });

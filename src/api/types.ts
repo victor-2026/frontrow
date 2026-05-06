@@ -10,10 +10,25 @@ export type Venue = {
   capacity: number;
 };
 
+export type TicketTier = {
+  id: string;
+  label: string;
+  description?: string;
+  priceCents: number;
+  soldOut?: boolean;
+};
+
+export type LineupSlot = {
+  artist: string;
+  startsAt: string; // ISO
+  isHeadliner?: boolean;
+};
+
 export type Event = {
   id: string;
   title: string;
   artist: string;
+  artistId?: string;
   genre: string;
   startsAt: string; // ISO
   doorsAt: string; // ISO
@@ -23,6 +38,12 @@ export type Event = {
   imageUrl: string;
   soldOut: boolean;
   tags: string[];
+  tiers?: TicketTier[];
+  lineup?: LineupSlot[];
+  refundPolicy?: {
+    refundableUntil?: string; // ISO; nullable for non-refundable events
+    note?: string;
+  };
 };
 
 export type TicketStatus = 'active' | 'used' | 'cancelled' | 'refunded' | 'refund_pending';
@@ -63,6 +84,15 @@ export type Review = {
   rating: 1 | 2 | 3 | 4 | 5;
   text: string;
   createdAt: string;
+};
+
+export type Artist = {
+  id: string;
+  name: string;
+  avatarUrl: string | null;
+  bio?: string;
+  genres: string[];
+  followers: number;
 };
 
 export type CardBrand = 'visa' | 'mastercard' | 'amex' | 'discover' | 'unknown';
