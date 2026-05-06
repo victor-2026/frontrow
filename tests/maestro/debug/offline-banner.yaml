@@ -9,9 +9,13 @@ appId: app.frontrow.qa
     timeout: 20000
 
 - openLink: 'frontrow://debug/forceError/offline'
+- waitForAnimationToEnd:
+    timeout: 2000
 
-- assertVisible:
-    id: 'app.offlineBanner'
+- extendedWaitUntil:
+    visible:
+      id: 'app.offlineBanner'
+    timeout: 5000
 
 # Events list now fails — error message replaces the data.
 - tapOn:

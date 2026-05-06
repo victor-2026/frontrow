@@ -17,6 +17,12 @@ appId: app.frontrow.qa
     commands:
       - tapOn: 'Open'
 
+# Give the deep link's setScenario + invalidateQueries chain a moment
+# before navigating — otherwise the tickets-mine query refetch races
+# with the tab switch.
+- waitForAnimationToEnd:
+    timeout: 2000
+
 # Open My Tickets and verify the status shows used on every ticket.
 - tapOn:
     id: 'tab.myTickets'

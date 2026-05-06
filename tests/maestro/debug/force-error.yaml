@@ -8,8 +8,13 @@ appId: app.frontrow.qa
       id: 'screen.events'
     timeout: 20000
 
-# Set forceError via deep link (no scroll needed).
+# Set forceError via deep link (no scroll needed). The deep link
+# routes through Linking → useDeepLinkScenario → setForceError +
+# invalidateQueries. waitForAnimationToEnd gives that chain a moment
+# to propagate before we drive the UI.
 - openLink: 'frontrow://debug/forceError/5xx'
+- waitForAnimationToEnd:
+    timeout: 2000
 
 - tapOn:
     id: 'tab.events'
@@ -22,6 +27,8 @@ appId: app.frontrow.qa
 
 # Clear forceError and tap Retry — the list should populate.
 - openLink: 'frontrow://debug/forceError/none'
+- waitForAnimationToEnd:
+    timeout: 2000
 - tapOn:
     id: 'events.retryButton'
 - extendedWaitUntil:

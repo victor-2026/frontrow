@@ -36,5 +36,6 @@
         <data android:scheme="frontrow"/>
       </intent-filter>
     </activity>
+    <activity android:name="com.frontrow.nativedemo.NativeDemoActivity" android:exported="false"/>
   </application>
 </manifest>

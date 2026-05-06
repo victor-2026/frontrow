@@ -1,5 +1,7 @@
 package app.frontrow.qa
 
+import com.frontrow.nativedemo.NativeDemoPackage
+
 import android.app.Application
 import android.content.res.Configuration
 
