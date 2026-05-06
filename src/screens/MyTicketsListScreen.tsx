@@ -1,4 +1,12 @@
-import { View, Text, FlatList, Pressable, ActivityIndicator, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Pressable,
+  RefreshControl,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -15,7 +23,7 @@ export function MyTicketsListScreen() {
   const { t } = useTranslation();
   const nav = useNavigation<NativeStackNavigationProp<TicketsStackParamList>>();
   const token = useAuthStore((s) => s.token);
-  const { data, isLoading, error } = useMyTickets();
+  const { data, isLoading, isRefetching, refetch, error } = useMyTickets();
 
   if (!token) {
     return (
@@ -57,6 +65,7 @@ export function MyTicketsListScreen() {
         data={data}
         keyExtractor={(t) => t.id}
         contentContainerStyle={{ padding: theme.spacing.md, gap: theme.spacing.md }}
+        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
         renderItem={({ item }) => (
           <Pressable
             testID={testIds.myTickets.item(item.id)}
