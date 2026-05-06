@@ -2,9 +2,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
   listMyTickets,
+  getTicket,
   purchaseTicket,
   cancelTicket,
   applyPromoCode,
+  transferTicket,
 } from '../api/services/tickets';
 import { useAuthStore } from '../state/auth';
 import { track } from '../state/analytics';
@@ -15,6 +17,15 @@ export function useMyTickets() {
     queryKey: ['tickets', 'mine', token],
     queryFn: () => listMyTickets(token),
     enabled: Boolean(token),
+  });
+}
+
+export function useTicket(id: string) {
+  const token = useAuthStore((s) => s.token);
+  return useQuery({
+    queryKey: ['tickets', 'detail', token, id],
+    queryFn: () => getTicket(token, id),
+    enabled: Boolean(token && id),
   });
 }
 
@@ -58,7 +69,25 @@ export function useCancelTicket() {
     },
     onSuccess: (ticket) => {
       track('ticket.cancel.success', { ticketId: ticket.id });
-      void qc.invalidateQueries({ queryKey: ['tickets', 'mine'] });
+      void qc.invalidateQueries({ queryKey: ['tickets'] });
+    },
+  });
+}
+
+export function useTransferTicket() {
+  const token = useAuthStore((s) => s.token);
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (input: { ticketId: string; recipientEmail: string }) => {
+      track('ticket.transfer.intent', input);
+      return transferTicket(token, input.ticketId, input.recipientEmail);
+    },
+    onSuccess: (ticket) => {
+      track('ticket.transfer.success', { ticketId: ticket.id });
+      void qc.invalidateQueries({ queryKey: ['tickets'] });
+    },
+    onError: (err) => {
+      track('ticket.transfer.failure', { message: (err as Error).message });
     },
   });
 }

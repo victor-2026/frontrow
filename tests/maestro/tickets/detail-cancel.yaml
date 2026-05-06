@@ -1,0 +1,49 @@
+# Open a purchased ticket, view QR + status, cancel through the confirm dialog.
+appId: app.frontrow.qa
+---
+- runFlow: ../auth/login.yaml
+
+- tapOn:
+    id: 'tab.myTickets'
+- assertVisible:
+    id: 'screen.myTickets'
+
+# Demo data ships with tkt_001 owned by demo user.
+- tapOn:
+    id: 'myTickets.item.tkt_001'
+- extendedWaitUntil:
+    visible:
+      id: 'screen.ticketDetail'
+    timeout: 5000
+
+- assertVisible:
+    id: 'ticketDetail.qrCode'
+- assertVisible:
+    id: 'ticketDetail.qrPayload'
+- assertVisible:
+    id: 'ticketDetail.statusPill'
+
+# Tap cancel, dismiss with "Keep" first to verify the confirm dialog can back out.
+- tapOn:
+    id: 'ticketDetail.cancelButton'
+- assertVisible:
+    id: 'ticketDetail.cancelConfirmDialog'
+- tapOn:
+    id: 'ticketDetail.cancelConfirmNo'
+- assertNotVisible:
+    id: 'ticketDetail.cancelConfirmDialog'
+
+# Now actually cancel.
+- tapOn:
+    id: 'ticketDetail.cancelButton'
+- assertVisible:
+    id: 'ticketDetail.cancelConfirmDialog'
+- tapOn:
+    id: 'ticketDetail.cancelConfirmYes'
+
+- assertVisible: 'Refund requested'
+
+# Status updates and the action buttons go away.
+- assertVisible: 'refund pending'
+- assertNotVisible:
+    id: 'ticketDetail.cancelButton'

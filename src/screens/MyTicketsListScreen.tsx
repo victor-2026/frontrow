@@ -1,5 +1,7 @@
-import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Pressable, ActivityIndicator, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { theme } from '../theme';
 import { testIds } from '../testIds';
@@ -7,9 +9,11 @@ import { Card } from '../components/Card';
 import { useMyTickets } from '../hooks/useTickets';
 import { useAuthStore } from '../state/auth';
 import { formatPrice, formatEventDate } from '../utils/format';
+import type { TicketsStackParamList } from '../navigation/types';
 
 export function MyTicketsListScreen() {
   const { t } = useTranslation();
+  const nav = useNavigation<NativeStackNavigationProp<TicketsStackParamList>>();
   const token = useAuthStore((s) => s.token);
   const { data, isLoading, error } = useMyTickets();
 
@@ -54,16 +58,22 @@ export function MyTicketsListScreen() {
         keyExtractor={(t) => t.id}
         contentContainerStyle={{ padding: theme.spacing.md, gap: theme.spacing.md }}
         renderItem={({ item }) => (
-          <Card testID={testIds.myTickets.item(item.id)}>
-            <Text style={styles.cardTitle}>{item.tier}</Text>
-            <Text style={styles.cardMeta}>Purchased {formatEventDate(item.purchasedAt)}</Text>
-            <Text style={styles.cardMeta}>
-              {item.quantity} × · {formatPrice(item.totalCents, item.currency)} ·{' '}
-              <Text testID={`myTickets.status.${item.id}`} style={styles.status}>
-                {item.status}
+          <Pressable
+            testID={testIds.myTickets.item(item.id)}
+            accessibilityRole="button"
+            onPress={() => nav.navigate('TicketDetail', { id: item.id })}
+          >
+            <Card>
+              <Text style={styles.cardTitle}>{item.tier}</Text>
+              <Text style={styles.cardMeta}>Purchased {formatEventDate(item.purchasedAt)}</Text>
+              <Text style={styles.cardMeta}>
+                {item.quantity} × · {formatPrice(item.totalCents, item.currency)} ·{' '}
+                <Text testID={`myTickets.status.${item.id}`} style={styles.status}>
+                  {item.status}
+                </Text>
               </Text>
-            </Text>
-          </Card>
+            </Card>
+          </Pressable>
         )}
       />
     </View>

@@ -1,0 +1,69 @@
+# Transfer a ticket to a known FrontRow recipient (friend@frontrow.app).
+# Also covers the validation paths: invalid email + recipient not found.
+appId: app.frontrow.qa
+---
+- runFlow: ../auth/login.yaml
+
+- tapOn:
+    id: 'tab.myTickets'
+- assertVisible:
+    id: 'screen.myTickets'
+
+- tapOn:
+    id: 'myTickets.item.tkt_001'
+- extendedWaitUntil:
+    visible:
+      id: 'screen.ticketDetail'
+    timeout: 5000
+
+# 1. invalid email format
+- tapOn:
+    id: 'ticketDetail.transferButton'
+- tapOn:
+    id: 'ticketDetail.transferEmailInput'
+- inputText: 'not-an-email'
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
+- tapOn:
+    id: 'ticketDetail.transferSubmitButton'
+- assertVisible:
+    id: 'ticketDetail.transferError'
+
+# 2. valid format but unknown recipient
+- tapOn:
+    id: 'ticketDetail.transferEmailInput'
+- eraseText
+- inputText: 'nobody@example.com'
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
+- tapOn:
+    id: 'ticketDetail.transferSubmitButton'
+- assertVisible:
+    id: 'ticketDetail.transferError'
+
+# 3. valid recipient — succeeds
+- tapOn:
+    id: 'ticketDetail.transferEmailInput'
+- eraseText
+- inputText: 'friend@frontrow.app'
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
+- tapOn:
+    id: 'ticketDetail.transferSubmitButton'
+
+- assertVisible: 'Ticket transferred'
+
+# After transfer the ticket disappears from the demo user's list.
+- assertVisible:
+    id: 'screen.myTickets'
+- assertNotVisible:
+    id: 'myTickets.item.tkt_001'

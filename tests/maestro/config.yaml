@@ -26,6 +26,8 @@ executionOrder:
     - auth/login
     - auth/forgotPassword
     - tickets/buy
+    - tickets/detail-cancel
+    - tickets/transfer
     - events/reviews
     - billing/buy-success
     - billing/buy-decline

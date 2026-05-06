@@ -9,6 +9,7 @@ import { EventDetailScreen } from '../screens/EventDetailScreen';
 import { BuyTicketScreen } from '../screens/BuyTicketScreen';
 import { EventReviewsScreen } from '../screens/EventReviewsScreen';
 import { MyTicketsListScreen } from '../screens/MyTicketsListScreen';
+import { TicketDetailScreen } from '../screens/TicketDetailScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
@@ -76,6 +77,11 @@ function TicketsNavigator() {
         name="MyTicketsList"
         component={MyTicketsListScreen}
         options={{ title: 'My Tickets' }}
+      />
+      <TicketsStack.Screen
+        name="TicketDetail"
+        component={TicketDetailScreen}
+        options={{ title: 'Ticket' }}
       />
     </TicketsStack.Navigator>
   );

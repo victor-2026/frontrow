@@ -15,5 +15,13 @@
     "avatarUrl": null,
     "createdAt": "2025-02-01T00:00:00.000Z",
     "locked": true
+  },
+  {
+    "id": "usr_friend",
+    "email": "friend@frontrow.app",
+    "password": "friend1234",
+    "displayName": "Alex Rivera",
+    "avatarUrl": "https://i.pravatar.cc/300?u=usr_friend",
+    "createdAt": "2025-03-01T00:00:00.000Z"
   }
 ]

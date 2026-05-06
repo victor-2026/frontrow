@@ -118,3 +118,58 @@ export async function cancelTicket(token: string | null, ticketId: string): Prom
   ticket.status = 'refund_pending';
   return ticket;
 }
+
+export async function getTicket(token: string | null, ticketId: string): Promise<Ticket> {
+  await applyQaDelay();
+  applyQaForcedError();
+  const userId = requireUser(token);
+  const ticket = mockState.tickets.find((t) => t.id === ticketId && t.userId === userId);
+  if (!ticket) {
+    throw new ApiClientError(404, { code: 'not_found', message: 'Ticket not found.' });
+  }
+  return ticket;
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export async function transferTicket(
+  token: string | null,
+  ticketId: string,
+  recipientEmail: string,
+): Promise<Ticket> {
+  await applyQaDelay();
+  applyQaForcedError();
+  const userId = requireUser(token);
+  const email = recipientEmail.trim().toLowerCase();
+  if (!EMAIL_RE.test(email)) {
+    throw new ApiClientError(400, {
+      code: 'invalid_email',
+      message: 'Enter a valid email address.',
+    });
+  }
+  const ticket = mockState.tickets.find((t) => t.id === ticketId && t.userId === userId);
+  if (!ticket) {
+    throw new ApiClientError(404, { code: 'not_found', message: 'Ticket not found.' });
+  }
+  if (ticket.status !== 'active') {
+    throw new ApiClientError(409, {
+      code: 'invalid_state',
+      message: 'Only active tickets can be transferred.',
+    });
+  }
+  const recipient = mockState.users.find((u) => u.email.toLowerCase() === email);
+  if (!recipient) {
+    throw new ApiClientError(404, {
+      code: 'recipient_not_found',
+      message: 'No FrontRow user with that email.',
+    });
+  }
+  if (recipient.id === userId) {
+    throw new ApiClientError(400, {
+      code: 'self_transfer',
+      message: 'You already own this ticket.',
+    });
+  }
+  ticket.userId = recipient.id;
+  return ticket;
+}
