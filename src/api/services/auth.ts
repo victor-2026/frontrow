@@ -50,6 +50,48 @@ export async function getMe(token: string): Promise<User> {
   return stripPassword(user);
 }
 
+export const PROFILE_BIO_MAX = 160;
+export const PROFILE_NAME_MAX = 50;
+
+export async function updateProfile(
+  token: string | null,
+  input: { displayName: string; bio: string },
+): Promise<User> {
+  await applyQaDelay();
+  applyQaForcedError();
+  if (!token) {
+    throw new ApiClientError(401, { code: 'unauthorized', message: 'Sign in required.' });
+  }
+  const userId = mockState.sessions.get(token);
+  const user = userId ? mockState.users.find((u) => u.id === userId) : undefined;
+  if (!user) {
+    throw new ApiClientError(401, { code: 'unauthorized', message: 'Session expired.' });
+  }
+  const displayName = input.displayName.trim();
+  const bio = input.bio.trim();
+  if (!displayName) {
+    throw new ApiClientError(400, {
+      code: 'invalid_displayName',
+      message: 'Display name is required.',
+    });
+  }
+  if (displayName.length > PROFILE_NAME_MAX) {
+    throw new ApiClientError(400, {
+      code: 'invalid_displayName',
+      message: `Display name must be ≤ ${PROFILE_NAME_MAX} characters.`,
+    });
+  }
+  if (bio.length > PROFILE_BIO_MAX) {
+    throw new ApiClientError(400, {
+      code: 'invalid_bio',
+      message: `Bio must be ≤ ${PROFILE_BIO_MAX} characters.`,
+    });
+  }
+  user.displayName = displayName;
+  user.bio = bio || undefined;
+  return stripPassword(user);
+}
+
 function stripPassword(user: { password: string } & User): User {
   const { password: _pw, ...publicUser } = user;
   return publicUser;

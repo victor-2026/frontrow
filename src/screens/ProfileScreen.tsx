@@ -48,6 +48,13 @@ export function ProfileScreen() {
         {user.displayName}
       </Text>
       <Text style={styles.body}>{user.email}</Text>
+      {user.bio ? <Text style={styles.bio}>{user.bio}</Text> : null}
+      <Button
+        testID={testIds.profile.editButton}
+        title="Edit profile"
+        variant="secondary"
+        onPress={() => nav.navigate('EditProfile')}
+      />
       <Button
         testID="profile.premiumButton"
         title="Premium"
@@ -90,4 +97,10 @@ const styles = StyleSheet.create({
   avatarLetter: { fontSize: 36, fontWeight: '700', color: theme.colors.text },
   heading: { fontSize: theme.typography.heading, fontWeight: '700', color: theme.colors.text },
   body: { fontSize: theme.typography.body, color: theme.colors.muted, textAlign: 'center' },
+  bio: {
+    fontSize: theme.typography.body,
+    color: theme.colors.text,
+    textAlign: 'center',
+    paddingHorizontal: theme.spacing.lg,
+  },
 });

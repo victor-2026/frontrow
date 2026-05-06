@@ -57,6 +57,18 @@ export const testIds = {
     avatar: 'profile.avatar',
     signInButton: 'profile.signInButton',
     signOutButton: 'profile.signOutButton',
+    editButton: 'profile.editButton',
+  },
+  editProfile: {
+    screen: 'screen.editProfile',
+    displayNameInput: 'editProfile.displayNameInput',
+    bioInput: 'editProfile.bioInput',
+    bioCharCount: 'editProfile.bioCharCount',
+    saveButton: 'editProfile.saveButton',
+    discardConfirmDialog: 'editProfile.discardConfirmDialog',
+    discardConfirmYes: 'editProfile.discardConfirmYes',
+    discardConfirmNo: 'editProfile.discardConfirmNo',
+    errorMessage: 'editProfile.errorMessage',
   },
   login: {
     screen: 'screen.login',

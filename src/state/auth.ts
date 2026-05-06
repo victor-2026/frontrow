@@ -9,6 +9,7 @@ type AuthState = {
   hydrated: boolean;
   hydrate: () => Promise<void>;
   setSession: (token: string, user: User) => Promise<void>;
+  setUser: (user: User) => Promise<void>;
   clear: () => Promise<void>;
 };
 
@@ -27,6 +28,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     await store.set(storeKeys.authToken, token);
     await store.set(storeKeys.authUser, user);
     set({ token, user });
+  },
+  async setUser(user) {
+    await store.set(storeKeys.authUser, user);
+    set({ user });
   },
   async clear() {
     await store.remove(storeKeys.authToken);

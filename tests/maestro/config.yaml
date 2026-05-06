@@ -27,6 +27,7 @@ executionOrder:
     - events/pagination
     - auth/login
     - auth/forgotPassword
+    - auth/edit-profile
     - tickets/buy
     - tickets/detail-cancel
     - tickets/transfer

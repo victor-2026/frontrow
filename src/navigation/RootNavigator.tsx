@@ -11,6 +11,7 @@ import { EventReviewsScreen } from '../screens/EventReviewsScreen';
 import { MyTicketsListScreen } from '../screens/MyTicketsListScreen';
 import { TicketDetailScreen } from '../screens/TicketDetailScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
+import { EditProfileScreen } from '../screens/EditProfileScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
 import { OtpScreen } from '../screens/auth/OtpScreen';
@@ -96,6 +97,11 @@ function ProfileNavigator() {
         name="ProfileHome"
         component={ProfileScreen}
         options={{ title: 'Profile' }}
+      />
+      <ProfileStack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ title: 'Edit profile' }}
       />
       <ProfileStack.Screen
         name="Login"

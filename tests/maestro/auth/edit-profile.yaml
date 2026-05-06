@@ -1,0 +1,41 @@
+# Edit profile, exercise the dirty-state discard dialog, then save.
+appId: app.frontrow.qa
+---
+- runFlow: ../auth/login.yaml
+
+- tapOn:
+    id: 'tab.profile'
+- assertVisible:
+    id: 'screen.profile'
+
+- tapOn:
+    id: 'profile.editButton'
+- assertVisible:
+    id: 'screen.editProfile'
+
+# Make a change but try to back out — the discard dialog should appear.
+- tapOn:
+    id: 'editProfile.bioInput'
+- inputText: 'Front-row regular since 2018.'
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
+- back
+- assertVisible:
+    id: 'editProfile.discardConfirmDialog'
+- tapOn:
+    id: 'editProfile.discardConfirmNo'
+- assertNotVisible:
+    id: 'editProfile.discardConfirmDialog'
+
+# Save instead.
+- tapOn:
+    id: 'editProfile.saveButton'
+- assertVisible: 'Profile updated'
+
+# Back on the profile, the new bio renders.
+- assertVisible:
+    id: 'screen.profile'
+- assertVisible: 'Front-row regular since 2018.'

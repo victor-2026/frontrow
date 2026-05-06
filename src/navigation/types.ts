@@ -14,6 +14,7 @@ export type TicketsStackParamList = {
 
 export type ProfileStackParamList = {
   ProfileHome: undefined;
+  EditProfile: undefined;
   Login: undefined;
   ForgotPassword: undefined;
   Otp: { email: string };

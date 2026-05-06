@@ -1,6 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { login, logout, forgotPassword, verifyOtp, resetPassword } from '../api/services/auth';
+import {
+  login,
+  logout,
+  forgotPassword,
+  verifyOtp,
+  resetPassword,
+  updateProfile,
+} from '../api/services/auth';
 import { useAuthStore } from '../state/auth';
 import { track } from '../state/analytics';
 
@@ -53,6 +60,21 @@ export function useResetPassword() {
     },
     onSuccess: () => track('auth.resetPassword.success'),
     onError: (err) => track('auth.resetPassword.failure', { message: (err as Error).message }),
+  });
+}
+
+export function useUpdateProfile() {
+  const token = useAuthStore((s) => s.token);
+  const setUser = useAuthStore((s) => s.setUser);
+  return useMutation({
+    mutationFn: async (input: { displayName: string; bio: string }) => {
+      track('profile.update.attempt');
+      const user = await updateProfile(token, input);
+      await setUser(user);
+      return user;
+    },
+    onSuccess: () => track('profile.update.success'),
+    onError: (err) => track('profile.update.failure', { message: (err as Error).message }),
   });
 }
 
