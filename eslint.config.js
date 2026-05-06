@@ -1,7 +1,7 @@
 // https://docs.expo.dev/guides/using-eslint/
 const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
-const frontrowRules = require('./eslint-rules');
+const frontrowPlugin = require('./eslint-plugin-frontrow');
 
 module.exports = defineConfig([
   expoConfig,
@@ -17,7 +17,7 @@ module.exports = defineConfig([
     ],
   },
   {
-    plugins: { frontrow: frontrowRules },
+    plugins: { frontrow: frontrowPlugin },
     rules: {
       'react-hooks/exhaustive-deps': 'warn',
       'frontrow/require-testid': 'warn',

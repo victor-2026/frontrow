@@ -32,6 +32,7 @@ executionOrder:
     - events/pagination
     - auth/login
     - auth/forgotPassword
+    - auth/recovery-deeplinks
     - auth/edit-profile
     - auth/language-switch
     - tickets/buy

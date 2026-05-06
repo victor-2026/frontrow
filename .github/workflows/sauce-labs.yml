@@ -1,0 +1,68 @@
+# Sauce Labs runner — uploads a release APK to App Storage and runs the
+# smoke flows against a real-device pool. Requires the following repo
+# secrets: SAUCE_USERNAME, SAUCE_ACCESS_KEY. Without them the workflow
+# skips silently so forks of the repo don't fail.
+#
+# Sauce Labs has a Maestro runner via `saucectl run --config .sauce/config.yml`.
+# We use the appium config here for broader device coverage.
+name: Sauce Labs — Smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      device-pool:
+        description: 'Device pool to target'
+        type: choice
+        options:
+          - 'Android.GoogleAPI_Pixel_*'
+          - 'iPhone_15_*'
+        default: 'Android.GoogleAPI_Pixel_*'
+
+jobs:
+  smoke:
+    name: Smoke (Sauce Labs)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip when credentials are missing
+        id: gate
+        run: |
+          if [ -z "${{ secrets.SAUCE_USERNAME }}" ] || [ -z "${{ secrets.SAUCE_ACCESS_KEY }}" ]; then
+            echo "Sauce credentials not set — skipping" >&2
+            echo "ran=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ran=true" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-java@v4
+        if: steps.gate.outputs.ran == 'true'
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.ran == 'true'
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install JS deps
+        if: steps.gate.outputs.ran == 'true'
+        run: npm ci
+
+      - name: Build release APK
+        if: steps.gate.outputs.ran == 'true'
+        run: ./android/gradlew -p android assembleRelease
+
+      - name: Install saucectl
+        if: steps.gate.outputs.ran == 'true'
+        run: npm install -g saucectl
+
+      - name: Run smoke flows on Sauce Labs
+        if: steps.gate.outputs.ran == 'true'
+        env:
+          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+        run: |
+          saucectl run --config .sauce/config.yml --suite smoke

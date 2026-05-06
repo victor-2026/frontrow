@@ -1,0 +1,23 @@
+{
+  "name": "eslint-plugin-frontrow",
+  "version": "0.1.0",
+  "description": "Lint rules for QA-friendly React Native apps — testIDs and accessibilityLabels on every interactive component.",
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "src/"
+  ],
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "react-native",
+    "testing",
+    "qa",
+    "accessibility",
+    "testid"
+  ],
+  "peerDependencies": {
+    "eslint": ">=9"
+  }
+}

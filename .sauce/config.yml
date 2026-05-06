@@ -1,0 +1,25 @@
+# saucectl config used by .github/workflows/sauce-labs.yml.
+# Runs the Maestro smoke flows against a Sauce Labs Real Device cloud pool.
+apiVersion: v1alpha
+kind: maestro
+sauce:
+  region: us-west-1
+  concurrency: 2
+suites:
+  - name: smoke
+    appPath: android/app/build/outputs/apk/release/app-release.apk
+    devices:
+      - id: 'Android.GoogleAPI_Pixel_*'
+    flows:
+      - tests/maestro/smoke/launch.yaml
+      - tests/maestro/events/browse.yaml
+      - tests/maestro/auth/login.yaml
+      - tests/maestro/tickets/buy.yaml
+      - tests/maestro/tickets/detail-cancel.yaml
+artifacts:
+  download:
+    when: always
+    match:
+      - '*.log'
+      - '*.png'
+    directory: ./artifacts

@@ -64,19 +64,27 @@ Requires:
 - `MAESTRO_CLOUD_API_KEY` — from https://app.mobile.dev
 - One of `IOS_BUILD_URL` / `ANDROID_BUILD_URL` — a binary the cloud can install. You can build these in a parallel job (`expo build` / `expo run:android --variant release` then upload), or supply a fixed URL.
 
-### Sauce Labs (planned)
+### Sauce Labs
 
-A `.github/workflows/sauce.yml` is planned that runs `tests/appium/` on Sauce Labs real devices. Will require:
+`.github/workflows/sauce-labs.yml` runs the **smoke** Maestro flows against the Sauce Labs Real Device cloud via `saucectl`. The runner reads `.sauce/config.yml`, which mirrors the five-flow allowlist in `scripts/smoke.sh`. Manually triggered via the **Run workflow** button.
+
+Requires:
 
 - `SAUCE_USERNAME`
 - `SAUCE_ACCESS_KEY`
 
-### BrowserStack (planned)
+### BrowserStack
 
-A `.github/workflows/browserstack.yml` is planned for the same Appium suite. Will require:
+`.github/workflows/browserstack.yml` uploads the release APK to App Storage and runs the **Appium** suite (`tests/appium/`) against a BrowserStack real device. Triggered nightly at 03:00 UTC and on demand.
+
+Requires:
 
 - `BROWSERSTACK_USERNAME`
 - `BROWSERSTACK_ACCESS_KEY`
+
+### Maestro Cloud — smoke
+
+`.github/workflows/maestro-cloud-smoke.yml` runs the smoke flow allowlist on Maestro Cloud on every PR. Smaller and faster than the full nightly suite. Requires `MAESTRO_CLOUD_API_KEY`.
 
 ## Building binaries
 

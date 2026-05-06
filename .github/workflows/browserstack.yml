@@ -1,0 +1,72 @@
+# BrowserStack App Live + App Automate runner — uploads the APK and
+# kicks off the Appium WebdriverIO suite (tests/appium/) against a real
+# device. Requires repo secrets BROWSERSTACK_USERNAME and
+# BROWSERSTACK_ACCESS_KEY; skips silently otherwise.
+name: BrowserStack — Appium suite
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Nightly run at 03:00 UTC.
+    - cron: '0 3 * * *'
+
+jobs:
+  appium:
+    name: Appium (BrowserStack)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip when credentials are missing
+        id: gate
+        run: |
+          if [ -z "${{ secrets.BROWSERSTACK_USERNAME }}" ] || [ -z "${{ secrets.BROWSERSTACK_ACCESS_KEY }}" ]; then
+            echo "BrowserStack credentials not set — skipping" >&2
+            echo "ran=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ran=true" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-java@v4
+        if: steps.gate.outputs.ran == 'true'
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.ran == 'true'
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install JS deps
+        if: steps.gate.outputs.ran == 'true'
+        run: npm ci
+
+      - name: Build release APK
+        if: steps.gate.outputs.ran == 'true'
+        run: ./android/gradlew -p android assembleRelease
+
+      - name: Upload APK to BrowserStack App Storage
+        if: steps.gate.outputs.ran == 'true'
+        id: upload
+        env:
+          BS_USER: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        run: |
+          response=$(curl -s -u "$BS_USER:$BS_KEY" \
+            -X POST 'https://api-cloud.browserstack.com/app-automate/upload' \
+            -F 'file=@android/app/build/outputs/apk/release/app-release.apk')
+          app_url=$(echo "$response" | jq -r '.app_url')
+          echo "app_url=$app_url" >> "$GITHUB_OUTPUT"
+
+      - name: Run Appium suite via BrowserStack
+        if: steps.gate.outputs.ran == 'true'
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          BS_APP_URL: ${{ steps.upload.outputs.app_url }}
+        run: |
+          cd tests/appium
+          npm ci
+          npm test -- --hostname=hub-cloud.browserstack.com --capabilities='{"bstack:options": {"appiumVersion": "2.0.0"}, "platformName": "Android", "appium:app": "'"$BS_APP_URL"'"}'

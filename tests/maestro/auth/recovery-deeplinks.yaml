@@ -1,0 +1,64 @@
+# Drive the entire forgot-password recovery via deep links + form fills.
+# Validates each screen is independently linkable + the persistence of the
+# OTP-resetToken handoff across openLink jumps.
+appId: app.frontrow.qa
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: 'screen.events'
+    timeout: 60000
+
+# Jump straight to forgot-password.
+- openLink: 'frontrow://profile/forgot-password'
+- runFlow:
+    when:
+      visible: 'Open'
+    commands:
+      - tapOn: 'Open'
+- assertVisible:
+    id: 'screen.forgotPassword'
+
+- tapOn:
+    id: 'forgotPassword.emailInput'
+- inputText: 'demo@frontrow.app'
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
+- tapOn:
+    id: 'forgotPassword.submitButton'
+
+- assertVisible:
+    id: 'screen.otp'
+- tapOn:
+    id: 'otp.codeInput'
+- inputText: '123456'
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
+- tapOn:
+    id: 'otp.submitButton'
+
+- assertVisible:
+    id: 'screen.resetPassword'
+- tapOn:
+    id: 'resetPassword.newPasswordInput'
+- inputText: 'newpass1234'
+- tapOn:
+    id: 'resetPassword.confirmPasswordInput'
+- inputText: 'newpass1234'
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - hideKeyboard
+- tapOn:
+    id: 'resetPassword.submitButton'
+
+- assertVisible:
+    id: 'resetPassword.successMessage'
