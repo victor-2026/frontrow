@@ -10,7 +10,14 @@ import { BuyTicketScreen } from '../screens/BuyTicketScreen';
 import { MyTicketsListScreen } from '../screens/MyTicketsListScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
+import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
+import { OtpScreen } from '../screens/auth/OtpScreen';
+import { ResetPasswordScreen } from '../screens/auth/ResetPasswordScreen';
 import { PremiumScreen } from '../screens/PremiumScreen';
+import { SettingsScreen } from '../screens/settings/SettingsScreen';
+import { LanguageScreen } from '../screens/settings/LanguageScreen';
+import { AboutScreen } from '../screens/settings/AboutScreen';
+import { WebViewScreen } from '../screens/settings/WebViewScreen';
 import { DebugScreen } from '../screens/DebugScreen';
 import { HapticDemo } from '../screens/capabilities/HapticDemo';
 import { LocationDemo } from '../screens/capabilities/LocationDemo';
@@ -82,9 +89,36 @@ function ProfileNavigator() {
         options={{ title: 'Sign in', presentation: 'modal' }}
       />
       <ProfileStack.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
+        options={{ title: 'Forgot password' }}
+      />
+      <ProfileStack.Screen name="Otp" component={OtpScreen} options={{ title: 'Enter code' }} />
+      <ProfileStack.Screen
+        name="ResetPassword"
+        component={ResetPasswordScreen}
+        options={{ title: 'New password' }}
+      />
+      <ProfileStack.Screen
         name="Premium"
         component={PremiumScreen}
         options={{ title: 'Premium' }}
+      />
+      <ProfileStack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: 'Settings' }}
+      />
+      <ProfileStack.Screen
+        name="Language"
+        component={LanguageScreen}
+        options={{ title: 'Language' }}
+      />
+      <ProfileStack.Screen name="About" component={AboutScreen} options={{ title: 'About' }} />
+      <ProfileStack.Screen
+        name="WebView"
+        component={WebViewScreen}
+        options={{ title: 'WebView' }}
       />
     </ProfileStack.Navigator>
   );

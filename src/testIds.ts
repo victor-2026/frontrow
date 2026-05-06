@@ -75,6 +75,21 @@ export const testIds = {
     buyButton: 'eventDetail.buyButton',
     favoriteButton: 'eventDetail.favoriteButton',
   },
+  settings: {
+    screen: 'screen.settings',
+    notificationsToggle: 'settings.notificationsToggle',
+    languageRow: 'settings.languageRow',
+    languageScreen: 'screen.settings.language',
+    aboutRow: 'settings.aboutRow',
+    aboutScreen: 'screen.settings.about',
+    privacyRow: 'settings.privacyRow',
+    termsRow: 'settings.termsRow',
+    webview: {
+      screen: 'screen.webview',
+      content: 'webview.content',
+      errorMessage: 'webview.errorMessage',
+    },
+  },
   buyTicket: {
     screen: 'screen.buyTicket',
     quantityStepper: 'buyTicket.quantityStepper',

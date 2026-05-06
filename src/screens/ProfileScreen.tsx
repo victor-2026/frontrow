@@ -55,6 +55,12 @@ export function ProfileScreen() {
         onPress={() => nav.navigate('Premium')}
       />
       <Button
+        testID="profile.settingsButton"
+        title="Settings"
+        variant="secondary"
+        onPress={() => nav.navigate('Settings')}
+      />
+      <Button
         testID={testIds.profile.signOutButton}
         title={loggingOut ? 'Signing out…' : 'Sign out'}
         variant="secondary"

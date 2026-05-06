@@ -27,6 +27,9 @@ export const linking: LinkingOptions<RootTabParamList> = {
           Otp: 'profile/otp',
           ResetPassword: 'profile/reset-password',
           Premium: 'profile/premium',
+          Settings: 'profile/settings',
+          Language: 'profile/language',
+          About: 'profile/about',
         },
       },
       Debug: {

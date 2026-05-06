@@ -1,0 +1,18 @@
+{
+  "events": {
+    "heading": "Veranstaltungen",
+    "placeholder": "Stöbere durch kommende Konzerte und Shows."
+  },
+  "myTickets": {
+    "heading": "Meine Tickets",
+    "placeholder": "Hier erscheinen die Tickets, die du gekauft hast."
+  },
+  "profile": {
+    "heading": "Profil",
+    "placeholder": "Melde dich an, um dein Konto zu verwalten."
+  },
+  "debug": {
+    "heading": "QA-Debug-Menü",
+    "placeholder": "Seed-Daten, Zeitreise, Fake-Push und mehr."
+  }
+}

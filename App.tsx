@@ -13,6 +13,7 @@ import { queryClient } from './src/hooks/queryClient';
 import { useAuthStore } from './src/state/auth';
 import { useQaStore } from './src/state/qa';
 import { useBillingStore } from './src/state/billing';
+import { useSettingsStore } from './src/state/settings';
 import { useDeepLinkScenario } from './src/hooks/useDeepLinkScenario';
 import { theme } from './src/theme';
 
@@ -47,17 +48,20 @@ export default function App() {
   const hydrateAuth = useAuthStore((s) => s.hydrate);
   const hydrateQa = useQaStore((s) => s.hydrate);
   const hydrateBilling = useBillingStore((s) => s.hydrate);
+  const hydrateSettings = useSettingsStore((s) => s.hydrate);
 
   const authHydrated = useAuthStore((s) => s.hydrated);
   const qaHydrated = useQaStore((s) => s.hydrated);
   const billingHydrated = useBillingStore((s) => s.hydrated);
-  const allHydrated = authHydrated && qaHydrated && billingHydrated;
+  const settingsHydrated = useSettingsStore((s) => s.hydrated);
+  const allHydrated = authHydrated && qaHydrated && billingHydrated && settingsHydrated;
 
   useEffect(() => {
     void hydrateAuth();
     void hydrateQa();
     void hydrateBilling();
-  }, [hydrateAuth, hydrateQa, hydrateBilling]);
+    void hydrateSettings();
+  }, [hydrateAuth, hydrateQa, hydrateBilling, hydrateSettings]);
 
   return (
     <SafeAreaProvider>

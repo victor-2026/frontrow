@@ -18,6 +18,10 @@ export type ProfileStackParamList = {
   Otp: { email: string };
   ResetPassword: { resetToken: string };
   Premium: undefined;
+  Settings: undefined;
+  Language: undefined;
+  About: undefined;
+  WebView: { url: string; title: string };
 };
 
 export type DebugStackParamList = {
