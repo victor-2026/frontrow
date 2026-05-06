@@ -51,12 +51,21 @@ const seedPaymentMethods: PaymentMethod[] = [
   },
 ];
 
+// userId -> set of favorited event ids. Demo seed favorites three events
+// so the happy_path scenario description matches reality.
+const seedFavorites: Record<string, string[]> = {
+  usr_demo: ['evt_001', 'evt_002', 'evt_003'],
+};
+
 export const mockState = {
   events: [...seed.events] as Event[],
   users: [...seed.users] as SeedUser[],
   tickets: [...seed.tickets] as Ticket[],
   reviews: [...seedReviews] as Review[],
   paymentMethods: [...seedPaymentMethods] as PaymentMethod[],
+  favorites: new Map<string, Set<string>>(
+    Object.entries(seedFavorites).map(([uid, ids]) => [uid, new Set(ids)]),
+  ),
   sessions: new Map<string, string>(), // token -> userId
 };
 
@@ -72,4 +81,7 @@ export function resetMockState(): void {
   mockState.tickets = [...seed.tickets];
   mockState.reviews = [...seedReviews];
   mockState.paymentMethods = [...seedPaymentMethods];
+  mockState.favorites = new Map(
+    Object.entries(seedFavorites).map(([uid, ids]) => [uid, new Set(ids)]),
+  );
 }

@@ -31,6 +31,7 @@ executionOrder:
     - tickets/detail-cancel
     - tickets/transfer
     - events/reviews
+    - events/favorites
     - billing/buy-success
     - billing/buy-decline
     - billing/payment-methods-crud

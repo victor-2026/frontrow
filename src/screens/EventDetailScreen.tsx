@@ -1,13 +1,16 @@
-import { ScrollView, View, Text, Image, ActivityIndicator, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, Image, Pressable, ActivityIndicator, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons';
 
 import { theme } from '../theme';
 import { testIds } from '../testIds';
 import { useEvent } from '../hooks/useEvents';
+import { useFavoriteEventIds, useToggleFavorite } from '../hooks/useFavorites';
+import { useAuthStore } from '../state/auth';
 import { Button } from '../components/Button';
 import { formatPrice, formatEventDate } from '../utils/format';
 import type { EventsStackParamList } from '../navigation/types';
@@ -18,6 +21,10 @@ export function EventDetailScreen({ route }: Props) {
   const { id } = route.params;
   const nav = useNavigation<NativeStackNavigationProp<EventsStackParamList>>();
   const { data: event, isLoading, error } = useEvent(id);
+  const isSignedIn = Boolean(useAuthStore((s) => s.token));
+  const { data: favIds } = useFavoriteEventIds();
+  const toggleFavorite = useToggleFavorite();
+  const isFavorite = (favIds ?? []).includes(id);
 
   if (isLoading) {
     return (
@@ -42,9 +49,34 @@ export function EventDetailScreen({ route }: Props) {
     >
       <Image source={{ uri: event.imageUrl }} style={styles.hero} accessible={false} />
       <View style={styles.body}>
-        <Text testID={testIds.eventDetail.title} style={styles.title} accessibilityRole="header">
-          {event.title}
-        </Text>
+        <View style={styles.titleRow}>
+          <Text
+            testID={testIds.eventDetail.title}
+            style={styles.title}
+            accessibilityRole="header"
+          >
+            {event.title}
+          </Text>
+          {isSignedIn ? (
+            <Pressable
+              testID={testIds.eventDetail.favoriteButton}
+              accessibilityRole="button"
+              accessibilityLabel={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+              accessibilityState={{ selected: isFavorite }}
+              onPress={() =>
+                void toggleFavorite.mutateAsync({ eventId: event.id, favorite: !isFavorite })
+              }
+              hitSlop={12}
+              style={styles.heart}
+            >
+              <Ionicons
+                name={isFavorite ? 'heart' : 'heart-outline'}
+                size={28}
+                color={isFavorite ? theme.colors.primary : theme.colors.muted}
+              />
+            </Pressable>
+          ) : null}
+        </View>
         <Text style={styles.subtitle}>{event.artist}</Text>
         <Text style={styles.meta}>{formatEventDate(event.startsAt)}</Text>
         <Text style={styles.meta}>
@@ -81,7 +113,14 @@ const styles = StyleSheet.create({
   },
   hero: { width: '100%', aspectRatio: 16 / 9, backgroundColor: theme.colors.surface },
   body: { padding: theme.spacing.lg, gap: theme.spacing.sm },
-  title: { fontSize: theme.typography.heading, fontWeight: '700', color: theme.colors.text },
+  titleRow: { flexDirection: 'row', alignItems: 'center', gap: theme.spacing.md },
+  heart: { padding: theme.spacing.xs },
+  title: {
+    flex: 1,
+    fontSize: theme.typography.heading,
+    fontWeight: '700',
+    color: theme.colors.text,
+  },
   subtitle: { fontSize: theme.typography.title, color: theme.colors.text },
   meta: { fontSize: theme.typography.body, color: theme.colors.muted },
   actions: { marginTop: theme.spacing.lg },

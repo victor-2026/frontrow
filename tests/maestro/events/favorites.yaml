@@ -1,0 +1,39 @@
+# Toggle a favorite from event detail, see it filtered on the list.
+appId: app.frontrow.qa
+---
+- runFlow: ../auth/login.yaml
+
+- tapOn:
+    id: 'tab.events'
+- assertVisible:
+    id: 'screen.events'
+
+# evt_001 ships pre-favorited from seed data → un-favorite it first.
+- tapOn:
+    id: 'events.item.evt_001'
+- extendedWaitUntil:
+    visible:
+      id: 'screen.eventDetail'
+    timeout: 10000
+- tapOn:
+    id: 'eventDetail.favoriteButton'
+
+# Favoriting again so we have a known starting state.
+- tapOn:
+    id: 'eventDetail.favoriteButton'
+
+- back
+- assertVisible:
+    id: 'screen.events'
+
+# Filter chip surfaces favorited events. Three events are favorited via seed.
+- tapOn:
+    id: 'events.filterChip.favorites'
+- assertVisible:
+    id: 'events.item.evt_001'
+
+# Toggle off, ensure the list returns to the full set.
+- tapOn:
+    id: 'events.filterChip.all'
+- assertVisible:
+    id: 'events.item.evt_001'

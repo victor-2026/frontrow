@@ -17,6 +17,8 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { theme } from '../theme';
 import { testIds } from '../testIds';
 import { useEvents } from '../hooks/useEvents';
+import { useFavoriteEventIds } from '../hooks/useFavorites';
+import { useAuthStore } from '../state/auth';
 import { EventListItem } from '../components/EventListItem';
 import type { EventsStackParamList } from '../navigation/types';
 
@@ -27,6 +29,8 @@ export function EventsListScreen() {
   const nav = useNavigation<NativeStackNavigationProp<EventsStackParamList>>();
   const [q, setQ] = useState('');
   const [genre, setGenre] = useState<string | null>(null);
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const isSignedIn = Boolean(useAuthStore((s) => s.token));
   const {
     data,
     isLoading,
@@ -37,8 +41,14 @@ export function EventsListScreen() {
     isFetchingNextPage,
     error,
   } = useEvents({ q: q || undefined, genre: genre ?? undefined });
+  const { data: favIds } = useFavoriteEventIds();
 
-  const items = useMemo(() => data?.pages.flatMap((p) => p.items) ?? [], [data]);
+  const allItems = useMemo(() => data?.pages.flatMap((p) => p.items) ?? [], [data]);
+  const items = useMemo(() => {
+    if (!favoritesOnly) return allItems;
+    const set = new Set(favIds ?? []);
+    return allItems.filter((e) => set.has(e.id));
+  }, [allItems, favoritesOnly, favIds]);
   const total = data?.pages[0]?.total ?? 0;
 
   return (
@@ -65,9 +75,20 @@ export function EventsListScreen() {
         <Chip
           testID={testIds.events.filterChip('all')}
           label="All"
-          selected={genre == null}
-          onPress={() => setGenre(null)}
+          selected={genre == null && !favoritesOnly}
+          onPress={() => {
+            setGenre(null);
+            setFavoritesOnly(false);
+          }}
         />
+        {isSignedIn ? (
+          <Chip
+            testID={testIds.events.filterChip('favorites')}
+            label="♥ Favorites"
+            selected={favoritesOnly}
+            onPress={() => setFavoritesOnly((v) => !v)}
+          />
+        ) : null}
         {GENRES.map((g) => (
           <Chip
             key={g}
