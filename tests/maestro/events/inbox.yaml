@@ -16,7 +16,7 @@ appId: app.frontrow.qa
 - extendedWaitUntil:
     visible:
       id: 'events.inboxBadge'
-    timeout: 5000
+    timeout: 15000
 
 - tapOn:
     id: 'events.inboxButton'

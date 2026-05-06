@@ -28,8 +28,14 @@ appId: app.frontrow.qa
 - tapOn:
     id: 'myTickets.swipeCancel.tkt_001'
 
-# Status flips to refund_pending — same end state as the in-detail
-# cancel path, just reached via the gesture.
+# After the cancel mutation lands, navigate to "All" to collapse
+# the swipe state. Otherwise the still-revealed Cancel button
+# overlaps the status text and Maestro reports it as not visible.
+- tapOn:
+    id: 'myTickets.filterChip.all'
+
+# Status flipped to refund pending — same end state as the
+# in-detail cancel path, reached via gesture.
 - extendedWaitUntil:
     visible: 'refund pending'
     timeout: 5000

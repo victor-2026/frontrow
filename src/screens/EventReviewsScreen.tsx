@@ -83,7 +83,7 @@ export function EventReviewsScreen({ route }: Props) {
 
   return (
     <FlatList
-      testID={testIds.reviews.list}
+      testID={testIds.reviews.screen}
       data={data ?? []}
       keyExtractor={(r) => r.id}
       refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}

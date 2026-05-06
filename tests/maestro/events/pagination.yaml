@@ -23,9 +23,11 @@ appId: app.frontrow.qa
 - assertVisible:
     id: 'events.list'
 
-# Repeated swipes pull additional pages until the footer marker appears.
+# Page 1 has 20 events; page 2 has the remaining 5 (many_events seeds
+# 25 total). A handful of swipes is enough to load page 2 and reach
+# the end-of-list marker.
 - repeat:
-    times: 25
+    times: 8
     commands:
       - swipe:
           from:
@@ -37,4 +39,4 @@ appId: app.frontrow.qa
 - extendedWaitUntil:
     visible:
       id: 'events.endOfList'
-    timeout: 30000
+    timeout: 10000

@@ -204,7 +204,11 @@ export function TicketDetailScreen({ route }: Props) {
                 testID={testIds.ticketDetail.transferCancelButton}
                 title="Cancel"
                 variant="secondary"
-                onPress={() => setTransferOpen(false)}
+                onPress={() => {
+                  setTransferOpen(false);
+                  setTransferEmail('');
+                  setTransferError(null);
+                }}
               />
               <Button
                 testID={testIds.ticketDetail.transferSubmitButton}

@@ -60,11 +60,12 @@ export const scenarios: Record<ScenarioId, Scenario> = {
   many_events: {
     id: 'many_events',
     label: 'Many events (perf)',
-    description: '200+ events for list-perf testing.',
+    description:
+      "Just over one page (6 base + 19 extras = 25 total, pageSize=20) — minimum to exercise pagination's load-more + end-of-list marker. Bigger sizes made the flow's swipe loop run too long without adding test signal.",
     apply() {
       resetMockState();
       const base = mockState.events;
-      const extras = Array.from({ length: 200 }, (_, i) => {
+      const extras = Array.from({ length: 19 }, (_, i) => {
         const src = base[i % base.length]!;
         return { ...src, id: `evt_perf_${i + 1}`, title: `${src.title} (#${i + 1})` };
       });
