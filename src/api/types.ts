@@ -79,6 +79,20 @@ export type PaymentMethod = {
   createdAt: string;
 };
 
+export type NotificationKind = 'event' | 'ticket' | 'promo' | 'system';
+
+export type AppNotification = {
+  id: string;
+  userId: string;
+  kind: NotificationKind;
+  title: string;
+  body: string;
+  eventId?: string;
+  ticketId?: string;
+  readAt: string | null;
+  createdAt: string;
+};
+
 export type ApiError = {
   code: string;
   message: string;

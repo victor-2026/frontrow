@@ -8,6 +8,7 @@ import { EventsListScreen } from '../screens/EventsListScreen';
 import { EventDetailScreen } from '../screens/EventDetailScreen';
 import { BuyTicketScreen } from '../screens/BuyTicketScreen';
 import { EventReviewsScreen } from '../screens/EventReviewsScreen';
+import { InboxScreen } from '../screens/InboxScreen';
 import { MyTicketsListScreen } from '../screens/MyTicketsListScreen';
 import { TicketDetailScreen } from '../screens/TicketDetailScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
@@ -69,6 +70,7 @@ function EventsNavigator() {
         component={EventReviewsScreen}
         options={{ title: 'Reviews' }}
       />
+      <EventsStack.Screen name="Inbox" component={InboxScreen} options={{ title: 'Inbox' }} />
     </EventsStack.Navigator>
   );
 }

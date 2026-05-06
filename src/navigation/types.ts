@@ -5,6 +5,7 @@ export type EventsStackParamList = {
   EventDetail: { id: string };
   BuyTicket: { eventId: string };
   EventReviews: { eventId: string };
+  Inbox: undefined;
 };
 
 export type TicketsStackParamList = {

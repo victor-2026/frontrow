@@ -33,6 +33,16 @@ export const testIds = {
     retryButton: 'events.retryButton',
     loadingFooter: 'events.loadingFooter',
     endOfList: 'events.endOfList',
+    inboxButton: 'events.inboxButton',
+    inboxBadge: 'events.inboxBadge',
+  },
+  inbox: {
+    screen: 'screen.inbox',
+    list: 'inbox.list',
+    item: (id: string) => `inbox.item.${id}`,
+    unreadDot: (id: string) => `inbox.unreadDot.${id}`,
+    markAllReadButton: 'inbox.markAllReadButton',
+    emptyState: 'inbox.emptyState',
   },
   myTickets: {
     screen: 'screen.myTickets',

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -13,11 +13,13 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons';
 
 import { theme } from '../theme';
 import { testIds } from '../testIds';
 import { useEvents } from '../hooks/useEvents';
 import { useFavoriteEventIds } from '../hooks/useFavorites';
+import { useUnreadNotificationCount } from '../hooks/useNotifications';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import { useAuthStore } from '../state/auth';
 import { Button } from '../components/Button';
@@ -55,6 +57,30 @@ export function EventsListScreen() {
     return allItems.filter((e) => set.has(e.id));
   }, [allItems, favoritesOnly, favIds]);
   const total = data?.pages[0]?.total ?? 0;
+  const unreadCount = useUnreadNotificationCount();
+
+  useLayoutEffect(() => {
+    nav.setOptions({
+      headerRight: () =>
+        isSignedIn ? (
+          <Pressable
+            testID={testIds.events.inboxButton}
+            accessibilityRole="button"
+            accessibilityLabel={`Inbox${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
+            onPress={() => nav.navigate('Inbox')}
+            hitSlop={12}
+            style={styles.headerButton}
+          >
+            <Ionicons name="notifications-outline" size={22} color={theme.colors.text} />
+            {unreadCount > 0 ? (
+              <View testID={testIds.events.inboxBadge} style={styles.badge}>
+                <Text style={styles.badgeText}>{unreadCount > 9 ? '9+' : String(unreadCount)}</Text>
+              </View>
+            ) : null}
+          </Pressable>
+        ) : null,
+    });
+  }, [nav, isSignedIn, unreadCount]);
 
   return (
     <View style={styles.container} testID={testIds.events.screen}>
@@ -232,4 +258,22 @@ const styles = StyleSheet.create({
   chipSelected: { backgroundColor: theme.colors.primary, borderColor: theme.colors.primary },
   chipText: { fontSize: theme.typography.body, color: theme.colors.text },
   chipTextSelected: { color: theme.colors.primaryText, fontWeight: '600' },
+  headerButton: { paddingHorizontal: theme.spacing.md },
+  badge: {
+    position: 'absolute',
+    top: -2,
+    right: theme.spacing.xs,
+    backgroundColor: theme.colors.primary,
+    minWidth: 16,
+    height: 16,
+    borderRadius: 8,
+    paddingHorizontal: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  badgeText: {
+    color: theme.colors.primaryText,
+    fontSize: 10,
+    fontWeight: '700',
+  },
 });

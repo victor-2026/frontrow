@@ -1,5 +1,12 @@
 import { seed } from './seed';
-import type { Event, PaymentMethod, Review, Ticket, User } from '../api/types';
+import type {
+  AppNotification,
+  Event,
+  PaymentMethod,
+  Review,
+  Ticket,
+  User,
+} from '../api/types';
 
 type SeedUser = User & { password: string };
 
@@ -57,6 +64,38 @@ const seedFavorites: Record<string, string[]> = {
   usr_demo: ['evt_001', 'evt_002', 'evt_003'],
 };
 
+const seedNotifications: AppNotification[] = [
+  {
+    id: 'ntf_001',
+    userId: 'usr_demo',
+    kind: 'event',
+    title: 'Doors open in 1 hour',
+    body: 'Aurora Lights at Warsaw, Brooklyn — gates lift at 7 PM.',
+    eventId: 'evt_001',
+    readAt: null,
+    createdAt: '2026-05-04T17:00:00.000Z',
+  },
+  {
+    id: 'ntf_002',
+    userId: 'usr_demo',
+    kind: 'promo',
+    title: '25% off this weekend',
+    body: 'Use code FRONTROW25 at checkout. Expires Sunday.',
+    readAt: null,
+    createdAt: '2026-05-03T09:00:00.000Z',
+  },
+  {
+    id: 'ntf_003',
+    userId: 'usr_demo',
+    kind: 'ticket',
+    title: 'Ticket transferred',
+    body: 'Your transfer to friend@frontrow.app went through.',
+    ticketId: 'tkt_002',
+    readAt: '2026-05-02T22:00:00.000Z',
+    createdAt: '2026-05-02T21:55:00.000Z',
+  },
+];
+
 export const mockState = {
   events: [...seed.events] as Event[],
   users: [...seed.users] as SeedUser[],
@@ -66,6 +105,7 @@ export const mockState = {
   favorites: new Map<string, Set<string>>(
     Object.entries(seedFavorites).map(([uid, ids]) => [uid, new Set(ids)]),
   ),
+  notifications: [...seedNotifications] as AppNotification[],
   sessions: new Map<string, string>(), // token -> userId
 };
 
@@ -84,4 +124,5 @@ export function resetMockState(): void {
   mockState.favorites = new Map(
     Object.entries(seedFavorites).map(([uid, ids]) => [uid, new Set(ids)]),
   );
+  mockState.notifications = [...seedNotifications];
 }
