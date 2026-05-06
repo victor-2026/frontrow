@@ -2,7 +2,7 @@
 # purchase, expect the deterministic timeout error.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - openLink: 'frontrow://debug/trigger/paymentTimeout'
 - runFlow:

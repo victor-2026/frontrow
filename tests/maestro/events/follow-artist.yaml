@@ -1,7 +1,7 @@
 # Follow an artist from event detail, see them in the Following list, unfollow.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.events'

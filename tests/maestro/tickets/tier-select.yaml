@@ -2,7 +2,7 @@
 # into the purchased ticket.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.events'

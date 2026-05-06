@@ -1,7 +1,7 @@
 # Edit profile, exercise the dirty-state discard dialog, then save.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.profile'

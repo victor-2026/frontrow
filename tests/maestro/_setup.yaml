@@ -1,0 +1,25 @@
+# Shared E2E setup. Use via:
+#   - runFlow: ../_setup.yaml
+#
+# Replaces the cold-boot + onboarding-skip + login dance with a single
+# deep link that pre-auths the demo user, marks onboarding done, resets
+# mock state, and clears all failure triggers.
+#
+# Use this in flows that need an authenticated, deterministic starting
+# state. For flows that specifically test cold launch or the onboarding
+# UI itself, keep the explicit launchApp/clearState pattern.
+appId: app.frontrow.qa
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: 'screen.events'
+    timeout: 20000
+
+- openLink: 'frontrow://e2e/setup'
+
+# After fast-boot, the events screen is the active surface and the
+# demo user is signed in. Children can navigate from here.
+- assertVisible:
+    id: 'screen.events'

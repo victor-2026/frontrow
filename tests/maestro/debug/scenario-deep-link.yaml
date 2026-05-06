@@ -5,7 +5,7 @@ appId: app.frontrow.qa
     clearState: true
 
 # Sign in first
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 # Apply expired_tickets via debug deep link.
 - openLink: 'frontrow://debug/seed/expired_tickets'

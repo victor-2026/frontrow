@@ -1,7 +1,7 @@
 # Set IAP outcome to Decline via the QA Debug menu, then buy and confirm the failure UI.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.debug'

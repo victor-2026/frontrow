@@ -3,8 +3,10 @@ import * as Linking from 'expo-linking';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { scenarios, type ScenarioId } from '../mocks/seed/scenarios/registry';
-import { resetMockState } from '../mocks/state';
+import { mockState, resetMockState } from '../mocks/state';
 import { useQaStore, type FailureTrigger } from '../state/qa';
+import { useAuthStore } from '../state/auth';
+import { useSettingsStore } from '../state/settings';
 import { track } from '../state/analytics';
 
 const TRIGGER_NAMES: readonly FailureTrigger[] = [
@@ -19,11 +21,20 @@ const TRIGGER_NAMES: readonly FailureTrigger[] = [
 ];
 
 /**
- * Listens for two debug deep links:
+ * Listens for the QA + E2E deep links:
  *
  *   frontrow://debug/seed/<scenario_id>  → applies a seed scenario
  *   frontrow://debug/reset               → wipes in-memory mock state
  *                                          back to fixture defaults
+ *   frontrow://debug/trigger/<kind>[/on|/off]
+ *                                        → toggles a failure trigger
+ *   frontrow://e2e/setup                 → fast-boot: signs in demo
+ *                                          user, completes onboarding,
+ *                                          resets mock state, clears
+ *                                          triggers. Replaces the
+ *                                          7-tap login flow with one
+ *                                          openLink. ~5–8s saved per
+ *                                          flow that needs auth.
  *
  * MMKV (`launchApp: clearState: true`) only resets persisted state — the
  * in-process `mockState` survives between flows in a Maestro session.
@@ -46,6 +57,29 @@ export function useDeepLinkScenario(): void {
         useQaStore.getState().clearTriggers();
         void qc.invalidateQueries();
         track('debug.mockState.reset');
+        return;
+      }
+
+      // Fast-boot for E2E: pre-auth + onboarding-done + clean state in
+      // one openLink. Saves the ~7 taps + ~5s per auth-needing flow.
+      if (/(?:^|\/)e2e\/setup$/.test(segments)) {
+        resetMockState();
+        useQaStore.getState().clearTriggers();
+        void setScenario(null);
+        const demo = mockState.users.find((u) => u.id === 'usr_demo');
+        if (demo) {
+          const token = `e2e_${demo.id}_${Date.now()}`;
+          mockState.sessions.set(token, demo.id);
+          // password is on the seed shape but not on User — strip it
+          // so the auth-store user matches the API contract.
+          const { password: _pw, ...user } = demo;
+          void useAuthStore.getState().setSession(token, user);
+        }
+        // Mark onboarding as done so flows that clearState don't bounce
+        // through the onboarding screen on the next launch.
+        void useSettingsStore.getState().finishOnboarding();
+        void qc.invalidateQueries();
+        track('e2e.setup');
         return;
       }
 

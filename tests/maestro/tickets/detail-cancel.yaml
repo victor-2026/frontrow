@@ -1,7 +1,7 @@
 # Open a purchased ticket, view QR + status, cancel through the confirm dialog.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.myTickets'

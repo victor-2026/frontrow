@@ -1,7 +1,7 @@
 # Sign in, navigate to Premium, buy a product with the default Success outcome.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.profile'

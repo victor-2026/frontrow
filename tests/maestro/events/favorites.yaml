@@ -1,7 +1,7 @@
 # Toggle a favorite from event detail, see it filtered on the list.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.events'

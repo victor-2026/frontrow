@@ -4,7 +4,7 @@
 # this flow is specifically about the swipe-and-tap gesture.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.myTickets'

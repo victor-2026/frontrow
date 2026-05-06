@@ -2,7 +2,7 @@
 # Also covers the validation paths: invalid email + recipient not found.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.myTickets'

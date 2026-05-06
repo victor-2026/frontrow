@@ -1,7 +1,7 @@
 # Add, mark default, delete a saved payment method.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.profile'

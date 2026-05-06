@@ -1,7 +1,7 @@
 # End-to-end: sign in, browse to an event, buy a ticket, confirm in My Tickets.
 appId: app.frontrow.qa
 ---
-- runFlow: ../auth/login.yaml
+- runFlow: ../_setup.yaml
 
 - tapOn:
     id: 'tab.events'
