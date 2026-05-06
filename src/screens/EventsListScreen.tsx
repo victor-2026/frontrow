@@ -24,6 +24,7 @@ import { useDebouncedValue } from '../hooks/useDebouncedValue';
 import { useAuthStore } from '../state/auth';
 import { Button } from '../components/Button';
 import { EventListItem } from '../components/EventListItem';
+import { EventListSkeleton } from '../components/EventListSkeleton';
 import type { EventsStackParamList } from '../navigation/types';
 
 const SEARCH_DEBOUNCE_MS = 300;
@@ -131,9 +132,7 @@ export function EventsListScreen() {
         ))}
       </ScrollView>
       {isLoading ? (
-        <View style={styles.center}>
-          <ActivityIndicator />
-        </View>
+        <EventListSkeleton testID={testIds.events.skeleton} />
       ) : error ? (
         <View style={styles.center}>
           <Text testID={testIds.events.errorMessage} style={styles.error}>

@@ -35,6 +35,7 @@ export const testIds = {
     endOfList: 'events.endOfList',
     inboxButton: 'events.inboxButton',
     inboxBadge: 'events.inboxBadge',
+    skeleton: 'events.skeleton',
   },
   inbox: {
     screen: 'screen.inbox',
