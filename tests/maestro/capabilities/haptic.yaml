@@ -3,6 +3,10 @@ appId: app.frontrow.qa
 ---
 - launchApp:
     clearState: true
+- extendedWaitUntil:
+    visible:
+      id: 'screen.events'
+    timeout: 20000
 
 - tapOn:
     id: 'tab.debug'
