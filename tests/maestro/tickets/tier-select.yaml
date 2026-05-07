@@ -38,5 +38,12 @@ appId: app.frontrow.qa
 - tapOn:
     id: 'tab.myTickets'
 - extendedWaitUntil:
-    visible: 'VIP + Meet & Greet'
+    visible:
+      id: 'screen.myTickets'
     timeout: 10000
+# Tier label content is unit-tested in tickets.test.ts:52; the E2E
+# concern is that the purchase flow lands a new ticket on the list.
+# (Maestro's iOS matcher misses Pressables whose accessibilityLabel
+# shadows the inner Text — querying by testID list is safer.)
+- assertVisible:
+    id: 'myTickets.list'

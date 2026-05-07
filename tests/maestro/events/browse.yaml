@@ -12,11 +12,7 @@ appId: app.frontrow.qa
 - tapOn:
     id: 'events.searchInput'
 - inputText: 'Aurora'
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - hideKeyboard
+- hideKeyboard
 - extendedWaitUntil:
     visible:
       id: 'events.item.evt_002'
@@ -26,11 +22,7 @@ appId: app.frontrow.qa
 - tapOn:
     id: 'events.searchInput'
 - eraseText
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - hideKeyboard
+- hideKeyboard
 - extendedWaitUntil:
     visible:
       id: 'events.item.evt_001'
@@ -48,7 +40,10 @@ appId: app.frontrow.qa
 - assertVisible:
     id: 'eventDetail.buyButton'
 
-# Back to list
-- back
-- assertVisible:
-    id: 'screen.events'
+# Back to list — `- back` is unreliable on iOS stack screens.
+- tapOn:
+    point: '8%,7%'
+- extendedWaitUntil:
+    visible:
+      id: 'screen.events'
+    timeout: 5000

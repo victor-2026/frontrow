@@ -17,12 +17,11 @@ appId: app.frontrow.qa
 - tapOn:
     id: 'editProfile.bioInput'
 - inputText: 'Front-row regular since 2018.'
-- runFlow:
-    when:
-      platform: Android
-    commands:
-      - hideKeyboard
-- back
+- hideKeyboard
+# Custom headerLeft button (added because beforeRemove + preventDefault
+# is unreliable on @react-navigation/native-stack iOS).
+- tapOn:
+    id: 'editProfile.backButton'
 - assertVisible:
     id: 'editProfile.discardConfirmDialog'
 - tapOn:

@@ -1,5 +1,6 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
-import { View, Text, TextInput, Modal, ScrollView, StyleSheet } from 'react-native';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { View, Text, TextInput, Modal, Pressable, ScrollView, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
@@ -28,19 +29,39 @@ export function EditProfileScreen() {
   const bioOver = bioRemaining < 0;
   const canSave = dirty && displayName.trim().length > 0 && !bioOver;
 
-  useLayoutEffect(() => {
-    nav.setOptions({ title: 'Edit profile' });
-  }, [nav]);
+  // Keep a ref so the headerLeft button (registered once via setOptions)
+  // sees the latest dirty state without re-rendering the header.
+  const dirtyRef = useRef(dirty);
+  dirtyRef.current = dirty;
 
-  // Block native back nav when there are unsaved changes.
-  useEffect(() => {
-    const unsubscribe = nav.addListener('beforeRemove', (e) => {
-      if (!dirty || update.isPending) return;
-      e.preventDefault();
+  const onBackPress = useCallback(() => {
+    if (dirtyRef.current && !update.isPending) {
       setDiscardOpen(true);
+      return;
+    }
+    nav.goBack();
+  }, [nav, update.isPending]);
+
+  useLayoutEffect(() => {
+    nav.setOptions({
+      title: 'Edit profile',
+      // Custom back button so the dirty-state guard runs in user-space React
+      // state instead of relying on `beforeRemove` + `preventDefault`, which
+      // is unreliable on @react-navigation/native-stack iOS.
+      headerLeft: () => (
+        <Pressable
+          testID={testIds.editProfile.backButton}
+          accessibilityRole="button"
+          accessibilityLabel="Back"
+          onPress={onBackPress}
+          hitSlop={12}
+          style={styles.headerBack}
+        >
+          <Ionicons name="chevron-back" size={26} color={theme.colors.primary} />
+        </Pressable>
+      ),
     });
-    return unsubscribe;
-  }, [nav, dirty, update.isPending]);
+  }, [nav, onBackPress]);
 
   const onSave = async () => {
     setError(null);
@@ -57,8 +78,13 @@ export function EditProfileScreen() {
     setDiscardOpen(false);
     setDisplayName(initialName);
     setBio(initialBio);
-    // Defer goBack so the beforeRemove listener doesn't intercept again.
-    requestAnimationFrame(() => nav.goBack());
+    // dirtyRef is updated synchronously below by the next render; using
+    // requestAnimationFrame keeps a single repaint between dialog close
+    // and navigation pop.
+    requestAnimationFrame(() => {
+      dirtyRef.current = false;
+      nav.goBack();
+    });
   };
 
   return (
@@ -142,6 +168,7 @@ export function EditProfileScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: theme.colors.background },
   content: { padding: theme.spacing.lg, gap: theme.spacing.sm },
+  headerBack: { paddingHorizontal: theme.spacing.xs, paddingVertical: theme.spacing.xs },
   label: { fontSize: theme.typography.caption, color: theme.colors.muted, marginTop: theme.spacing.sm },
   input: {
     borderWidth: 1,

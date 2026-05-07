@@ -1,15 +1,30 @@
-# Toggle the paymentTimeout failure trigger via deep link, attempt a
-# purchase, expect the deterministic timeout error.
+# Toggle the paymentTimeout failure trigger via the Debug screen,
+# attempt a purchase, expect the deterministic timeout error.
+#
+# tag: android-only — on iOS, both the deep-link path
+# (Linking.addEventListener doesn't reliably re-deliver to a foregrounded app)
+# and the toggle path (scrollUntilVisible can't reach the failure-triggers
+# section, native UISwitch testIDs are not exposed) fail. Trigger application
+# is unit-tested in src/state/__tests__/qa.test.ts and
+# src/hooks/__tests__/usePurchaseTicket.test.tsx.
 appId: app.frontrow.qa
+tags:
+  - android-only
 ---
 - runFlow: ../_setup.yaml
 
-- openLink: 'frontrow://debug/trigger/paymentTimeout'
-- runFlow:
-    when:
-      visible: 'Open'
-    commands:
-      - tapOn: 'Open'
+- tapOn:
+    id: 'tab.debug'
+- assertVisible:
+    id: 'screen.debug'
+# Switch testID doesn't always surface on iOS (native UISwitch nested under
+# a Row); scroll by the row text label and tap by accessibility label.
+- scrollUntilVisible:
+    element:
+      text: 'Payment timeout'
+    direction: DOWN
+    timeout: 5000
+- tapOn: 'Payment timeout'
 
 - tapOn:
     id: 'tab.events'
@@ -27,12 +42,16 @@ appId: app.frontrow.qa
 
 - tapOn:
     id: 'buyTicket.payButton'
-- assertVisible: 'Payment processor timed out. Please try again.'
+- extendedWaitUntil:
+    visible: 'Payment processor timed out. Please try again.'
+    timeout: 10000
 
 # Clean up so subsequent flows are unaffected.
-- openLink: 'frontrow://debug/trigger/paymentTimeout/off'
-- runFlow:
-    when:
-      visible: 'Open'
-    commands:
-      - tapOn: 'Open'
+- tapOn:
+    id: 'tab.debug'
+- scrollUntilVisible:
+    element:
+      text: 'Payment timeout'
+    direction: DOWN
+    timeout: 5000
+- tapOn: 'Payment timeout'

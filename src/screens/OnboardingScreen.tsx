@@ -10,6 +10,7 @@ import {
   type NativeSyntheticEvent,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { theme } from '../theme';
 import { testIds } from '../testIds';
@@ -42,6 +43,7 @@ const SLIDES: Slide[] = [
 
 export function OnboardingScreen() {
   const { width } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
   const [page, setPage] = useState(0);
   const finishOnboarding = useSettingsStore((s) => s.finishOnboarding);
@@ -67,7 +69,7 @@ export function OnboardingScreen() {
 
   return (
     <View style={styles.root} testID={testIds.onboarding.screen}>
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + theme.spacing.xs }]}>
         <Pressable
           testID={testIds.onboarding.skipButton}
           accessibilityRole="button"
@@ -126,7 +128,6 @@ export function OnboardingScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: theme.colors.background },
   header: {
-    paddingTop: theme.spacing.xl,
     paddingHorizontal: theme.spacing.lg,
     flexDirection: 'row',
     justifyContent: 'flex-end',

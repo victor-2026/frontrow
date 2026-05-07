@@ -20,7 +20,9 @@ appId: app.frontrow.qa
     visible:
       id: 'screen.eventDetail'
     timeout: 10000
-- back
+# `- back` is unreliable on iOS stack screens; tap the chevron header instead.
+- tapOn:
+    point: '8%,7%'
 
 # evt_001 should now show in the strip.
 - extendedWaitUntil:

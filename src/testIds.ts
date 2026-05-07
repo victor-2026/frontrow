@@ -82,6 +82,7 @@ export const testIds = {
   },
   editProfile: {
     screen: 'screen.editProfile',
+    backButton: 'editProfile.backButton',
     displayNameInput: 'editProfile.displayNameInput',
     bioInput: 'editProfile.bioInput',
     bioCharCount: 'editProfile.bioCharCount',

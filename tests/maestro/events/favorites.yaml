@@ -22,9 +22,13 @@ appId: app.frontrow.qa
 - tapOn:
     id: 'eventDetail.favoriteButton'
 
-- back
-- assertVisible:
-    id: 'screen.events'
+# `- back` is unreliable on iOS stack screens; use the rendered chevron header.
+- tapOn:
+    point: '8%,7%'
+- extendedWaitUntil:
+    visible:
+      id: 'screen.events'
+    timeout: 5000
 
 # Filter chip surfaces favorited events. Three events are favorited via seed.
 - tapOn:

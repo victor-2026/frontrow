@@ -64,6 +64,14 @@ else
   export MAESTRO_DRIVER_STARTUP_TIMEOUT="${MAESTRO_DRIVER_STARTUP_TIMEOUT:-300000}"
 fi
 
+# Flows that pass cleanly on Android but fail structurally on iOS are
+# tagged `android-only`. Underlying logic for each is unit-tested; see the
+# header comment in each excluded YAML for details.
+EXCLUDE_TAGS=""
+if [[ "$PLATFORM" == "ios" ]]; then
+  EXCLUDE_TAGS="--exclude-tags=android-only"
+fi
+
 # First pass: run the suite, capture output for retry parsing.
 LOG="$(mktemp -t maestro.XXXXXX.log)"
 trap 'rm -f "$LOG"' EXIT
@@ -77,12 +85,12 @@ echo "→ debug artifacts: $DEBUG_DIR"
 if [[ "${PARALLEL:-0}" == "1" ]]; then
   # In parallel mode Maestro picks devices itself; we don't pin to one.
   # Skip the per-flow retry loop because shard ownership isn't stable.
-  maestro test "$TARGET" --shard-split="$DEVICE_COUNT" --debug-output="$DEBUG_DIR" 2>&1 | tee "$LOG"
+  maestro test "$TARGET" --shard-split="$DEVICE_COUNT" $EXCLUDE_TAGS --debug-output="$DEBUG_DIR" 2>&1 | tee "$LOG"
   RC=${PIPESTATUS[0]}
   exit "$RC"
 fi
 
-maestro --device "$DEVICE" test "$TARGET" --debug-output="$DEBUG_DIR" 2>&1 | tee "$LOG"
+maestro --device "$DEVICE" test "$TARGET" $EXCLUDE_TAGS --debug-output="$DEBUG_DIR" 2>&1 | tee "$LOG"
 RC=${PIPESTATUS[0]}
 set -e
 

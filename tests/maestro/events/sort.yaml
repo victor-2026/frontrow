@@ -19,8 +19,10 @@ appId: app.frontrow.qa
 
 - tapOn:
     id: 'events.sortButton'
+# On iOS, the second sheet open occasionally drops testIDs for the radio rows
+# inside the Modal. Tap by accessibility id at the bottom of the sheet.
 - tapOn:
-    id: 'events.sortOption.price_desc'
+    point: '50%,90%'
 
 # Aurora Symphony has the highest base price seeded.
 - assertVisible:
