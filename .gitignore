@@ -55,3 +55,4 @@ test-results/
 # editor
 .idea/
 .vscode/
+.claude/
