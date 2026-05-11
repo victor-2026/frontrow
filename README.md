@@ -29,17 +29,74 @@ That's it. No backend to run, no accounts to create, no secrets to configure.
 
 > Some Phase 5+ capabilities (MMKV, real local notifications) require a development build. The standard `npm run ios` / `npm run android` covers that — Expo Go alone is not enough once `expo prebuild` has run.
 
-## Just want the app?
+## Install a prebuilt binary
 
-If you don't want to build from source, a prebuilt Android APK ships with each tagged release. Grab `FrontRow.apk` from the [Releases](../../releases) page and install via:
+Each tagged release ships two artifacts so you can poke at FrontRow without setting up a React Native toolchain.
+
+### Android — `FrontRow.apk` (real device or emulator)
+
+The APK is a release-variant build signed with a debug keystore. It installs side-by-side with anything from the Play Store, but `adb` and the device installer will both flag it as "from an unknown source" — that's expected.
+
+**On an emulator** (Android Studio AVD running):
 
 ```bash
-adb install FrontRow.apk        # emulator or USB-attached device
+adb install FrontRow.apk
+adb shell am start -n app.frontrow.qa/.MainActivity
 ```
 
-Or open the APK on the device directly and accept "install from unknown source". The APK is signed with a debug keystore — it's intentionally a sideload artifact, not a Play Store build.
+**On a real device** (USB debugging enabled, device paired with `adb devices`):
 
-iOS distribution requires an Apple Developer account (TestFlight or AdHoc signing) — see the [Quick start](#quick-start) above to run on a simulator instead.
+```bash
+adb install -r FrontRow.apk
+```
+
+**No `adb`?** Email/AirDrop/download the APK to the device, tap it in Files, accept the "install unknown apps" prompt for whatever app is handling it (usually Chrome or Files). The app launches from the home screen as **FrontRow**.
+
+### iOS — `FrontRow.app.zip` (iOS Simulator only)
+
+The `.app` inside is a Release build for the iOS Simulator on Apple Silicon (`arm64`). It will not run on a physical iPhone or on Intel Macs.
+
+```bash
+# Unzip
+unzip FrontRow.app.zip
+# Pick a booted simulator (or boot one in Xcode/Simulator.app first)
+xcrun simctl list devices booted
+# Install
+xcrun simctl install booted FrontRow.app
+# Launch
+xcrun simctl launch booted app.frontrow.qa
+```
+
+Tip: you can also drag-and-drop the unzipped `FrontRow.app` onto the simulator window. Same result.
+
+**For a real iPhone**: you'll need to build from source with your own provisioning profile (see [Quick start](#quick-start)). A signed `.ipa` for TestFlight may land in a later release.
+
+## First five minutes
+
+Once the app is on a device or simulator:
+
+1. **Onboarding** — three intro slides. Tap "Skip" or swipe through and "Get started".
+2. **Sign in** — Profile tab → Sign in. Demo creds are filled in (`demo@frontrow.app` / `password`). Or skip auth entirely; most of the app works signed out.
+3. **Browse events** — the Events tab opens to a feed of mocked concert listings. Search, filter by genre, scroll for infinite pagination.
+4. **Buy a ticket** — tap any event → **Buy** → choose a tier → **Confirm purchase**. The flow ends in My Tickets with a QR code.
+5. **Visit the Debug tab** — this is where the QA showcase lives. Try:
+   - **Scenarios** → "Empty state" / "Expired tickets" / "Many events" — reseed mock data with one tap.
+   - **Network → Force error → 5xx** — every API call returns a 500 until you set it back to None.
+   - **In-app purchases → Decline** — flip the IAP outcome and re-run the buy flow.
+   - **Time travel → +1w** — fast-forward the clock to see expired tickets and stale events.
+   - **Device capabilities → Native demo** — opens a hand-rolled Swift `UIViewController` / Kotlin `Activity` bridged to JS (the testID contract carries through to raw native code).
+   - **First-run → Replay onboarding** — reset the onboarding flag without wiping data.
+   - **Reset → Wipe all local data** — full reset, useful between manual runs.
+6. **Trigger a deep link** to jump to a specific state without tapping through. From a terminal:
+
+   ```bash
+   # Android
+   adb shell am start -W -a android.intent.action.VIEW -d "frontrow://debug/seed/empty_state"
+   # iOS Simulator
+   xcrun simctl openurl booted "frontrow://debug/seed/expired_tickets"
+   ```
+
+   Full deep-link catalog: [docs/DEEPLINKS.md](docs/DEEPLINKS.md).
 
 ## Try a Maestro flow
 

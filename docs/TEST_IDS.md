@@ -25,10 +25,15 @@ Examples:
 
 ## Lint enforcement
 
-A custom ESLint rule (planned for Phase 0/1) flags interactive components missing a `testID`. Until it lands, add IDs by hand and use the PR template checklist.
+The custom plugin [`eslint-plugin-frontrow`](../eslint-plugin-frontrow/) is wired into `eslint.config.js` and ships two rules:
+
+- `frontrow/require-testid` — interactive components (`Button`, `Pressable`, `TouchableOpacity`, etc.) must declare a `testID`.
+- `frontrow/require-a11y-label` — the same components must pair the `testID` with an `accessibilityLabel`.
+
+Both run in `npm run lint`. The CI job fails on violations, so new code can't drift from the contract.
 
 ## Adding a new ID
 
-1. Add the entry to `src/testIds.ts`.
+1. Add the entry to [`src/testIds.ts`](../src/testIds.ts).
 2. Reference it via `testIds.<area>.<element>` from the component.
-3. Pair it with an `accessibilityLabel` describing the _purpose_ in human terms.
+3. Pair it with an `accessibilityLabel` describing the _purpose_ in human terms — the lint rule enforces this.

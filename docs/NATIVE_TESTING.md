@@ -41,6 +41,17 @@ xcodebuild test \
   -only-testing:FrontRowUITests
 ```
 
-## What about the native showcase screen?
+## The native showcase screen
 
-A small Swift screen and a small Kotlin screen will land later as authentic targets where trainees can _also_ see the native view tree (instead of the React Native bridge). For Phase 5 we ship the bare-bones native projects so contributors can run prebuild-dependent tooling (MMKV, real push, real biometric, native Espresso/XCUITest harnesses) immediately.
+A hand-rolled Swift `UIViewController` and Kotlin `AppCompatActivity` ship in [`native-showcase/`](../native-showcase/) and get copied into the host iOS/Android projects on every `expo prebuild` by [`plugins/with-native-showcase.js`](../plugins/with-native-showcase.js). Open it from the app at **Debug tab → Native demo**, or programmatically:
+
+```ts
+import { openNativeDemo } from './src/utils/nativeDemo';
+openNativeDemo();
+```
+
+JS calls go through `NativeModules.FrontRowNativeDemo.open()`. On iOS this is wired up in `FrontRowNativeDemoBridge.m` via `RCT_EXTERN_REMAP_MODULE`; on Android via `NativeDemoPackage.kt`. The native screens set `accessibilityIdentifier` (iOS) and `contentDescription` (Android) to the same `nativeDemo.*` strings registered in [`src/testIds.ts`](../src/testIds.ts), so XCUITest, Espresso, and Maestro all match against the same names.
+
+The cross-platform Maestro flow that exercises the round-trip lives at [`tests/maestro/native/native-demo.yaml`](../tests/maestro/native/native-demo.yaml).
+
+The native test scaffolds at [`native-showcase/tests/espresso/`](../native-showcase/tests/espresso/) and [`native-showcase/tests/xcuitest/`](../native-showcase/tests/xcuitest/) are reference templates — they aren't wired into a runnable test target by default (iOS UI Test target setup happens in Xcode; Android `androidTest` source set needs adding to `app/build.gradle`). See the per-framework READMEs for setup.

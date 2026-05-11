@@ -13,15 +13,18 @@ maestro test tests/maestro/smoke/launch.yaml      # single flow
 
 ## What's covered
 
-| Folder          | Flows                                                                |
-| --------------- | -------------------------------------------------------------------- |
-| `smoke/`        | `launch`, `onboarding-complete`, `onboarding-skip`                   |
-| `events/`       | `browse`, `pagination`, `reviews`, `favorites`, `inbox`              |
-| `auth/`         | `login`, `forgotPassword`, `edit-profile`                            |
-| `tickets/`      | `buy`, `detail-cancel`, `transfer`                                   |
-| `billing/`      | `buy-success`, `buy-decline`, `payment-methods-crud`                 |
-| `debug/`        | `scenario-deep-link`, `force-error`, `offline-banner`                |
-| `capabilities/` | `haptic`                                                             |
+| Folder          | Flows                                                                                                                            |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `smoke/`        | `launch`, `onboarding-complete`, `onboarding-skip`                                                                               |
+| `events/`       | `browse`, `pagination`, `reviews`, `favorites`, `follow-artist`, `genre-filter`, `lineup`, `recently-viewed`, `refund-policy`, `sort` |
+| `auth/`         | `login`, `forgotPassword`, `recovery-deeplinks`, `edit-profile`, `language-switch`                                               |
+| `tickets/`      | `buy`, `tier-select`, `detail-cancel` (android-only), `transfer` (android-only)                                                  |
+| `billing/`      | `buy-success`, `buy-decline`, `payment-methods-crud`                                                                             |
+| `debug/`        | `failure-trigger` (android-only)                                                                                                 |
+| `capabilities/` | `haptic`                                                                                                                         |
+| `native/`       | `native-demo` — opens the bridged Swift/Kotlin screen and exercises its testID contract                                          |
+
+Three flows are tagged `android-only` because they rely on Maestro reading testIDs inside an RN `<Modal>` on iOS, which surfaces inconsistently. The scripts/maestro.sh wrapper excludes them automatically when `PLATFORM=ios`. Their underlying logic is unit-tested.
 
 ## Convention
 
@@ -35,8 +38,8 @@ maestro test tests/maestro/smoke/launch.yaml      # single flow
 
 Every cold launch on emulator costs ~5–15s for the JS bundle to load,
 plus another 2–5s of UI taps if the flow needs an authenticated user.
-Across 18 entry-point flows that compounds into 3–5 minutes of pure
-overhead per suite run.
+Across the ~28 flow suite that compounds into several minutes of pure
+overhead per run.
 
 Two patterns reduce this:
 

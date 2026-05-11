@@ -1,14 +1,14 @@
 # QA Debug Menu
 
-The Debug tab is the central control surface for hermetic testing.
+The Debug tab is the central control surface for hermetic testing. Source: [`src/screens/DebugScreen.tsx`](../src/screens/DebugScreen.tsx).
 
 ## Opening the menu
 
-- **Tab bar**: tap the **Debug** tab.
+- **Tab bar**: tap the **Debug** tab (visible in every build — see the README's "A note on the Debug tab" if you fork this app).
 - **Deep link**: `frontrow://debug`.
 - **Apply scenario via deep link**: `frontrow://debug/seed/<scenario_id>` — applied on app launch or while running.
 
-## What's here
+## Sections (top to bottom)
 
 ### Build
 
@@ -16,22 +16,15 @@ Read-only info: app name, version + build number, platform + OS version, Expo SD
 
 ### Jump to screen
 
-One-tap navigation to every top-level screen in the app. Useful when you want to verify a screen renders without driving a full flow.
+One-tap navigation to every top-level screen. Useful when you want to verify a screen renders without driving a full flow.
+
+### Device capabilities
+
+One-tap entry to every device-feature demo: Haptics, Location, Biometric, Camera, Microphone, Calendar, Share, Notifications, and **Native demo** — the hand-rolled Swift `UIViewController` / Kotlin `AppCompatActivity` bridged through `NativeModules.FrontRowNativeDemo` (source in [`native-showcase/`](../native-showcase/)). The native demo is exposed under `debug.openNativeDemo` for Maestro.
 
 ### Scenarios
 
-Tapping a scenario applies it immediately and invalidates all React Query caches so the UI re-renders against the new state. Currently shipped:
-
-| ID                | Description                             |
-| ----------------- | --------------------------------------- |
-| `happy_path`      | Demo user with one upcoming ticket.     |
-| `empty_state`     | No data anywhere; logged-out user.      |
-| `expired_tickets` | All tickets in the past (status: used). |
-| `refund_pending`  | Active ticket has a pending refund.     |
-| `many_events`     | 200+ events for list-perf testing.      |
-| `error_state`     | Companion to "Force error" toggle.      |
-| `slow_network`    | Companion to "Delay" preset.            |
-| `offline`         | Cached data only.                       |
+Tapping a scenario applies it immediately and invalidates all React Query caches so the UI re-renders against the new state. Catalog: [SCENARIOS.md](SCENARIOS.md). The currently-active scenario is marked with `✓`.
 
 ### Time travel
 
@@ -39,26 +32,37 @@ Sets `useQaStore.timeOffsetMs`. Anywhere the app needs "now," it goes through `n
 
 ### Network
 
-- **Force error** — next API call throws `ApiClientError` from `applyQaForcedError()`. Modes: `4xx` (400), `5xx` (500), `Timeout` (408), `Offline` (status 0). The `Offline` mode also surfaces a red banner across the top of the app via `app.offlineBanner` so tests can assert the offline UX without wiring NetInfo.
-- **Delay** — every service function awaits `applyQaDelay()` for the chosen ms before resolving.
+- **Force error** — sets the next round of API calls to throw `ApiClientError` from `applyQaForcedError()`. Modes: `None`, `4xx` (400), `5xx` (500), `Timeout` (408), `Offline` (status 0). The `Offline` mode also surfaces a red banner across the top of the app via `app.offlineBanner` so tests can assert the offline UX without wiring NetInfo.
+- **Profile** — pick a named latency profile (`fast`, `realistic`, `slow`, `flaky`). Every service function awaits `applyQaDelay()` for the profile's configured ms before resolving. The current effective delay is shown below the chips.
 
 ### Locale
 
-Override the i18next/Intl locale for the session. Empty input restores device default.
+Override the i18next/Intl locale for the session. Type a tag (e.g. `en`, `ja`, `de-DE`) and tap **Set**. Empty input restores device default.
 
 ### Notifications & crashes
 
-- **Fire fake push** — Phase 2 ships an Alert simulation. Phase 3 swaps this for `expo-notifications` local push.
-- **Trigger crash** — throws asynchronously to exercise crash reporters.
+- **Fire fake push** — shows an Alert simulating a push payload. Pairs with the `push` failure trigger to test delivery-failure UX.
+- **Trigger crash** — throws asynchronously to exercise crash reporters (no Sentry/Crashlytics wired in this demo; see the README).
 
 ### First-run
 
 - **Replay onboarding** — flips the persisted `onboardingPending` flag and re-renders the OnboardingScreen above the app. Lets QA exercise the swipe-through pager + skip path without uninstalling. The screen clears the flag itself when the user finishes or skips.
 
+### Failure triggers
+
+Eight toggles that arm deterministic failures (`push`, `geolocation`, `camera`, `biometric`, `imageUpload`, `sessionExpired`, `paymentTimeout`, `reviewSubmit`). Triggers compose. Catalog: [FAILURE_TRIGGERS.md](FAILURE_TRIGGERS.md). Toggle from a deep link with `frontrow://debug/trigger/<kind>[/on|/off]`.
+
+### In-app purchases
+
+- **Outcome** — flips the next mock purchase result (`success`, `decline`, `cancel`, `pending`).
+- **Receipts** — shows the current count of mock receipts. **Reset receipts** wipes them.
+
+Equivalent deep link: `frontrow://debug/iap/<outcome>`.
+
 ### Reset
 
-Wipes all local AsyncStorage, clears the auth session, resets QA settings, and clears React Query cache.
+**Wipe all local data** — resets the mock state, QA settings, auth session, billing receipts, and React Query cache.
 
 ### Analytics events
 
-In-memory event log of `track(name, props)` calls (latest 200). Lets you write tests like _"tapping Buy fires `ticket.purchase.intent`"_.
+In-memory event log of `track(name, props)` calls (latest 200). Lets you write tests like *"tapping Buy fires `ticket.purchase.intent`"*. **Clear log** empties it without resetting anything else.
