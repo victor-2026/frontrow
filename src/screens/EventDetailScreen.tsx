@@ -20,11 +20,7 @@ import { theme } from '../theme';
 import { testIds } from '../testIds';
 import { useEvent } from '../hooks/useEvents';
 import { useFavoriteEventIds, useToggleFavorite } from '../hooks/useFavorites';
-import {
-  useArtistByName,
-  useFollowedArtists,
-  useToggleFollowArtist,
-} from '../hooks/useArtists';
+import { useArtistByName, useFollowedArtists, useToggleFollowArtist } from '../hooks/useArtists';
 import { useAuthStore } from '../state/auth';
 import { useRecentlyViewedStore } from '../state/recentlyViewed';
 import { Button } from '../components/Button';
@@ -74,11 +70,7 @@ export function EventDetailScreen({ route }: Props) {
       <Image source={{ uri: event.imageUrl }} style={styles.hero} accessible={false} />
       <View style={styles.body}>
         <View style={styles.titleRow}>
-          <Text
-            testID={testIds.eventDetail.title}
-            style={styles.title}
-            accessibilityRole="header"
-          >
+          <Text testID={testIds.eventDetail.title} style={styles.title} accessibilityRole="header">
             {event.title}
           </Text>
           <Pressable
@@ -129,9 +121,7 @@ export function EventDetailScreen({ route }: Props) {
               style={[styles.followPill, isFollowing && styles.followPillActive]}
               hitSlop={8}
             >
-              <Text
-                style={[styles.followPillText, isFollowing && styles.followPillTextActive]}
-              >
+              <Text style={[styles.followPillText, isFollowing && styles.followPillTextActive]}>
                 {isFollowing ? 'Following' : '+ Follow'}
               </Text>
             </Pressable>
@@ -237,7 +227,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   followPillActive: { backgroundColor: theme.colors.primary },
-  followPillText: { fontSize: theme.typography.caption, fontWeight: '700', color: theme.colors.primary },
+  followPillText: {
+    fontSize: theme.typography.caption,
+    fontWeight: '700',
+    color: theme.colors.primary,
+  },
   followPillTextActive: { color: theme.colors.primaryText },
   meta: { fontSize: theme.typography.body, color: theme.colors.muted },
   sectionHeading: {

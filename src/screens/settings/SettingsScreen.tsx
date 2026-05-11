@@ -63,9 +63,7 @@ export function SettingsScreen() {
                   onPress={() => void setAppearance(opt.id)}
                   style={[styles.segmentedOption, selected && styles.segmentedOptionSelected]}
                 >
-                  <Text
-                    style={[styles.segmentedText, selected && styles.segmentedTextSelected]}
-                  >
+                  <Text style={[styles.segmentedText, selected && styles.segmentedTextSelected]}>
                     {opt.label}
                   </Text>
                 </Pressable>

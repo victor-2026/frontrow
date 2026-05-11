@@ -1,4 +1,12 @@
-import { login, logout, getMe, forgotPassword, verifyOtp, resetPassword, updateProfile } from '../auth';
+import {
+  login,
+  logout,
+  getMe,
+  forgotPassword,
+  verifyOtp,
+  resetPassword,
+  updateProfile,
+} from '../auth';
 import { resetMockState, mockState } from '../../../mocks/state';
 
 beforeEach(() => {
@@ -22,7 +30,9 @@ describe('auth.login', () => {
   });
 
   it('rejects locked account with 423', async () => {
-    await expect(login({ email: 'locked@frontrow.app', password: 'wontwork' })).rejects.toMatchObject({
+    await expect(
+      login({ email: 'locked@frontrow.app', password: 'wontwork' }),
+    ).rejects.toMatchObject({
       status: 423,
       code: 'account_locked',
     });
@@ -58,13 +68,15 @@ describe('auth.forgotPassword + verifyOtp + resetPassword', () => {
       code: '123456',
     });
     await resetPassword({ resetToken, newPassword: 'newpass1234' });
-    await expect(login({ email: 'demo@frontrow.app', password: 'newpass1234' })).resolves.toBeTruthy();
+    await expect(
+      login({ email: 'demo@frontrow.app', password: 'newpass1234' }),
+    ).resolves.toBeTruthy();
   });
 
   it('rejects invalid OTP', async () => {
-    await expect(
-      verifyOtp({ email: 'demo@frontrow.app', code: '000000' }),
-    ).rejects.toMatchObject({ code: 'invalid_otp' });
+    await expect(verifyOtp({ email: 'demo@frontrow.app', code: '000000' })).rejects.toMatchObject({
+      code: 'invalid_otp',
+    });
   });
 
   it('rejects short passwords', async () => {
@@ -88,9 +100,9 @@ describe('auth.updateProfile', () => {
 
   it('rejects empty display name', async () => {
     const { token } = await login({ email: 'demo@frontrow.app', password: 'demo1234' });
-    await expect(
-      updateProfile(token, { displayName: '   ', bio: '' }),
-    ).rejects.toMatchObject({ code: 'invalid_displayName' });
+    await expect(updateProfile(token, { displayName: '   ', bio: '' })).rejects.toMatchObject({
+      code: 'invalid_displayName',
+    });
   });
 
   it('rejects bio over 160 chars', async () => {

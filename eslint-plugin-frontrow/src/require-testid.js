@@ -49,8 +49,7 @@ module.exports = {
     },
     schema: [],
     messages: {
-      missing:
-        '<{{name}}> needs a `testID` (use src/testIds.ts so QA can target this surface).',
+      missing: '<{{name}}> needs a `testID` (use src/testIds.ts so QA can target this surface).',
     },
   },
   create(context) {

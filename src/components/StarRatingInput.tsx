@@ -12,13 +12,7 @@ type Props = {
   interactive?: boolean;
 };
 
-export function StarRatingInput({
-  value,
-  onChange,
-  size = 32,
-  testID,
-  interactive = true,
-}: Props) {
+export function StarRatingInput({ value, onChange, size = 32, testID, interactive = true }: Props) {
   return (
     <View testID={testID} accessibilityLabel={`${value} of 5 stars`} style={styles.row}>
       {[1, 2, 3, 4, 5].map((n) => {

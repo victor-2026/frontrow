@@ -65,4 +65,4 @@ Equivalent deep link: `frontrow://debug/iap/<outcome>`.
 
 ### Analytics events
 
-In-memory event log of `track(name, props)` calls (latest 200). Lets you write tests like *"tapping Buy fires `ticket.purchase.intent`"*. **Clear log** empties it without resetting anything else.
+In-memory event log of `track(name, props)` calls (latest 200). Lets you write tests like _"tapping Buy fires `ticket.purchase.intent`"_. **Clear log** empties it without resetting anything else.

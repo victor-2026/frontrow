@@ -150,11 +150,7 @@ export function DebugScreen() {
           label="Notifications"
           onPress={() => nav.dispatch(CommonActions.navigate({ name: 'NotificationsDemo' }))}
         />
-        <Row
-          testID={testIds.debug.openNativeDemo}
-          label="Native demo"
-          onPress={openNativeDemo}
-        />
+        <Row testID={testIds.debug.openNativeDemo} label="Native demo" onPress={openNativeDemo} />
       </Section>
 
       <Section title="Scenarios">

@@ -10,16 +10,16 @@ All scenarios live together in [`src/mocks/seed/scenarios/registry.ts`](../src/m
 
 ## Available scenarios
 
-| ID                | What it sets up                                                                                                  |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `happy_path`      | Demo user with one upcoming ticket and three favorited events. Equivalent to a fresh `resetMockState()`.         |
-| `empty_state`     | Logged-out user with no tickets anywhere. The home feed renders empty-state.                                     |
-| `expired_tickets` | All of the user's tickets flipped to `status: used`. Useful for the Past-tickets filter and refund UI.           |
-| `refund_pending`  | First ticket flipped to `status: refund_pending`. Pair with the cancel UI.                                       |
+| ID                | What it sets up                                                                                                                                        |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `happy_path`      | Demo user with one upcoming ticket and three favorited events. Equivalent to a fresh `resetMockState()`.                                               |
+| `empty_state`     | Logged-out user with no tickets anywhere. The home feed renders empty-state.                                                                           |
+| `expired_tickets` | All of the user's tickets flipped to `status: used`. Useful for the Past-tickets filter and refund UI.                                                 |
+| `refund_pending`  | First ticket flipped to `status: refund_pending`. Pair with the cancel UI.                                                                             |
 | `many_events`     | 25 events total (6 base + 19 extras), just over one page (pageSize=20). Minimum to exercise pagination + end-of-list marker without bloating run time. |
-| `error_state`     | Resets state; pair with **Network → Force error → 5xx** in the debug menu to make the next API call fail.        |
-| `slow_network`    | Resets state; pair with **Network → Profile → slow** to add per-call latency.                                    |
-| `offline`         | Resets state; pair with **Network → Force error → Offline** to surface the offline banner and cached data only.  |
+| `error_state`     | Resets state; pair with **Network → Force error → 5xx** in the debug menu to make the next API call fail.                                              |
+| `slow_network`    | Resets state; pair with **Network → Profile → slow** to add per-call latency.                                                                          |
+| `offline`         | Resets state; pair with **Network → Force error → Offline** to surface the offline banner and cached data only.                                        |
 
 The last three scenarios are companions to debug-menu toggles rather than self-contained — they get the data into a known shape and you flip the network behavior alongside.
 

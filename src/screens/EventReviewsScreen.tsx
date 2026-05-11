@@ -263,7 +263,11 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.border,
     backgroundColor: theme.colors.surface,
   },
-  pickButtonText: { fontSize: theme.typography.body, color: theme.colors.primary, fontWeight: '600' },
+  pickButtonText: {
+    fontSize: theme.typography.body,
+    color: theme.colors.primary,
+    fontWeight: '600',
+  },
   previewBlock: { position: 'relative', alignSelf: 'flex-start' },
   previewImage: {
     width: 120,

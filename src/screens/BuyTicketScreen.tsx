@@ -312,5 +312,9 @@ const styles = StyleSheet.create({
   tierDesc: { fontSize: theme.typography.caption, color: theme.colors.muted, marginTop: 2 },
   tierTrailing: { alignItems: 'flex-end' },
   tierPrice: { fontSize: theme.typography.body, fontWeight: '700', color: theme.colors.primary },
-  tierSoldOut: { fontSize: theme.typography.caption, fontWeight: '600', color: theme.colors.danger },
+  tierSoldOut: {
+    fontSize: theme.typography.caption,
+    fontWeight: '600',
+    color: theme.colors.danger,
+  },
 });

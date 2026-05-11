@@ -17,9 +17,9 @@ describe('reviews', () => {
     const reviews = await listReviewsForEvent('evt_001');
     expect(reviews.length).toBeGreaterThan(0);
     for (let i = 1; i < reviews.length; i += 1) {
-      expect(
-        reviews[i - 1]!.createdAt.localeCompare(reviews[i]!.createdAt),
-      ).toBeGreaterThanOrEqual(0);
+      expect(reviews[i - 1]!.createdAt.localeCompare(reviews[i]!.createdAt)).toBeGreaterThanOrEqual(
+        0,
+      );
     }
   });
 

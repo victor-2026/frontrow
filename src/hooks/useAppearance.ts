@@ -22,7 +22,10 @@ export function useResolvedAppearance(): 'light' | 'dark' {
   return resolveScheme(appearance, sys);
 }
 
-function resolveScheme(pref: Appearance, sys: 'light' | 'dark' | null | undefined): 'light' | 'dark' {
+function resolveScheme(
+  pref: Appearance,
+  sys: 'light' | 'dark' | null | undefined,
+): 'light' | 'dark' {
   if (pref === 'light') return 'light';
   if (pref === 'dark') return 'dark';
   return sys === 'dark' ? 'dark' : 'light';

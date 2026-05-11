@@ -23,33 +23,33 @@ export function HeroEventCard({ event, onPress }: Props) {
         onPress={() => onPress(event)}
         style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
       >
-      <Image source={{ uri: event.imageUrl }} style={styles.image} accessible={false} />
-      <View style={styles.overlay} pointerEvents="none" />
-      <View style={styles.overlayMid} pointerEvents="none" />
-      <View style={styles.overlayBottom} pointerEvents="none" />
-      <View style={styles.featuredBadge}>
-        <Text style={styles.featuredText}>FEATURED</Text>
-      </View>
-      <View style={styles.content}>
-        <Text style={styles.title} numberOfLines={2}>
-          {event.title}
-        </Text>
-        <Text style={styles.artist} numberOfLines={1}>
-          {event.artist}
-        </Text>
-        <View style={styles.metaRow}>
-          <Text style={styles.meta}>{formatDateShort(event.startsAt)}</Text>
-          <Text style={styles.dot}>·</Text>
-          <Text style={styles.meta} numberOfLines={1}>
-            {event.venue.city}
-          </Text>
-          <View style={{ flex: 1 }} />
-          <Text style={styles.price}>
-            {event.soldOut ? 'Sold out' : formatPrice(event.priceCents, event.currency)}
-          </Text>
+        <Image source={{ uri: event.imageUrl }} style={styles.image} accessible={false} />
+        <View style={styles.overlay} pointerEvents="none" />
+        <View style={styles.overlayMid} pointerEvents="none" />
+        <View style={styles.overlayBottom} pointerEvents="none" />
+        <View style={styles.featuredBadge}>
+          <Text style={styles.featuredText}>FEATURED</Text>
         </View>
-      </View>
-    </Pressable>
+        <View style={styles.content}>
+          <Text style={styles.title} numberOfLines={2}>
+            {event.title}
+          </Text>
+          <Text style={styles.artist} numberOfLines={1}>
+            {event.artist}
+          </Text>
+          <View style={styles.metaRow}>
+            <Text style={styles.meta}>{formatDateShort(event.startsAt)}</Text>
+            <Text style={styles.dot}>·</Text>
+            <Text style={styles.meta} numberOfLines={1}>
+              {event.venue.city}
+            </Text>
+            <View style={{ flex: 1 }} />
+            <Text style={styles.price}>
+              {event.soldOut ? 'Sold out' : formatPrice(event.priceCents, event.currency)}
+            </Text>
+          </View>
+        </View>
+      </Pressable>
     </View>
   );
 }

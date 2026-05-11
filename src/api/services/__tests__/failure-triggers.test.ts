@@ -29,9 +29,10 @@ describe('failure triggers', () => {
   it('paymentTimeout fails purchase with 504', async () => {
     const token = await signIn();
     useQaStore.getState().setTrigger('paymentTimeout', true);
-    await expect(
-      purchaseTicket(token, { eventId: 'evt_001', quantity: 1 }),
-    ).rejects.toMatchObject({ status: 504, code: 'payment_timeout' });
+    await expect(purchaseTicket(token, { eventId: 'evt_001', quantity: 1 })).rejects.toMatchObject({
+      status: 504,
+      code: 'payment_timeout',
+    });
   });
 
   it('reviewSubmit fails postReview with 503 even on text-only reviews', async () => {

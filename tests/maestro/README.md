@@ -13,16 +13,16 @@ maestro test tests/maestro/smoke/launch.yaml      # single flow
 
 ## What's covered
 
-| Folder          | Flows                                                                                                                            |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `smoke/`        | `launch`, `onboarding-complete`, `onboarding-skip`                                                                               |
+| Folder          | Flows                                                                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `smoke/`        | `launch`, `onboarding-complete`, `onboarding-skip`                                                                                    |
 | `events/`       | `browse`, `pagination`, `reviews`, `favorites`, `follow-artist`, `genre-filter`, `lineup`, `recently-viewed`, `refund-policy`, `sort` |
-| `auth/`         | `login`, `forgotPassword`, `recovery-deeplinks`, `edit-profile`, `language-switch`                                               |
-| `tickets/`      | `buy`, `tier-select`, `detail-cancel` (android-only), `transfer` (android-only)                                                  |
-| `billing/`      | `buy-success`, `buy-decline`, `payment-methods-crud`                                                                             |
-| `debug/`        | `failure-trigger` (android-only)                                                                                                 |
-| `capabilities/` | `haptic`                                                                                                                         |
-| `native/`       | `native-demo` — opens the bridged Swift/Kotlin screen and exercises its testID contract                                          |
+| `auth/`         | `login`, `forgotPassword`, `recovery-deeplinks`, `edit-profile`, `language-switch`                                                    |
+| `tickets/`      | `buy`, `tier-select`, `detail-cancel` (android-only), `transfer` (android-only)                                                       |
+| `billing/`      | `buy-success`, `buy-decline`, `payment-methods-crud`                                                                                  |
+| `debug/`        | `failure-trigger` (android-only)                                                                                                      |
+| `capabilities/` | `haptic`                                                                                                                              |
+| `native/`       | `native-demo` — opens the bridged Swift/Kotlin screen and exercises its testID contract                                               |
 
 Three flows are tagged `android-only` because they rely on Maestro reading testIDs inside an RN `<Modal>` on iOS, which surfaces inconsistently. The scripts/maestro.sh wrapper excludes them automatically when `PLATFORM=ios`. Their underlying logic is unit-tested.
 
@@ -64,7 +64,7 @@ Two patterns reduce this:
    60s ceiling only ever burned time on a stuck flow before reporting
    failure.
 
-When *not* to use `_setup.yaml`:
+When _not_ to use `_setup.yaml`:
 
 - Flows that explicitly test the cold-launch path (`smoke/launch`).
 - Flows that test the onboarding UI (`smoke/onboarding-*`).

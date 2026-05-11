@@ -37,9 +37,10 @@ describe('tickets.purchaseTicket', () => {
 
   it('refuses sold-out events', async () => {
     const token = await signIn();
-    await expect(
-      purchaseTicket(token, { eventId: 'evt_003', quantity: 1 }),
-    ).rejects.toMatchObject({ status: 409, code: 'sold_out' });
+    await expect(purchaseTicket(token, { eventId: 'evt_003', quantity: 1 })).rejects.toMatchObject({
+      status: 409,
+      code: 'sold_out',
+    });
   });
 
   it('uses the selected tier price when tiers exist', async () => {

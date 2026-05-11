@@ -1,4 +1,12 @@
-import { View, Text, FlatList, Pressable, ActivityIndicator, StyleSheet, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Pressable,
+  ActivityIndicator,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -174,7 +182,11 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     backgroundColor: theme.colors.primary,
   },
-  badgeText: { color: theme.colors.primaryText, fontSize: theme.typography.caption, fontWeight: '600' },
+  badgeText: {
+    color: theme.colors.primaryText,
+    fontSize: theme.typography.caption,
+    fontWeight: '600',
+  },
   cardActions: {
     flexDirection: 'row',
     justifyContent: 'flex-end',

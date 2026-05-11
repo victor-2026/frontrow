@@ -93,9 +93,7 @@ export function useDeepLinkScenario(): void {
       // frontrow://debug/forceError/<mode> — set the API-level forced
       // error mode (none / 4xx / 5xx / timeout / offline). Same
       // scroll-bypass rationale.
-      const forceErr = /(?:^|\/)debug\/forceError\/(none|4xx|5xx|timeout|offline)$/.exec(
-        segments,
-      );
+      const forceErr = /(?:^|\/)debug\/forceError\/(none|4xx|5xx|timeout|offline)$/.exec(segments);
       if (forceErr) {
         const mode = forceErr[1] as 'none' | '4xx' | '5xx' | 'timeout' | 'offline';
         // setForceError is async (writes MMKV then sets state) — chain

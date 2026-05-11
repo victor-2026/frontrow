@@ -33,10 +33,9 @@ afterEach(() => {
 describe('usePurchaseTicket', () => {
   it('appends a new ticket to the list after a successful purchase', async () => {
     const wrapper = makeWrapper();
-    const { result } = renderHook(
-      () => ({ buy: usePurchaseTicket(), list: useMyTickets() }),
-      { wrapper },
-    );
+    const { result } = renderHook(() => ({ buy: usePurchaseTicket(), list: useMyTickets() }), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.list.data).toBeDefined());
     const before = result.current.list.data?.length ?? 0;
     await act(async () => {

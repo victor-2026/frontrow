@@ -28,45 +28,45 @@ Apps surveyed (functional surface only, no code/network inspection):
 
 ### What we already match
 
-| Surface                          | FrontRow | Notes |
-| -------------------------------- | -------- | ----- |
-| Browse events list               | ✅        | `EventsScreen` with search + genre filters + sort |
-| Event detail with hero image     | ✅        | `EventDetailScreen` |
-| Buy ticket flow                  | ✅        | `BuyTicketScreen` with quantity stepper, tier picker, promo codes |
-| Saved/owned tickets list         | ✅        | `MyTicketsScreen` with status filter chips |
-| QR code on owned ticket          | ✅        | `TicketDetailScreen` renders QR + payload |
-| Cancel ticket                    | ✅        | With confirmation dialog |
-| Transfer ticket                  | ✅        | Email-based transfer with validation |
-| Sign in / sign up                | ✅        | `LoginScreen` + email + password |
-| Forgot password → OTP → reset    | ✅        | Full recovery chain wired to deep links |
-| Profile + edit profile           | ✅        | Avatar, display name, bio with char count |
-| Push inbox / notifications       | ✅        | `InboxScreen` with unread state, mark all read |
-| Settings (language, appearance)  | ✅        | en/ja/de + light/dark/system |
-| Payment methods CRUD             | ✅        | List + add + set default + delete |
-| Reviews + ratings                | ✅        | Image attachment, character count, rating input |
-| Following artists                | ✅        | `FollowingScreen` with unfollow |
-| Onboarding carousel              | ✅        | Skip + paginated dots |
-| Offline banner                   | ✅        | Toggleable from QA store |
-| Recently viewed strip            | ✅        | Persisted via MMKV |
-| Inbox badges                     | ✅        | Computed from notifications cache |
+| Surface                         | FrontRow | Notes                                                             |
+| ------------------------------- | -------- | ----------------------------------------------------------------- |
+| Browse events list              | ✅       | `EventsScreen` with search + genre filters + sort                 |
+| Event detail with hero image    | ✅       | `EventDetailScreen`                                               |
+| Buy ticket flow                 | ✅       | `BuyTicketScreen` with quantity stepper, tier picker, promo codes |
+| Saved/owned tickets list        | ✅       | `MyTicketsScreen` with status filter chips                        |
+| QR code on owned ticket         | ✅       | `TicketDetailScreen` renders QR + payload                         |
+| Cancel ticket                   | ✅       | With confirmation dialog                                          |
+| Transfer ticket                 | ✅       | Email-based transfer with validation                              |
+| Sign in / sign up               | ✅       | `LoginScreen` + email + password                                  |
+| Forgot password → OTP → reset   | ✅       | Full recovery chain wired to deep links                           |
+| Profile + edit profile          | ✅       | Avatar, display name, bio with char count                         |
+| Push inbox / notifications      | ✅       | `InboxScreen` with unread state, mark all read                    |
+| Settings (language, appearance) | ✅       | en/ja/de + light/dark/system                                      |
+| Payment methods CRUD            | ✅       | List + add + set default + delete                                 |
+| Reviews + ratings               | ✅       | Image attachment, character count, rating input                   |
+| Following artists               | ✅       | `FollowingScreen` with unfollow                                   |
+| Onboarding carousel             | ✅       | Skip + paginated dots                                             |
+| Offline banner                  | ✅       | Toggleable from QA store                                          |
+| Recently viewed strip           | ✅       | Persisted via MMKV                                                |
+| Inbox badges                    | ✅       | Computed from notifications cache                                 |
 
 ### Surfaces we deliberately don't simulate
 
 These are common in real apps but expensive to fake convincingly,
-and the value/test ratio is low. Documenting why we *don't* have them
+and the value/test ratio is low. Documenting why we _don't_ have them
 matters as much as what we do have:
 
-| Missing surface          | Why we skipped it |
-| ------------------------ | ----------------- |
-| Map/venue picker         | Real-map UI is a separate testing problem (gestures, tile loading) — out of scope until we want to teach map-specific harnesses |
-| Seat selection (SVG map) | Same — venue-shape SVGs are bespoke per app; a generic version teaches nothing |
-| Stripe/Apple Pay sheet   | Native payment sheets are vendor-controlled; we fake the result instead |
-| Live event streaming     | Out of scope; no QA harness for video QoE in this project |
-| Social feed              | Bandsintown/Songkick have feeds; we model the *interesting* social bits (follow/unfollow, reviews) without the feed itself |
-| Friend graph + invites   | Doubles the data model with no new test technique |
-| Calendar integration     | Native calendar permissions are an OS-level affordance, not an app one |
-| Share sheet              | Same — OS sheet, not interesting from the app's testability angle |
-| Wallet card add (Apple/Google) | Vendor-owned UI; faking it is uninteresting |
+| Missing surface                | Why we skipped it                                                                                                               |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| Map/venue picker               | Real-map UI is a separate testing problem (gestures, tile loading) — out of scope until we want to teach map-specific harnesses |
+| Seat selection (SVG map)       | Same — venue-shape SVGs are bespoke per app; a generic version teaches nothing                                                  |
+| Stripe/Apple Pay sheet         | Native payment sheets are vendor-controlled; we fake the result instead                                                         |
+| Live event streaming           | Out of scope; no QA harness for video QoE in this project                                                                       |
+| Social feed                    | Bandsintown/Songkick have feeds; we model the _interesting_ social bits (follow/unfollow, reviews) without the feed itself      |
+| Friend graph + invites         | Doubles the data model with no new test technique                                                                               |
+| Calendar integration           | Native calendar permissions are an OS-level affordance, not an app one                                                          |
+| Share sheet                    | Same — OS sheet, not interesting from the app's testability angle                                                               |
+| Wallet card add (Apple/Google) | Vendor-owned UI; faking it is uninteresting                                                                                     |
 
 ### Surfaces worth adding next (high QA learning value)
 
@@ -131,7 +131,7 @@ Apps surveyed:
 ### What FrontRow does that the others don't
 
 These are the things I'd point a candidate at if they wanted to learn
-testability patterns *beyond* the basic Sauce/WDIO demos:
+testability patterns _beyond_ the basic Sauce/WDIO demos:
 
 1. **Centralized testID registry** (`src/testIds.ts`) — every demo app
    I looked at hard-codes `accessibilityLabel` strings inline. Ours is
@@ -141,7 +141,7 @@ testability patterns *beyond* the basic Sauce/WDIO demos:
 
 2. **ESLint plugin enforcing the testID contract** — `no-hardcoded-testids`,
    `require-testid-on-pressable`. None of the demo apps I surveyed enforce
-   their testID convention via lint. WDIO's demo has *suggestions* in a
+   their testID convention via lint. WDIO's demo has _suggestions_ in a
    README; ours has a flat-config plugin you can drop in.
 
 3. **Failure trigger system** — 7 deterministic failure modes, each a
@@ -152,7 +152,7 @@ testability patterns *beyond* the basic Sauce/WDIO demos:
    this many failure modes.**
 
 4. **Scenario seeding** — pristine, normal, sold-out, post-event,
-   refunded, fraud-flagged. The Sauce demo has *one* state. WDIO's has
+   refunded, fraud-flagged. The Sauce demo has _one_ state. WDIO's has
    none — you log in and that's the demo. Reproducible scenarios are
    table stakes for repeatable QA training.
 
@@ -162,7 +162,7 @@ testability patterns *beyond* the basic Sauce/WDIO demos:
 
 6. **Deterministic network stubs with QA-controlled latency and error
    injection** — others mock the network at the test layer (Detox,
-   WDIO). We mock at the *app* layer with state knobs, so the same app
+   WDIO). We mock at the _app_ layer with state knobs, so the same app
    binary supports many test profiles without rebuilds.
 
 7. **Locale switching as a first-class debug toggle** — en/ja/de live;
@@ -171,7 +171,7 @@ testability patterns *beyond* the basic Sauce/WDIO demos:
 
 8. **Accessibility-label sweep** (`docs/A11Y.md`) — explicit
    convention + audit. WDIO's demo has accessibility but doesn't
-   *teach* it.
+   _teach_ it.
 
 9. **Debug menu as a test-affordance hub** — scenarios, time travel,
    trigger toggles, force-error toggle, fake push, crash button,
@@ -179,7 +179,7 @@ testability patterns *beyond* the basic Sauce/WDIO demos:
    equivalent; their "menu" is the OS sign-in screen.
 
 10. **Native showcase scaffold** — a wirable Swift/Kotlin pair with
-    XCUITest + Espresso targets. The Sauce *native* sample has this,
+    XCUITest + Espresso targets. The Sauce _native_ sample has this,
     but their RN demo doesn't bridge to it. We're the only one I've
     seen that makes the JS↔native testID handoff explicit.
 
@@ -233,14 +233,14 @@ testability patterns *beyond* the basic Sauce/WDIO demos:
    Sentry-in-mock-mode for a richer demo.
 
 8. **Realtime/Pusher demo** — none of the surveyed apps had a
-   websocket demo. This is a gap *in the OSS demo space* — we could
+   websocket demo. This is a gap _in the OSS demo space_ — we could
    add one and stand out.
 
 ### Things we shouldn't copy
 
 - **Login-required-to-do-anything paywalls** (Sauce's demo) make
   every flow start the same way. We deliberately allow guest browse;
-  it's more realistic and the auth recovery chain is a *separate*
+  it's more realistic and the auth recovery chain is a _separate_
   flow, not a gatekeeper.
 - **Hardcoded test data with no resets** (most demos). Once you
   delete a "for sale" item in their demo, it's gone for the next

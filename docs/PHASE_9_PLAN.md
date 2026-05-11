@@ -23,54 +23,54 @@ The following is a survey across the patterns shown by **Dice**, **Ticketmaster*
 
 ### Event detail
 
-| Pattern                                | FrontRow | Notes                                                  |
-| -------------------------------------- | -------- | ------------------------------------------------------ |
-| Hero image                             | ✓        |                                                        |
-| Title / artist / venue / date          | ✓        |                                                        |
-| Buy / Reviews / Favorite / Share       | ✓        |                                                        |
-| **Lineup with set times**              | ✗        | Festivals + multi-artist nights need this              |
-| **Ticket tiers (GA/VIP/Reserved)**     | ✗        | Every real app sells more than one tier                |
-| **Refund / cancellation policy**       | ✗        | Trust signal — common just above the Buy button        |
-| **Save to calendar**                   | ~        | Capability demo exists, not yet wired here             |
-| **Follow artist**                      | ✗        | Bandsintown + Songkick are entirely built around this  |
-| Image carousel                         | ✗        | Multiple photos / promo art                            |
-| FAQ block (age, accessibility)         | ✗        | Common on Ticketmaster / AXS                           |
-| Seat map                               | ✗        | Heavy work; intentionally out of scope                 |
+| Pattern                            | FrontRow | Notes                                                 |
+| ---------------------------------- | -------- | ----------------------------------------------------- |
+| Hero image                         | ✓        |                                                       |
+| Title / artist / venue / date      | ✓        |                                                       |
+| Buy / Reviews / Favorite / Share   | ✓        |                                                       |
+| **Lineup with set times**          | ✗        | Festivals + multi-artist nights need this             |
+| **Ticket tiers (GA/VIP/Reserved)** | ✗        | Every real app sells more than one tier               |
+| **Refund / cancellation policy**   | ✗        | Trust signal — common just above the Buy button       |
+| **Save to calendar**               | ~        | Capability demo exists, not yet wired here            |
+| **Follow artist**                  | ✗        | Bandsintown + Songkick are entirely built around this |
+| Image carousel                     | ✗        | Multiple photos / promo art                           |
+| FAQ block (age, accessibility)     | ✗        | Common on Ticketmaster / AXS                          |
+| Seat map                           | ✗        | Heavy work; intentionally out of scope                |
 
 ### Buy flow
 
-| Pattern                              | FrontRow | Notes                                                  |
-| ------------------------------------ | -------- | ------------------------------------------------------ |
-| Quantity stepper                     | ✓        |                                                        |
-| Promo code                           | ✓        |                                                        |
-| **Tier selection at checkout**       | ✗        | Pairs with the missing event-level tiers               |
-| **Promo code via deep link**         | ✗        | `?promo=XYZ` is a common share path                    |
-| Apple/Google Pay sheet (mock)        | ✓        | MockBillingSheet                                       |
-| **Wallet pass (Apple/Google)**       | ✗        | Real apps add ticket to Wallet on success              |
+| Pattern                        | FrontRow | Notes                                     |
+| ------------------------------ | -------- | ----------------------------------------- |
+| Quantity stepper               | ✓        |                                           |
+| Promo code                     | ✓        |                                           |
+| **Tier selection at checkout** | ✗        | Pairs with the missing event-level tiers  |
+| **Promo code via deep link**   | ✗        | `?promo=XYZ` is a common share path       |
+| Apple/Google Pay sheet (mock)  | ✓        | MockBillingSheet                          |
+| **Wallet pass (Apple/Google)** | ✗        | Real apps add ticket to Wallet on success |
 
 ### Tickets
 
-| Pattern                                | FrontRow | Notes                                                  |
-| -------------------------------------- | -------- | ------------------------------------------------------ |
-| QR code                                | ✓        |                                                        |
-| Cancel / refund flow                   | ✓        |                                                        |
-| Transfer to friend                     | ✓        |                                                        |
-| Active / Past filter                   | ✓        | Just shipped                                           |
-| **Tier label on ticket**               | ✗        | Need tier in the ticket model                          |
-| **Ticket countdown ("doors in 1h")**  | ✗        | Live-updating UI; common just above the QR             |
-| **Calendar export per ticket**         | ✗        |                                                        |
+| Pattern                              | FrontRow | Notes                                      |
+| ------------------------------------ | -------- | ------------------------------------------ |
+| QR code                              | ✓        |                                            |
+| Cancel / refund flow                 | ✓        |                                            |
+| Transfer to friend                   | ✓        |                                            |
+| Active / Past filter                 | ✓        | Just shipped                               |
+| **Tier label on ticket**             | ✗        | Need tier in the ticket model              |
+| **Ticket countdown ("doors in 1h")** | ✗        | Live-updating UI; common just above the QR |
+| **Calendar export per ticket**       | ✗        |                                            |
 
 ### Account / personal
 
-| Pattern                              | FrontRow | Notes                                                  |
-| ------------------------------------ | -------- | ------------------------------------------------------ |
-| Sign in / forgot pw / reset          | ✓        |                                                        |
-| Edit profile                         | ✓        |                                                        |
-| Saved payment methods                | ✓        |                                                        |
-| Notification inbox                   | ✓        |                                                        |
-| **Followed artists**                 | ✗        |                                                        |
-| **Concert history / "wrapped"**      | ✗        |                                                        |
-| **Saved searches / alerts**          | ✗        | Rarer, but Bandsintown / Songkick lead with this       |
+| Pattern                         | FrontRow | Notes                                            |
+| ------------------------------- | -------- | ------------------------------------------------ |
+| Sign in / forgot pw / reset     | ✓        |                                                  |
+| Edit profile                    | ✓        |                                                  |
+| Saved payment methods           | ✓        |                                                  |
+| Notification inbox              | ✓        |                                                  |
+| **Followed artists**            | ✗        |                                                  |
+| **Concert history / "wrapped"** | ✗        |                                                  |
+| **Saved searches / alerts**     | ✗        | Rarer, but Bandsintown / Songkick lead with this |
 
 ## Design polish
 

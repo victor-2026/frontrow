@@ -2,10 +2,7 @@ import { type ReactNode } from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import {
-  useUnreadNotificationCount,
-  useMarkAllNotificationsRead,
-} from '../useNotifications';
+import { useUnreadNotificationCount, useMarkAllNotificationsRead } from '../useNotifications';
 import { login } from '../../api/services/auth';
 import { useAuthStore } from '../../state/auth';
 import { resetMockState, mockState } from '../../mocks/state';

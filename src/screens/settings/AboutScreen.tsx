@@ -18,7 +18,9 @@ export function AboutScreen() {
         <Text style={styles.heroTitle} accessibilityRole="header">
           FrontRow
         </Text>
-        <Text style={styles.heroSubtitle}>An open-source mobile app for QA automation training.</Text>
+        <Text style={styles.heroSubtitle}>
+          An open-source mobile app for QA automation training.
+        </Text>
       </View>
 
       <Section title="Build">

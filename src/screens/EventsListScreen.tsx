@@ -186,9 +186,7 @@ export function EventsListScreen() {
                 />
               ) : null}
               {!debouncedQ && genre == null && !favoritesOnly ? (
-                <RecentlyViewedStrip
-                  onPress={(e) => nav.navigate('EventDetail', { id: e.id })}
-                />
+                <RecentlyViewedStrip onPress={(e) => nav.navigate('EventDetail', { id: e.id })} />
               ) : null}
             </View>
           }

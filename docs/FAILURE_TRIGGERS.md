@@ -12,16 +12,16 @@ produces both failures on the next purchase attempt.
 
 ## Triggers
 
-| Kind             | What fails                                                                    | Where it lands                          |
-| ---------------- | ----------------------------------------------------------------------------- | --------------------------------------- |
-| `push`           | Local push delivery throws on the next `fakePush` / scheduled-notification    | Notifications capability demo           |
-| `geolocation`    | Permission request resolves "denied" without showing the system prompt        | Location capability demo                |
-| `camera`         | Camera permission request resolves "denied"                                   | Camera capability demo                  |
-| `biometric`      | Biometric probe reports unavailable; `authenticate` resolves with failure     | Biometric capability demo               |
-| `imageUpload`    | `postReview` with an `imageUri` throws `ApiClientError(413, upload_failed)`   | Reviews flow                            |
-| `sessionExpired` | Every API call throws `ApiClientError(401, session_expired)`                  | All authed services                     |
-| `paymentTimeout` | `purchaseTicket` throws `ApiClientError(504, payment_timeout)`                | Buy flow                                |
-| `reviewSubmit`   | `postReview` throws `ApiClientError(503, service_unavailable)`                | Review post                             |
+| Kind             | What fails                                                                  | Where it lands                |
+| ---------------- | --------------------------------------------------------------------------- | ----------------------------- |
+| `push`           | Local push delivery throws on the next `fakePush` / scheduled-notification  | Notifications capability demo |
+| `geolocation`    | Permission request resolves "denied" without showing the system prompt      | Location capability demo      |
+| `camera`         | Camera permission request resolves "denied"                                 | Camera capability demo        |
+| `biometric`      | Biometric probe reports unavailable; `authenticate` resolves with failure   | Biometric capability demo     |
+| `imageUpload`    | `postReview` with an `imageUri` throws `ApiClientError(413, upload_failed)` | Reviews flow                  |
+| `sessionExpired` | Every API call throws `ApiClientError(401, session_expired)`                | All authed services           |
+| `paymentTimeout` | `purchaseTicket` throws `ApiClientError(504, payment_timeout)`              | Buy flow                      |
+| `reviewSubmit`   | `postReview` throws `ApiClientError(503, service_unavailable)`              | Review post                   |
 
 ## Turning them on
 
@@ -33,10 +33,12 @@ Three equivalent ways:
    tap (`debug.clearTriggers`).
 
 2. **From a Maestro flow** — open the deep link directly:
+
    ```yaml
    - openLink: 'frontrow://debug/trigger/paymentTimeout'
    - openLink: 'frontrow://debug/trigger/paymentTimeout/off'
    ```
+
    No suffix or `/on` enables; `/off` disables. The same handler also
    accepts `frontrow://debug/reset` which clears every trigger and
    resets the mock state in one call — use it at the top of a flow that

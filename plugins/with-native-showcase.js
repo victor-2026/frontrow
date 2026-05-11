@@ -42,11 +42,7 @@ const IOS_SOURCES = [
 ];
 
 const ANDROID_PACKAGE_DIR = 'com/frontrow/nativedemo';
-const ANDROID_FILES = [
-  'NativeDemoActivity.kt',
-  'NativeDemoModule.kt',
-  'NativeDemoPackage.kt',
-];
+const ANDROID_FILES = ['NativeDemoActivity.kt', 'NativeDemoModule.kt', 'NativeDemoPackage.kt'];
 
 function copyIfChanged(srcPath, destPath) {
   fs.mkdirSync(path.dirname(destPath), { recursive: true });
@@ -97,13 +93,7 @@ function withCopiedAndroidSources(config) {
   return withDangerousMod(config, [
     'android',
     (cfg) => {
-      const javaRoot = path.join(
-        cfg.modRequest.platformProjectRoot,
-        'app',
-        'src',
-        'main',
-        'java',
-      );
+      const javaRoot = path.join(cfg.modRequest.platformProjectRoot, 'app', 'src', 'main', 'java');
       for (const file of ANDROID_FILES) {
         const src = path.join(SHOWCASE_ROOT, 'android', ANDROID_PACKAGE_DIR, file);
         const dest = path.join(javaRoot, ANDROID_PACKAGE_DIR, file);
@@ -119,10 +109,7 @@ function withRegisteredAndroidPackage(config) {
     let src = cfg.modResults.contents;
     const importLine = 'import com.frontrow.nativedemo.NativeDemoPackage';
     if (!src.includes(importLine)) {
-      src = src.replace(
-        /^(package\s+[^\n]+\n)/m,
-        `$1\n${importLine}\n`,
-      );
+      src = src.replace(/^(package\s+[^\n]+\n)/m, `$1\n${importLine}\n`);
     }
     // Register inside the PackageList(this).packages.apply { ... }
     // block — the modern Expo/RN template. Falls back to the older
@@ -136,10 +123,7 @@ function withRegisteredAndroidPackage(config) {
           return `${head}${body}\n              add(NativeDemoPackage())${tail}`;
         });
       } else if (valForm.test(src)) {
-        src = src.replace(
-          valForm,
-          `$1\n            packages.add(NativeDemoPackage())`,
-        );
+        src = src.replace(valForm, `$1\n            packages.add(NativeDemoPackage())`);
       }
     }
     cfg.modResults.contents = src;

@@ -34,8 +34,7 @@ export function SwipeableRow({ children, actionLabel, actionTestID, onAction }: 
 
   const responder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: (_e, g) =>
-        Math.abs(g.dx) > 6 && Math.abs(g.dx) > Math.abs(g.dy),
+      onMoveShouldSetPanResponder: (_e, g) => Math.abs(g.dx) > 6 && Math.abs(g.dx) > Math.abs(g.dy),
       onPanResponderGrant: () => {
         tx.setOffset(offset.current);
         tx.setValue(0);
@@ -72,7 +71,10 @@ export function SwipeableRow({ children, actionLabel, actionTestID, onAction }: 
           <Text style={styles.actionText}>{actionLabel}</Text>
         </Pressable>
       </View>
-      <Animated.View style={[styles.foreground, { transform: [{ translateX: tx }] }]} {...responder.panHandlers}>
+      <Animated.View
+        style={[styles.foreground, { transform: [{ translateX: tx }] }]}
+        {...responder.panHandlers}
+      >
         {children}
       </Animated.View>
     </View>

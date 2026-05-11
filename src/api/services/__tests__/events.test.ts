@@ -13,9 +13,9 @@ describe('events.listEvents', () => {
     const page = await listEvents();
     expect(page.items.length).toBeGreaterThan(0);
     for (let i = 1; i < page.items.length; i += 1) {
-      expect(page.items[i - 1]!.startsAt.localeCompare(page.items[i]!.startsAt)).toBeLessThanOrEqual(
-        0,
-      );
+      expect(
+        page.items[i - 1]!.startsAt.localeCompare(page.items[i]!.startsAt),
+      ).toBeLessThanOrEqual(0);
     }
   });
 

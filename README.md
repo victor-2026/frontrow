@@ -151,16 +151,16 @@ A flow is a flow regardless of framework. Look at `tests/maestro/auth/login.yaml
 
 ## Roadmap
 
-| Phase | Scope                                                                                     | Status |
-| ----- | ----------------------------------------------------------------------------------------- | ------ |
-| 0     | Repo skeleton, toolchain, CI, navigation                                                  | ✓      |
-| 1     | Mock API + persistence + core flows + first Maestro flows                                 | ✓      |
-| 2     | QA Debug Menu + hermetic mode + deep-link-to-anywhere                                     | ✓      |
-| 3     | Device capability demos (camera, mic, location, biometric, haptic, calendar, share, push) | ✓      |
-| 4     | Mock IAP (success, decline, cancel, restore, refund)                                      | ✓      |
-| 5     | `expo prebuild`, MMKV migration, Espresso + XCUITest scaffolding                          | ✓      |
-| 6     | Appium WebdriverIO suite + Maestro Cloud CI                                               | ✓      |
-| 7     | Tutorials, scenario recipes, README polish                                                | ✓      |
+| Phase | Scope                                                                                      | Status |
+| ----- | ------------------------------------------------------------------------------------------ | ------ |
+| 0     | Repo skeleton, toolchain, CI, navigation                                                   | ✓      |
+| 1     | Mock API + persistence + core flows + first Maestro flows                                  | ✓      |
+| 2     | QA Debug Menu + hermetic mode + deep-link-to-anywhere                                      | ✓      |
+| 3     | Device capability demos (camera, mic, location, biometric, haptic, calendar, share, push)  | ✓      |
+| 4     | Mock IAP (success, decline, cancel, restore, refund)                                       | ✓      |
+| 5     | `expo prebuild`, MMKV migration, Espresso + XCUITest scaffolding                           | ✓      |
+| 6     | Appium WebdriverIO suite + Maestro Cloud CI                                                | ✓      |
+| 7     | Tutorials, scenario recipes, README polish                                                 | ✓      |
 | 8     | Realistic product surfaces (onboarding, favorites, ticket transfer, payment methods, etc.) | ✓      |
 
 ## A note on the Debug tab

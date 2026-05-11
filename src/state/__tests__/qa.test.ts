@@ -58,9 +58,7 @@ describe('setNetworkProfile', () => {
     await useQaStore.getState().setNetworkProfile('fast3g');
     const state = useQaStore.getState();
     expect(state.networkProfile).toBe('fast3g');
-    expect(state.networkDelayMs).toBe(
-      NETWORK_PROFILES.find((p) => p.id === 'fast3g')!.delayMs,
-    );
+    expect(state.networkDelayMs).toBe(NETWORK_PROFILES.find((p) => p.id === 'fast3g')!.delayMs);
   });
 
   it('offline preset doubles as the offline forceError', async () => {

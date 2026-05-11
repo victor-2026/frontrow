@@ -9,43 +9,43 @@ Two categories of links exist:
 
 ## Navigation links
 
-| Link                                      | Screen                  |
-| ----------------------------------------- | ----------------------- |
-| `frontrow://events`                       | Events list             |
-| `frontrow://events/:id`                   | Event detail            |
-| `frontrow://events/:eventId/buy`          | Buy ticket modal        |
-| `frontrow://events/:eventId/reviews`      | Event reviews           |
-| `frontrow://inbox`                        | Notifications inbox     |
-| `frontrow://tickets`                      | My Tickets              |
-| `frontrow://tickets/:id`                  | Ticket detail (QR)      |
-| `frontrow://profile`                      | Profile                 |
-| `frontrow://profile/edit`                 | Edit profile            |
-| `frontrow://profile/following`            | Followed artists        |
-| `frontrow://profile/login`                | Sign-in screen          |
-| `frontrow://profile/forgot-password`      | Forgot password         |
-| `frontrow://profile/otp`                  | OTP entry               |
-| `frontrow://profile/reset-password`       | Reset password          |
-| `frontrow://profile/premium`              | Premium upsell          |
-| `frontrow://profile/settings`             | Settings                |
-| `frontrow://profile/language`             | Language picker         |
-| `frontrow://profile/about`                | About                   |
-| `frontrow://profile/payment-methods`      | Saved payment methods   |
-| `frontrow://profile/payment-methods/add`  | Add payment method      |
-| `frontrow://debug`                        | QA Debug Menu           |
+| Link                                     | Screen                |
+| ---------------------------------------- | --------------------- |
+| `frontrow://events`                      | Events list           |
+| `frontrow://events/:id`                  | Event detail          |
+| `frontrow://events/:eventId/buy`         | Buy ticket modal      |
+| `frontrow://events/:eventId/reviews`     | Event reviews         |
+| `frontrow://inbox`                       | Notifications inbox   |
+| `frontrow://tickets`                     | My Tickets            |
+| `frontrow://tickets/:id`                 | Ticket detail (QR)    |
+| `frontrow://profile`                     | Profile               |
+| `frontrow://profile/edit`                | Edit profile          |
+| `frontrow://profile/following`           | Followed artists      |
+| `frontrow://profile/login`               | Sign-in screen        |
+| `frontrow://profile/forgot-password`     | Forgot password       |
+| `frontrow://profile/otp`                 | OTP entry             |
+| `frontrow://profile/reset-password`      | Reset password        |
+| `frontrow://profile/premium`             | Premium upsell        |
+| `frontrow://profile/settings`            | Settings              |
+| `frontrow://profile/language`            | Language picker       |
+| `frontrow://profile/about`               | About                 |
+| `frontrow://profile/payment-methods`     | Saved payment methods |
+| `frontrow://profile/payment-methods/add` | Add payment method    |
+| `frontrow://debug`                       | QA Debug Menu         |
 
 ## QA control links
 
 These intercept before navigation and apply side-effects. The app stays on whatever screen it was on (or lands on Events if it cold-launches).
 
-| Link                                            | What it does                                                                                       |
-| ----------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `frontrow://e2e/setup`                          | Signs in the demo user, marks onboarding complete, resets mock data, clears failure triggers. Replaces the cold-boot + login dance with one openLink (~200ms). |
-| `frontrow://debug/reset`                        | Wipes the in-process `mockState` back to fixture defaults and clears the active scenario.          |
-| `frontrow://debug/seed/<scenario_id>`           | Applies a seed scenario (see [SCENARIOS.md](SCENARIOS.md) for IDs).                                |
-| `frontrow://debug/replayOnboarding`             | Re-enables the onboarding pager without uninstalling.                                              |
-| `frontrow://debug/iap/<outcome>`                | Sets IAP outcome (`success`, `decline`, `cancel`, `pending`).                                      |
-| `frontrow://debug/forceError/<mode>`            | Sets force-error mode (`none`, `4xx`, `5xx`, `timeout`, `offline`).                                |
-| `frontrow://debug/trigger/<kind>[/on\|/off]`    | Toggles a [failure trigger](FAILURE_TRIGGERS.md). Omit the `/on\|/off` segment to default to `on`. |
+| Link                                         | What it does                                                                                                                                                   |
+| -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `frontrow://e2e/setup`                       | Signs in the demo user, marks onboarding complete, resets mock data, clears failure triggers. Replaces the cold-boot + login dance with one openLink (~200ms). |
+| `frontrow://debug/reset`                     | Wipes the in-process `mockState` back to fixture defaults and clears the active scenario.                                                                      |
+| `frontrow://debug/seed/<scenario_id>`        | Applies a seed scenario (see [SCENARIOS.md](SCENARIOS.md) for IDs).                                                                                            |
+| `frontrow://debug/replayOnboarding`          | Re-enables the onboarding pager without uninstalling.                                                                                                          |
+| `frontrow://debug/iap/<outcome>`             | Sets IAP outcome (`success`, `decline`, `cancel`, `pending`).                                                                                                  |
+| `frontrow://debug/forceError/<mode>`         | Sets force-error mode (`none`, `4xx`, `5xx`, `timeout`, `offline`).                                                                                            |
+| `frontrow://debug/trigger/<kind>[/on\|/off]` | Toggles a [failure trigger](FAILURE_TRIGGERS.md). Omit the `/on\|/off` segment to default to `on`.                                                             |
 
 ## Testing deep links locally
 
@@ -61,7 +61,7 @@ In Expo Go you can trigger deep links from the developer menu, or use the dev UR
 
 ## iOS-specific gotcha: foregrounded-app delivery
 
-iOS does not reliably re-deliver a URL to a foregrounded app via `Linking.addEventListener`. For QA control links that need to take effect on the *next* render (most importantly `debug/trigger/...`), kill the app first and let the platform cold-launch path process the URL:
+iOS does not reliably re-deliver a URL to a foregrounded app via `Linking.addEventListener`. For QA control links that need to take effect on the _next_ render (most importantly `debug/trigger/...`), kill the app first and let the platform cold-launch path process the URL:
 
 ```yaml
 # Maestro

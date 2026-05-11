@@ -35,10 +35,10 @@ native-showcase/
 
 ## How testIDs map to native code
 
-| Layer        | RN testID prop | Native attribute                                  |
-| ------------ | -------------- | ------------------------------------------------- |
-| iOS (UIKit)  | n/a            | `accessibilityIdentifier`                         |
-| Android view | n/a            | `contentDescription` (or `setTag` with view-id)   |
+| Layer        | RN testID prop | Native attribute                                |
+| ------------ | -------------- | ----------------------------------------------- |
+| iOS (UIKit)  | n/a            | `accessibilityIdentifier`                       |
+| Android view | n/a            | `contentDescription` (or `setTag` with view-id) |
 
 The native code in this directory sets those attributes manually so the
 XCUITest queries (`app.buttons["nativeDemo.incrementButton"]`) and
@@ -100,11 +100,7 @@ export function openNativeDemo(): void {
 Then add a button to `DebugScreen.tsx`:
 
 ```tsx
-<Row
-  testID="debug.openNativeDemo"
-  label="Open native demo"
-  onPress={openNativeDemo}
-/>
+<Row testID="debug.openNativeDemo" label="Open native demo" onPress={openNativeDemo} />
 ```
 
 The XCUITest scaffold (`testNativeDemoOpens_AndIncrementUpdatesCounter`)

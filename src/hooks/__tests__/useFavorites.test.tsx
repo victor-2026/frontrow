@@ -2,10 +2,7 @@ import { type ReactNode } from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import {
-  useFavoriteEventIds,
-  useToggleFavorite,
-} from '../useFavorites';
+import { useFavoriteEventIds, useToggleFavorite } from '../useFavorites';
 import { login } from '../../api/services/auth';
 import { useAuthStore } from '../../state/auth';
 import { resetMockState, mockState } from '../../mocks/state';
@@ -32,10 +29,13 @@ afterEach(() => {
 
 describe('useFavoriteEventIds + useToggleFavorite', () => {
   it('reads the seeded favorites and reflects a toggle', async () => {
-    const { result } = renderHook(() => ({
-      list: useFavoriteEventIds(),
-      toggle: useToggleFavorite(),
-    }), { wrapper });
+    const { result } = renderHook(
+      () => ({
+        list: useFavoriteEventIds(),
+        toggle: useToggleFavorite(),
+      }),
+      { wrapper },
+    );
 
     await waitFor(() => expect(result.current.list.data).toBeDefined());
     expect(result.current.list.data?.sort()).toEqual(['evt_001', 'evt_002', 'evt_003']);

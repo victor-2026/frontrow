@@ -2,11 +2,7 @@ import { type ReactNode } from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import {
-  useCancelTicket,
-  useTransferTicket,
-  useMyTickets,
-} from '../useTickets';
+import { useCancelTicket, useTransferTicket, useMyTickets } from '../useTickets';
 import { login } from '../../api/services/auth';
 import { useAuthStore } from '../../state/auth';
 import { useQaStore } from '../../state/qa';
@@ -50,10 +46,9 @@ afterEach(() => {
 describe('useCancelTicket', () => {
   it('flips the ticket status to refund_pending and invalidates the list cache', async () => {
     const wrapper = makeWrapper();
-    const { result } = renderHook(
-      () => ({ cancel: useCancelTicket(), list: useMyTickets() }),
-      { wrapper },
-    );
+    const { result } = renderHook(() => ({ cancel: useCancelTicket(), list: useMyTickets() }), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.list.data).toBeDefined());
 
     const target = result.current.list.data!.find((t) => t.status === 'active');
@@ -72,19 +67,16 @@ describe('useCancelTicket', () => {
   it('rejects when called against a ticket the user does not own', async () => {
     const wrapper = makeWrapper();
     const { result } = renderHook(() => useCancelTicket(), { wrapper });
-    await expect(
-      act(() => result.current.mutateAsync('tkt_does_not_exist')),
-    ).rejects.toBeDefined();
+    await expect(act(() => result.current.mutateAsync('tkt_does_not_exist'))).rejects.toBeDefined();
   });
 });
 
 describe('useTransferTicket', () => {
   it('rejects with recipient_not_found when the email is unknown', async () => {
     const wrapper = makeWrapper();
-    const { result } = renderHook(
-      () => ({ list: useMyTickets(), transfer: useTransferTicket() }),
-      { wrapper },
-    );
+    const { result } = renderHook(() => ({ list: useMyTickets(), transfer: useTransferTicket() }), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.list.data).toBeDefined());
     const tk = result.current.list.data!.find((t) => t.status === 'active')!;
     await expect(
@@ -99,10 +91,9 @@ describe('useTransferTicket', () => {
 
   it('reassigns the ticket to the recipient on success', async () => {
     const wrapper = makeWrapper();
-    const { result } = renderHook(
-      () => ({ list: useMyTickets(), transfer: useTransferTicket() }),
-      { wrapper },
-    );
+    const { result } = renderHook(() => ({ list: useMyTickets(), transfer: useTransferTicket() }), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.list.data).toBeDefined());
     const tk = result.current.list.data!.find((t) => t.status === 'active')!;
     await act(async () => {

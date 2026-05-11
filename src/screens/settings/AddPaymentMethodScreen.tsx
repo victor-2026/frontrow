@@ -131,7 +131,11 @@ export function AddPaymentMethodScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: theme.colors.background },
   content: { padding: theme.spacing.lg, gap: theme.spacing.sm },
-  label: { fontSize: theme.typography.caption, color: theme.colors.muted, marginTop: theme.spacing.sm },
+  label: {
+    fontSize: theme.typography.caption,
+    color: theme.colors.muted,
+    marginTop: theme.spacing.sm,
+  },
   input: {
     borderWidth: 1,
     borderColor: theme.colors.border,
@@ -143,7 +147,11 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: 'row', gap: theme.spacing.sm },
   col: { flex: 1 },
-  error: { color: theme.colors.danger, fontSize: theme.typography.body, marginTop: theme.spacing.sm },
+  error: {
+    color: theme.colors.danger,
+    fontSize: theme.typography.body,
+    marginTop: theme.spacing.sm,
+  },
   hint: {
     fontSize: theme.typography.caption,
     color: theme.colors.muted,
