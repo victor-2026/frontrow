@@ -286,7 +286,7 @@ exports[`component snapshots EventListItem — default state 1`] = `
       >
         Wed, Jun 12
          · 
-        10:00 PM
+        8:00 PM
       </Text>
     </View>
   </View>
@@ -493,7 +493,7 @@ exports[`component snapshots EventListItem — sold out 1`] = `
       >
         Wed, Jun 12
          · 
-        10:00 PM
+        8:00 PM
       </Text>
     </View>
   </View>
