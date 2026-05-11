@@ -29,6 +29,32 @@ That's it. No backend to run, no accounts to create, no secrets to configure.
 
 > Some Phase 5+ capabilities (MMKV, real local notifications) require a development build. The standard `npm run ios` / `npm run android` covers that — Expo Go alone is not enough once `expo prebuild` has run.
 
+## Just want the app?
+
+If you don't want to build from source, a prebuilt Android APK ships with each tagged release. Grab `FrontRow.apk` from the [Releases](../../releases) page and install via:
+
+```bash
+adb install FrontRow.apk        # emulator or USB-attached device
+```
+
+Or open the APK on the device directly and accept "install from unknown source". The APK is signed with a debug keystore — it's intentionally a sideload artifact, not a Play Store build.
+
+iOS distribution requires an Apple Developer account (TestFlight or AdHoc signing) — see the [Quick start](#quick-start) above to run on a simulator instead.
+
+## Try a Maestro flow
+
+With the app installed and Metro running:
+
+```bash
+# Single flow:
+maestro --device <udid-or-emulator-id> test tests/maestro/native/native-demo.yaml
+
+# Full suite (handles per-platform tag exclusions + retries):
+./scripts/maestro.sh android        # or: ./scripts/maestro.sh ios
+```
+
+The driver auto-installs on first run on iOS (~90s). Subsequent runs are fast.
+
 ## What's inside
 
 - **React Native + Expo (prebuilt)** — single TypeScript codebase, native iOS and Android projects committed.
@@ -39,6 +65,7 @@ That's it. No backend to run, no accounts to create, no secrets to configure.
 - **Mock IAP** — products, receipts, restore-purchases, with QA-controlled outcomes (success, decline, cancel, pending) — see [docs/tutorials/SCENARIOS_AS_FIXTURES.md](docs/tutorials/SCENARIOS_AS_FIXTURES.md).
 - **Device capability demos** — camera, microphone, location, biometric, haptics, calendar, share, notifications. Each has a dedicated screen with stable testIDs.
 - **Realistic product surfaces** — onboarding pager · debounced search with genre + favorites filters · skeleton loaders · paginated infinite scroll · star-rated reviews · ticket detail with QR + cancel + transfer · Active/Past ticket filter · saved payment methods CRUD · edit-profile with dirty-state guard · forgot-password (email → OTP → reset) · notification inbox with unread badge · offline banner · share to system sheet · retry on error — every feature ships with at least one Maestro flow.
+- **Hand-rolled native screen** — a Swift `UIViewController` (iOS) and Kotlin `AppCompatActivity` (Android) bridged to JS so QA can drive raw native surfaces with the same testID contract used everywhere else. Open it from the Debug tab → "Native demo", or via `tests/maestro/native/native-demo.yaml`. Source: [`native-showcase/`](native-showcase/) — copied into the host iOS/Android projects on every `expo prebuild` by [`plugins/with-native-showcase.js`](plugins/with-native-showcase.js).
 
 ## Test frameworks
 
@@ -75,6 +102,12 @@ A flow is a flow regardless of framework. Look at `tests/maestro/auth/login.yaml
 | 6     | Appium WebdriverIO suite + Maestro Cloud CI                                               | ✓      |
 | 7     | Tutorials, scenario recipes, README polish                                                | ✓      |
 | 8     | Realistic product surfaces (onboarding, favorites, ticket transfer, payment methods, etc.) | ✓      |
+
+## A note on the Debug tab
+
+The `Debug` tab is registered unconditionally in `src/navigation/RootNavigator.tsx` and ships visible in release builds. That is **intentional** — exposing the QA surface is the whole point of this app. If you fork FrontRow as the base for a real product, gate that registration behind `__DEV__` or a build flag before publishing.
+
+The deep-link handler in `src/hooks/useDeepLinkScenario.ts` follows the same principle: `frontrow://debug/*` URLs are honored regardless of build configuration. Same caveat applies for downstream forks.
 
 ## Contributing
 

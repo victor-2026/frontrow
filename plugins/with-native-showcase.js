@@ -35,6 +35,10 @@ const SHOWCASE_ROOT = path.resolve(__dirname, '..', 'native-showcase');
 const IOS_SOURCES = [
   'FrontRowNativeDemoViewController.swift',
   'FrontRowNativeDemoModule.swift',
+  // Objective-C bridge that registers the Swift module with React
+  // Native's bridge via RCT_EXTERN_MODULE. Without this file the
+  // Swift @objc class alone is not visible as NativeModules.FrontRowNativeDemo.
+  'FrontRowNativeDemoBridge.m',
 ];
 
 const ANDROID_PACKAGE_DIR = 'com/frontrow/nativedemo';

@@ -15,7 +15,18 @@ public final class FrontRowNativeDemoModule: NSObject {
 
   @objc public func open() {
     DispatchQueue.main.async {
-      guard let root = UIApplication.shared.windows.first?.rootViewController else { return }
+      // UIApplication.shared.windows is deprecated in iOS 15 and, more
+      // importantly, returns *all* connected windows including ones
+      // belonging to XCUITest's runner — under Maestro that surfaces
+      // first and the present() lands in a window the user never sees.
+      // Walk the connected scenes for the key window of the foreground
+      // active scene instead.
+      let key = UIApplication.shared.connectedScenes
+        .compactMap { $0 as? UIWindowScene }
+        .filter { $0.activationState == .foregroundActive }
+        .flatMap { $0.windows }
+        .first { $0.isKeyWindow }
+      guard let root = key?.rootViewController else { return }
       let vc = FrontRowNativeDemoViewController()
       vc.modalPresentationStyle = .fullScreen
       var presenter = root

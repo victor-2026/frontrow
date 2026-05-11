@@ -14,6 +14,9 @@
 		E1DCF043AAADD5D7A124F8F4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1663EAF62AFBAC79EDEDA81A /* PrivacyInfo.xcprivacy */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 		FDBA3DD02D09CD85C32CD0A7 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E94B0C9ED6223A1065678C /* ExpoModulesProvider.swift */; };
+		9D6CF490E8774925AC72FE02 /* FrontRowNativeDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74CC4950CA14466A9B438A3 /* FrontRowNativeDemoViewController.swift */; };
+		008CEBBE98D64D60ACE64811 /* FrontRowNativeDemoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61F47A6BC34391B6C28397 /* FrontRowNativeDemoModule.swift */; };
+		C403935FE666439F83D96CFD /* FrontRowNativeDemoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759F94EF0384688B10EDC17 /* FrontRowNativeDemoBridge.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = FrontRow/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* FrontRow-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "FrontRow-Bridging-Header.h"; path = "FrontRow/FrontRow-Bridging-Header.h"; sourceTree = "<group>"; };
+		D74CC4950CA14466A9B438A3 /* FrontRowNativeDemoViewController.swift */ = {isa = PBXFileReference; name = "FrontRowNativeDemoViewController.swift"; path = "FrontRow/FrontRowNativeDemoViewController.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		EE61F47A6BC34391B6C28397 /* FrontRowNativeDemoModule.swift */ = {isa = PBXFileReference; name = "FrontRowNativeDemoModule.swift"; path = "FrontRow/FrontRowNativeDemoModule.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		6759F94EF0384688B10EDC17 /* FrontRowNativeDemoBridge.m */ = {isa = PBXFileReference; name = "FrontRowNativeDemoBridge.m"; path = "FrontRow/FrontRowNativeDemoBridge.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +60,9 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
 				1663EAF62AFBAC79EDEDA81A /* PrivacyInfo.xcprivacy */,
+				D74CC4950CA14466A9B438A3 /* FrontRowNativeDemoViewController.swift */,
+				EE61F47A6BC34391B6C28397 /* FrontRowNativeDemoModule.swift */,
+				6759F94EF0384688B10EDC17 /* FrontRowNativeDemoBridge.m */,
 			);
 			name = FrontRow;
 			sourceTree = "<group>";
@@ -329,6 +338,9 @@
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
 				FDBA3DD02D09CD85C32CD0A7 /* ExpoModulesProvider.swift in Sources */,
+				9D6CF490E8774925AC72FE02 /* FrontRowNativeDemoViewController.swift in Sources */,
+				008CEBBE98D64D60ACE64811 /* FrontRowNativeDemoModule.swift in Sources */,
+				C403935FE666439F83D96CFD /* FrontRowNativeDemoBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,7 +374,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = app.frontrow.qa;
-				PRODUCT_NAME = FrontRow;
+				PRODUCT_NAME = "FrontRow";
 				SWIFT_OBJC_BRIDGING_HEADER = "FrontRow/FrontRow-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -393,7 +405,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = app.frontrow.qa;
-				PRODUCT_NAME = FrontRow;
+				PRODUCT_NAME = "FrontRow";
 				SWIFT_OBJC_BRIDGING_HEADER = "FrontRow/FrontRow-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

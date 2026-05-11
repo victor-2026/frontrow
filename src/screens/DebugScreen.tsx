@@ -16,6 +16,7 @@ import { useSettingsStore } from '../state/settings';
 import { scenarios, type ScenarioId } from '../mocks/seed/scenarios/registry';
 import { resetMockState } from '../mocks/state';
 import { getBuildInfo } from '../utils/buildInfo';
+import { openNativeDemo } from '../utils/nativeDemo';
 
 const PRESET_TIME_OFFSETS: { label: string; ms: number }[] = [
   { label: 'Now', ms: 0 },
@@ -148,6 +149,11 @@ export function DebugScreen() {
         <Row
           label="Notifications"
           onPress={() => nav.dispatch(CommonActions.navigate({ name: 'NotificationsDemo' }))}
+        />
+        <Row
+          testID={testIds.debug.openNativeDemo}
+          label="Native demo"
+          onPress={openNativeDemo}
         />
       </Section>
 

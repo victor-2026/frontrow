@@ -26,5 +26,12 @@ project.xcworkspace
 # Bundle artifacts
 *.jsbundle
 
+# Native showcase iOS files are copied here by
+# plugins/with-native-showcase.js on every `expo prebuild`. The source
+# of truth lives in native-showcase/ios/ — never edit these copies.
+FrontRow/FrontRowNativeDemoModule.swift
+FrontRow/FrontRowNativeDemoViewController.swift
+FrontRow/FrontRowNativeDemoBridge.m
+
 # CocoaPods
 /Pods/

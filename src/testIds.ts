@@ -133,6 +133,15 @@ export const testIds = {
     triggerToggle: (kind: string) => `debug.trigger.${kind}`,
     clearTriggersButton: 'debug.clearTriggers',
     networkProfile: (id: string) => `debug.networkProfile.${id}`,
+    openNativeDemo: 'debug.openNativeDemo',
+  },
+  nativeDemo: {
+    screen: 'screen.nativeDemo',
+    title: 'nativeDemo.title',
+    body: 'nativeDemo.body',
+    counter: 'nativeDemo.counter',
+    incrementButton: 'nativeDemo.incrementButton',
+    closeButton: 'nativeDemo.closeButton',
   },
   eventDetail: {
     screen: 'screen.eventDetail',
