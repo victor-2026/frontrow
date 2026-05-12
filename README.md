@@ -16,13 +16,23 @@
 
 <br />
 
-A concert & events ticketing app for QA automation engineers, automation learners, and manual testers. Stable test IDs, a deep QA Debug Menu, deterministic seed data, bridged native screens, and ready-to-run flows for Maestro, Appium, Espresso, and XCUITest — all targeting the same identifiers.
+A concert & events ticketing app for QA automation engineers, automation learners, and manual testers. Stable test IDs, a deep QA Debug Menu, deterministic seed data, bridged native screens, a full Maestro suite, and ready-to-extend scaffolds for Appium, Espresso, and XCUITest — all targeting the same identifiers.
 
 Clone, run on a simulator in under five minutes, then use it to learn — or teach — mobile test automation against a realistic surface.
 
-**If FrontRow helps you practice mobile testing, please star the repo.** It surfaces the project for the next QA engineer searching for a sandbox, and lets me know it's worth investing more time in.
-
 </div>
+
+> [!TIP]
+>
+> ### ⭐ Find FrontRow useful?
+>
+> **If it helps you practice mobile testing, please [star the repo](https://github.com/majdukovic/frontrow).** It surfaces the project for the next QA engineer searching for a sandbox, and tells me it's worth investing more time in.
+
+<p align="center">
+  <a href="https://github.com/majdukovic/frontrow">
+    <img src="https://img.shields.io/badge/%E2%AD%90%20Star%20this%20repo-on%20GitHub-FF3B5C?style=for-the-badge&labelColor=2D2D2D" height="42" alt="Star this repo on GitHub" />
+  </a>
+</p>
 
 ## See it in action
 
@@ -270,14 +280,16 @@ The driver auto-installs on first run on iOS (~90s). Subsequent runs are fast.
 
 ## Test frameworks
 
-| Framework                 | Lives in          | Tutorial                                       |
-| ------------------------- | ----------------- | ---------------------------------------------- |
-| Maestro                   | `tests/maestro/`  | [Maestro 101](docs/tutorials/MAESTRO_101.md)   |
-| Appium (WebdriverIO + TS) | `tests/appium/`   | [Appium 101](docs/tutorials/APPIUM_101.md)     |
-| Espresso (Android)        | `tests/espresso/` | [Espresso 101](docs/tutorials/ESPRESSO_101.md) |
-| XCUITest (iOS)            | `tests/xcuitest/` | [XCUITest 101](docs/tutorials/XCUITEST_101.md) |
+| Framework                 | Lives in          | Coverage today                           | Tutorial                                       |
+| ------------------------- | ----------------- | ---------------------------------------- | ---------------------------------------------- |
+| Maestro                   | `tests/maestro/`  | 30 flows across 8 areas — the full suite | [Maestro 101](docs/tutorials/MAESTRO_101.md)   |
+| Appium (WebdriverIO + TS) | `tests/appium/`   | Smoke + login specs, full WDIO infra     | [Appium 101](docs/tutorials/APPIUM_101.md)     |
+| Espresso (Android)        | `tests/espresso/` | Smoke template — wired to project hooks  | [Espresso 101](docs/tutorials/ESPRESSO_101.md) |
+| XCUITest (iOS)            | `tests/xcuitest/` | Smoke + sign-in templates                | [XCUITest 101](docs/tutorials/XCUITEST_101.md) |
 
 A flow is a flow regardless of framework. Look at `tests/maestro/auth/login.yaml` and `tests/appium/specs/login.spec.ts` side by side — they target identical test IDs.
+
+Maestro is the only framework with full coverage today; Appium, Espresso, and XCUITest ship with working examples and the same testID contract, so adding new flows is mechanical — see [Roadmap](#roadmap) for what's next.
 
 ## Documentation map
 
@@ -303,8 +315,11 @@ A flow is a flow regardless of framework. Look at `tests/maestro/auth/login.yaml
 | 6     | Appium WebdriverIO suite + Maestro Cloud CI                                                | ✓      |
 | 7     | Tutorials, scenario recipes, README polish                                                 | ✓      |
 | 8     | Realistic product surfaces (onboarding, favorites, ticket transfer, payment methods, etc.) | ✓      |
+| 9     | Mirror representative Maestro flows in Appium / Espresso / XCUITest                        | next   |
 
-Phase 0–8 are complete. The repo is feature-stable, but ideas are very welcome: more framework examples (Detox, KIF), contract-testing playgrounds, visual regression scaffolds, accessibility audit recipes. File an issue with a scenario you'd love to see — that's the fastest way to shape what lands next.
+Phase 0–8 are complete. Phase 9 is the active focus: bring Appium, Espresso, and XCUITest from "smoke template" to real coverage by porting the higher-value Maestro flows (auth, events browse, buy, ticket transfer, debug-menu interactions) so the side-by-side framework comparison the README promises is actually side by side.
+
+Further out, ideas are very welcome: more framework examples (Detox, KIF), contract-testing playgrounds, visual regression scaffolds, accessibility audit recipes. File an issue with a scenario you'd love to see — that's the fastest way to shape what lands next.
 
 ## A note on the Debug tab
 
