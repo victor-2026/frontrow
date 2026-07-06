@@ -1,0 +1,31 @@
+# Edit display name, save, verify it persists on the profile screen.
+appId: app.frontrow.qa
+---
+- runFlow: ../_setup.yaml
+
+- tapOn:
+    id: 'tab.profile'
+- assertVisible:
+    id: 'screen.profile'
+- assertVisible: 'Demo User'
+
+- tapOn:
+    id: 'profile.editButton'
+- assertVisible:
+    id: 'screen.editProfile'
+
+- tapOn:
+    id: 'editProfile.displayNameInput'
+- eraseText
+- inputText: 'QA Rockstar'
+
+- tapOn:
+    id: 'editProfile.saveButton'
+- extendedWaitUntil:
+    notVisible:
+      id: 'screen.editProfile'
+    timeout: 10000
+
+- assertVisible:
+    id: 'screen.profile'
+- assertVisible: 'QA Rockstar'

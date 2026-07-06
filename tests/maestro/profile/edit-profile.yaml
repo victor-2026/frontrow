@@ -1,0 +1,47 @@
+appId: app.frontrow.qa
+tags:
+  - editProfile
+  - coverage
+---
+# Edit Profile coverage (with longer wait)
+
+- tapOn:
+    id: "tab.profile"
+- extendedWaitUntil:
+    visible:
+      id: "screen.profile"
+    timeout: 10000
+- tapOn:
+    id: "profile.editButton"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "screen.editProfile"
+    timeout: 10000
+- assertVisible:
+    id: "editProfile.bioCharCount"
+
+# Trigger discard dialog with keyboard dismiss
+- tapOn:
+    id: "editProfile.displayNameInput"
+- eraseText
+- inputText: "New Name"
+- tapOn:
+    id: "editProfile.bioCharCount"
+- tapOn:
+    id: "editProfile.backButton"
+- extendedWaitUntil:
+    visible:
+      id: "editProfile.discardConfirmDialog"
+    timeout: 5000
+- assertVisible:
+    id: "editProfile.discardConfirmYes"
+
+# Dismiss discard dialog (stay on edit page)
+- tapOn:
+    id: "editProfile.discardConfirmNo"
+- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "editProfile.saveButton"
+    timeout: 5000

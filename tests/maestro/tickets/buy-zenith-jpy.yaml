@@ -1,0 +1,47 @@
+appId: app.frontrow.qa
+---
+- runFlow: ../_setup.yaml
+
+- tapOn:
+    id: 'tab.events'
+- assertVisible:
+    id: 'screen.events'
+
+- assertVisible:
+    id: 'events.item.evt_001'
+- swipe:
+    from:
+      id: 'events.list'
+    direction: UP
+    duration: 500
+- extendedWaitUntil:
+    visible:
+      id: 'events.item.evt_005'
+    timeout: 10000
+- tapOn:
+    id: 'events.item.evt_005'
+- assertVisible:
+    id: 'screen.eventDetail'
+- assertVisible:
+    id: 'eventDetail.buyButton'
+
+- tapOn:
+    id: 'eventDetail.buyButton'
+- assertVisible:
+    id: 'screen.buyTicket'
+
+- assertVisible:
+    id: 'buyTicket.totalAmount'
+- assertVisible:
+    text: '¥950000'
+- assertVisible:
+    id: 'buyTicket.payButton'
+
+- tapOn:
+    id: 'buyTicket.payButton'
+- assertVisible: 'Ticket purchased'
+
+- tapOn:
+    id: 'tab.myTickets'
+- assertVisible:
+    id: 'screen.myTickets'

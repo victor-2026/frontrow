@@ -1,16 +1,16 @@
 import { browser, $ } from '@wdio/globals';
 
+const _isAndroid = (browser.capabilities as { platformName?: string }).platformName === 'Android';
+
 /**
  * Resolve a test ID to a platform-specific selector. testID becomes
  * accessibilityIdentifier on iOS (matched with `~`) and resource-id on
- * Android (matched with the same `~` accessibility-id strategy).
- *
- * Both platforms support the `~` selector when the React Native testID is
- * exposed via accessibilityLabel/accessibilityIdentifier — which our app
- * does for every interactive element.
+ * Android (matched with xpath since `~` maps to content-desc, not resource-id).
  */
 export function byId(id: string) {
-  return $(`~${id}`);
+  return _isAndroid
+    ? $(`//*[@resource-id="${id}"]`)
+    : $(`~${id}`);
 }
 
 export async function waitForId(id: string, timeoutMs = 10_000): Promise<void> {
@@ -25,8 +25,4 @@ export async function tapId(id: string): Promise<void> {
 export async function typeIntoId(id: string, text: string): Promise<void> {
   await waitForId(id);
   await byId(id).setValue(text);
-}
-
-export async function isAndroid(): Promise<boolean> {
-  return (browser.capabilities as { platformName?: string }).platformName === 'Android';
 }

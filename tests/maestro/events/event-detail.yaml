@@ -1,0 +1,44 @@
+appId: app.frontrow.qa
+tags:
+  - eventDetail
+  - coverage
+---
+# Event Detail + Reviews coverage
+- assertVisible:
+    id: "eventDetail.title"
+- assertVisible:
+    id: "eventDetail.shareButton"
+- tapOn:
+    id: "eventDetail.reviewsButton"
+- extendedWaitUntil:
+    visible:
+      id: "reviews.ratingInput"
+    timeout: 5000
+- assertVisible:
+    id: "screen.reviews"
+- assertVisible:
+    id: "reviews.ratingInput"
+- assertVisible:
+    id: "reviews.charCount"
+- assertVisible:
+    id: "reviews.pickImageButton"
+- assertVisible:
+    id: "reviews.textInput"
+- assertVisible:
+    id: "reviews.submitButton"
+- assertVisible:
+    id: "reviews.item.rev_001"
+- assertVisible:
+    id: "reviews.item.rev_002"
+- tapOn:
+    id: "BackButton"
+- extendedWaitUntil:
+    visible:
+      id: "screen.eventDetail"
+    timeout: 5000
+- tapOn:
+    id: "BackButton"
+- extendedWaitUntil:
+    visible:
+      id: "screen.events"
+    timeout: 5000

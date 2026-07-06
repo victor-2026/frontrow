@@ -1,0 +1,71 @@
+appId: app.frontrow.qa
+tags:
+  - profile
+  - settings
+  - coverage
+---
+# Profile → Settings → Webview → About coverage
+
+# Profile screen
+- tapOn:
+    id: "tab.profile"
+- extendedWaitUntil:
+    visible:
+      id: "screen.profile"
+    timeout: 5000
+- assertVisible:
+    id: "profile.avatar"
+
+# Settings screen
+- tapOn:
+    id: "profile.settingsButton"
+- extendedWaitUntil:
+    visible:
+      id: "screen.settings"
+    timeout: 5000
+- assertVisible:
+    id: "settings.notificationsToggle"
+- assertVisible:
+    id: "settings.aboutRow"
+- assertVisible:
+    id: "settings.privacyRow"
+- assertVisible:
+    id: "settings.termsRow"
+
+# About screen
+- tapOn:
+    id: "settings.aboutRow"
+- extendedWaitUntil:
+    visible:
+      id: "screen.settings.about"
+    timeout: 5000
+- assertVisible:
+    id: "screen.settings.about"
+
+# Back to Settings
+- tapOn:
+    id: "BackButton"
+- extendedWaitUntil:
+    visible:
+      id: "screen.settings"
+    timeout: 5000
+
+# Webview (privacy policy)
+- tapOn:
+    id: "settings.privacyRow"
+- extendedWaitUntil:
+    visible:
+      id: "screen.webview"
+    timeout: 5000
+- assertVisible:
+    id: "screen.webview"
+- assertVisible:
+    id: "webview.errorMessage"
+
+# Back to Settings
+- tapOn:
+    id: "BackButton"
+- extendedWaitUntil:
+    visible:
+      id: "screen.settings"
+    timeout: 5000

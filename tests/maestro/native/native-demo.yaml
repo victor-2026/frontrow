@@ -1,22 +1,12 @@
 # Open the bridged native demo screen, exercise the increment counter,
 # close it. Validates the testID contract carries from the JS-driven
 # shell through into the Swift UIViewController and Kotlin Activity.
-#
-# Selector strategy: the iOS UIKit views and Android raw views both
-# expose their identifiers as accessibility metadata
-# (accessibilityIdentifier on iOS, contentDescription on Android), but
-# Maestro's `id:` selector matches resource-id on Android — which the
-# hand-rolled Activity does not register, since wiring R.id values via
-# res/values/ids.xml would tie the Kotlin to gradle-generated resources
-# that prebuild rewrites. Text matchers find the elements on both
-# platforms via their visible labels and work without that coupling.
 appId: app.frontrow.qa
 ---
-- launchApp:
-    clearState: true
+- launchApp
 - extendedWaitUntil:
     visible:
-      id: 'screen.events'
+      id: 'tab.debug'
     timeout: 20000
 
 - tapOn:
@@ -31,21 +21,29 @@ appId: app.frontrow.qa
 - tapOn:
     id: 'debug.openNativeDemo'
 
-# Assert presence of the native VC via the "Increment" button — that
-# string only exists inside the hand-rolled native screen and is
-# matchable on both platforms (UIButton title on iOS, Button text on
-# Android), unlike the title text "Native Demo" which collides with the
-# Debug-screen row label, or the `id:` selector which matches
-# contentDescription on iOS but resource-id on Android.
 - extendedWaitUntil:
-    visible: 'Increment'
+    visible:
+      id: 'screen.nativeDemo'
     timeout: 5000
-- assertVisible: '0'
+- assertVisible:
+    id: 'screen.nativeDemo'
+- assertVisible:
+    id: 'nativeDemo.title'
+- assertVisible:
+    id: 'nativeDemo.body'
+- assertVisible:
+    id: 'nativeDemo.counter'
+- assertVisible:
+    id: 'nativeDemo.incrementButton'
 
-- tapOn: 'Increment'
-- tapOn: 'Increment'
-- assertVisible: '2'
+- tapOn:
+    id: 'nativeDemo.incrementButton'
+- tapOn:
+    id: 'nativeDemo.incrementButton'
+- assertVisible:
+    id: 'nativeDemo.counter'
 
-- tapOn: 'Close'
+- tapOn:
+    id: 'nativeDemo.closeButton'
 - assertVisible:
     id: 'screen.debug'

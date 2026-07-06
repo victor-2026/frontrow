@@ -8,6 +8,12 @@ appId: app.frontrow.qa
       id: 'screen.events'
     timeout: 20000
 
+# Wait for events list data to load before search interaction.
+- extendedWaitUntil:
+    visible:
+      id: 'events.item.evt_001'
+    timeout: 10000
+
 # Search filters the list
 - tapOn:
     id: 'events.searchInput'

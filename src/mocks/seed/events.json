@@ -4,8 +4,8 @@
     "title": "Midnight Howl Live in Brooklyn",
     "artist": "Midnight Howl",
     "genre": "Indie Rock",
-    "startsAt": "2026-06-12T20:00:00.000Z",
-    "doorsAt": "2026-06-12T19:00:00.000Z",
+    "startsAt": "2026-07-12T20:00:00.000Z",
+    "doorsAt": "2026-07-12T19:00:00.000Z",
     "venue": {
       "id": "ven_001",
       "name": "Warsaw",
@@ -21,7 +21,7 @@
     "soldOut": false,
     "tags": ["indie", "rock", "live"],
     "refundPolicy": {
-      "refundableUntil": "2026-06-11T20:00:00.000Z",
+      "refundableUntil": "2026-07-11T20:00:00.000Z",
       "note": "Full refund up to 24 hours before doors. After that, transfer is still available."
     },
     "tiers": [
@@ -124,8 +124,8 @@
     "title": "Quiet Hours — Acoustic Set",
     "artist": "Quiet Hours",
     "genre": "Folk",
-    "startsAt": "2026-05-30T20:00:00.000Z",
-    "doorsAt": "2026-05-30T19:00:00.000Z",
+    "startsAt": "2026-08-05T20:00:00.000Z",
+    "doorsAt": "2026-08-05T19:00:00.000Z",
     "venue": {
       "id": "ven_004",
       "name": "Cafe du Nord",

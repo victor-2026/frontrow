@@ -1,0 +1,35 @@
+appId: app.frontrow.qa
+tags:
+  - buyTicket
+  - coverage
+---
+# Buy Ticket — quantity stepper coverage
+
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "events.list"
+    timeout: 20000
+- tapOn:
+    id: "events.item.evt_002"
+- extendedWaitUntil:
+    visible:
+      id: "eventDetail.buyButton"
+    timeout: 5000
+- tapOn:
+    id: "eventDetail.buyButton"
+- extendedWaitUntil:
+    visible:
+      id: "screen.buyTicket"
+    timeout: 5000
+- assertVisible:
+    id: "buyTicket.quantityIncrement"
+- assertVisible:
+    id: "buyTicket.quantityDecrement"
+- assertVisible:
+    id: "buyTicket.quantityStepper"
+
+- tapOn:
+    id: "buyTicket.quantityIncrement"
+- assertVisible:
+    id: "buyTicket.totalAmount"

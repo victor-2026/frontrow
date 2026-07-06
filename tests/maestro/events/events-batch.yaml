@@ -1,0 +1,14 @@
+appId: app.frontrow.qa
+tags:
+  - events
+  - coverage
+---
+# Events screen coverage
+- assertVisible:
+    id: "screen.events"
+- assertVisible:
+    id: "events.heroCard"
+- assertVisible:
+    id: "events.filterRow"
+- assertVisible:
+    id: "events.sortButton"

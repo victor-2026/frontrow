@@ -1,0 +1,38 @@
+appId: app.frontrow.qa
+---
+- runFlow: ../_setup.yaml
+
+- tapOn:
+    id: 'tab.myTickets'
+- assertVisible:
+    id: 'screen.myTickets'
+
+- tapOn:
+    id: 'myTickets.item.tkt_001'
+- extendedWaitUntil:
+    visible:
+      id: 'screen.ticketDetail'
+    timeout: 5000
+
+- swipe:
+    from:
+      id: 'ticketDetail.qrCode'
+    direction: UP
+    duration: 300
+- extendedWaitUntil:
+    visible:
+      id: 'ticketDetail.cancelButton'
+    timeout: 5000
+
+- tapOn:
+    id: 'ticketDetail.cancelButton'
+- extendedWaitUntil:
+    visible:
+      id: 'ticketDetail.cancelConfirmDialog'
+    timeout: 3000
+
+- tapOn:
+    id: 'ticketDetail.cancelConfirmYes'
+- extendedWaitUntil:
+    visible: 'refund pending'
+    timeout: 5000

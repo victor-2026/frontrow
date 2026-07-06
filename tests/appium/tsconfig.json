@@ -1,13 +1,8 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "es2022",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "strict": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "types": ["@wdio/mocha-framework", "node", "expect-webdriverio"]
+    "types": ["node", "@wdio/globals/types", "@wdio/mocha-framework"]
   },
-  "include": ["wdio.*.conf.ts", "specs/**/*.ts"]
+  "include": ["./**/*.ts"],
+  "exclude": ["../../node_modules", "../../ios", "../../android", "../../.expo", "../../dist", "../../web-build"]
 }

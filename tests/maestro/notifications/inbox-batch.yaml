@@ -1,0 +1,25 @@
+appId: app.frontrow.qa
+tags:
+  - inbox
+  - coverage
+---
+# Inbox coverage
+
+- tapOn:
+    id: "events.inboxButton"
+- extendedWaitUntil:
+    visible:
+      id: "screen.inbox"
+    timeout: 5000
+- assertVisible:
+    id: "screen.inbox"
+- assertVisible:
+    id: "inbox.list"
+- assertVisible:
+    id: "inbox.markAllReadButton"
+- assertVisible:
+    id: "inbox.item.ntf_001"
+- assertVisible:
+    id: "inbox.item.ntf_002"
+- assertVisible:
+    id: "inbox.item.ntf_003"

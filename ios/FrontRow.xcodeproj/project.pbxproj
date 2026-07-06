@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		008CEBBE98D64D60ACE64811 /* FrontRowNativeDemoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61F47A6BC34391B6C28397 /* FrontRowNativeDemoModule.swift */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		9D6CF490E8774925AC72FE02 /* FrontRowNativeDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74CC4950CA14466A9B438A3 /* FrontRowNativeDemoViewController.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		C403935FE666439F83D96CFD /* FrontRowNativeDemoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759F94EF0384688B10EDC17 /* FrontRowNativeDemoBridge.m */; };
 		C674A6F01FB86BACAC8359CD /* libPods-FrontRow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC4C980908B4D830D1B67C76 /* libPods-FrontRow.a */; };
 		E1DCF043AAADD5D7A124F8F4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 1663EAF62AFBAC79EDEDA81A /* PrivacyInfo.xcprivacy */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 		FDBA3DD02D09CD85C32CD0A7 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E94B0C9ED6223A1065678C /* ExpoModulesProvider.swift */; };
-		9D6CF490E8774925AC72FE02 /* FrontRowNativeDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74CC4950CA14466A9B438A3 /* FrontRowNativeDemoViewController.swift */; };
-		008CEBBE98D64D60ACE64811 /* FrontRowNativeDemoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE61F47A6BC34391B6C28397 /* FrontRowNativeDemoModule.swift */; };
-		C403935FE666439F83D96CFD /* FrontRowNativeDemoBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 6759F94EF0384688B10EDC17 /* FrontRowNativeDemoBridge.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,17 +25,17 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FrontRow/Info.plist; sourceTree = "<group>"; };
 		13E94B0C9ED6223A1065678C /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-FrontRow/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		1663EAF62AFBAC79EDEDA81A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = FrontRow/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		6759F94EF0384688B10EDC17 /* FrontRowNativeDemoBridge.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = FrontRowNativeDemoBridge.m; path = FrontRow/FrontRowNativeDemoBridge.m; sourceTree = "<group>"; };
 		6C9665464A159731B96C7A93 /* Pods-FrontRow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FrontRow.debug.xcconfig"; path = "Target Support Files/Pods-FrontRow/Pods-FrontRow.debug.xcconfig"; sourceTree = "<group>"; };
 		97678F3A8113D662DE92AE22 /* Pods-FrontRow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FrontRow.release.xcconfig"; path = "Target Support Files/Pods-FrontRow/Pods-FrontRow.release.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = FrontRow/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		D74CC4950CA14466A9B438A3 /* FrontRowNativeDemoViewController.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = FrontRowNativeDemoViewController.swift; path = FrontRow/FrontRowNativeDemoViewController.swift; sourceTree = "<group>"; };
 		DC4C980908B4D830D1B67C76 /* libPods-FrontRow.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FrontRow.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EE61F47A6BC34391B6C28397 /* FrontRowNativeDemoModule.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = FrontRowNativeDemoModule.swift; path = FrontRow/FrontRowNativeDemoModule.swift; sourceTree = "<group>"; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = FrontRow/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* FrontRow-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "FrontRow-Bridging-Header.h"; path = "FrontRow/FrontRow-Bridging-Header.h"; sourceTree = "<group>"; };
-		D74CC4950CA14466A9B438A3 /* FrontRowNativeDemoViewController.swift */ = {isa = PBXFileReference; name = "FrontRowNativeDemoViewController.swift"; path = "FrontRow/FrontRowNativeDemoViewController.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
-		EE61F47A6BC34391B6C28397 /* FrontRowNativeDemoModule.swift */ = {isa = PBXFileReference; name = "FrontRowNativeDemoModule.swift"; path = "FrontRow/FrontRowNativeDemoModule.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
-		6759F94EF0384688B10EDC17 /* FrontRowNativeDemoBridge.m */ = {isa = PBXFileReference; name = "FrontRowNativeDemoBridge.m"; path = "FrontRow/FrontRowNativeDemoBridge.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -374,7 +374,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = app.frontrow.qa;
-				PRODUCT_NAME = "FrontRow";
+				PRODUCT_NAME = FrontRow;
 				SWIFT_OBJC_BRIDGING_HEADER = "FrontRow/FrontRow-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -405,7 +405,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = app.frontrow.qa;
-				PRODUCT_NAME = "FrontRow";
+				PRODUCT_NAME = FrontRow;
 				SWIFT_OBJC_BRIDGING_HEADER = "FrontRow/FrontRow-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

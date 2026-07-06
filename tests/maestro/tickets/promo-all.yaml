@@ -1,0 +1,151 @@
+appId: app.frontrow.qa
+name: "Promo codes - full coverage"
+tags:
+  - smoke
+  - tickets
+---
+# ===== Setup =====
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible:
+      id: "screen.events"
+    timeout: 20000
+- openLink: 'frontrow://e2e/setup'
+- runFlow:
+    when:
+      visible: 'Open'
+    commands:
+      - tapOn: 'Open'
+- extendedWaitUntil:
+    visible:
+      id: "events.inboxButton"
+    timeout: 5000
+- extendedWaitUntil:
+    visible:
+      id: "events.item.evt_001"
+    timeout: 10000
+
+# ===== Navigate to buy ticket =====
+- tapOn:
+    id: "events.item.evt_001"
+- extendedWaitUntil:
+    visible:
+      id: "screen.eventDetail"
+    timeout: 10000
+- tapOn:
+    id: "eventDetail.buyButton"
+- extendedWaitUntil:
+    visible:
+      id: "screen.buyTicket"
+    timeout: 10000
+
+# ============================================================
+# Test 1: Apply valid promo FRONTROW10 → 10% off
+# ============================================================
+- tapOn:
+    id: "buyTicket.promoInput"
+- inputText:
+    text: "FRONTROW10"
+- tapOn:
+    text: "Midnight Howl Live in Brooklyn"
+- tapOn:
+    id: "buyTicket.promoApplyButton"
+- extendedWaitUntil:
+    visible:
+      id: "buyTicket.promoSuccess"
+    timeout: 10000
+- assertVisible:
+    id: "buyTicket.totalAmount"
+
+# Remove promo
+- tapOn:
+    id: "buyTicket.promoRemoveButton"
+- extendedWaitUntil:
+    visible:
+      id: "buyTicket.promoInput"
+    timeout: 5000
+
+# ============================================================
+# Test 2: Apply invalid promo → error
+# ============================================================
+- tapOn:
+    id: "buyTicket.promoInput"
+- eraseText
+- inputText:
+    text: "BOGUS123"
+- tapOn:
+    text: "Midnight Howl Live in Brooklyn"
+- tapOn:
+    id: "buyTicket.promoApplyButton"
+- extendedWaitUntil:
+    visible:
+      id: "buyTicket.promoError"
+    timeout: 10000
+
+# ============================================================
+# Test 3: Apply EXPIRED → specific expired error
+# ============================================================
+- tapOn:
+    id: "buyTicket.promoInput"
+- eraseText
+- inputText:
+    text: "EXPIRED"
+- tapOn:
+    text: "Midnight Howl Live in Brooklyn"
+- tapOn:
+    id: "buyTicket.promoApplyButton"
+- extendedWaitUntil:
+    visible:
+      id: "buyTicket.promoError"
+    timeout: 10000
+
+# ============================================================
+# Test 4: Apply promo, change quantity → promo stays
+# ============================================================
+- tapOn:
+    id: "buyTicket.promoInput"
+- eraseText
+- inputText:
+    text: "FRONTROW25"
+- tapOn:
+    text: "Midnight Howl Live in Brooklyn"
+- tapOn:
+    id: "buyTicket.promoApplyButton"
+- extendedWaitUntil:
+    visible:
+      id: "buyTicket.promoSuccess"
+    timeout: 10000
+- tapOn:
+    id: "buyTicket.quantityIncrement"
+- assertVisible:
+    id: "buyTicket.promoSuccess"
+- assertVisible:
+    id: "buyTicket.totalAmount"
+
+# Remove promo
+- tapOn:
+    id: "buyTicket.promoRemoveButton"
+- extendedWaitUntil:
+    visible:
+      id: "buyTicket.promoInput"
+    timeout: 5000
+
+# ============================================================
+# Test 5: Apply FREE (100% off) → total = $0.00
+# ============================================================
+- tapOn:
+    id: "buyTicket.promoInput"
+- eraseText
+- inputText:
+    text: "FREE"
+- tapOn:
+    text: "Midnight Howl Live in Brooklyn"
+- tapOn:
+    id: "buyTicket.promoApplyButton"
+- extendedWaitUntil:
+    visible:
+      id: "buyTicket.promoSuccess"
+    timeout: 10000
+- assertVisible:
+    id: "buyTicket.totalAmount"

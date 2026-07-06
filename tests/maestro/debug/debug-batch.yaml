@@ -1,0 +1,54 @@
+appId: app.frontrow.qa
+tags:
+  - debug
+  - coverage
+---
+# Debug Screen — comprehensive test batch
+# Covers: fakePushButton, crashButton, replayOnboarding,
+#          clearTriggers, resetButton, nativeDemo*
+
+# 1. Navigate to Debug
+- tapOn:
+    id: "tab.debug"
+- extendedWaitUntil:
+    visible:
+      id: "screen.debug"
+    timeout: 10000
+
+# 2. BUILD section (visible at top)
+- assertVisible:
+    id: "screen.debug"
+
+# 3. Scroll to NOTIFICATIONS & CRASHES (fakePushButton, crashButton)
+- scroll
+- waitForAnimationToEnd
+- scroll
+- waitForAnimationToEnd
+- scroll
+- waitForAnimationToEnd
+- assertVisible:
+    id: "debug.fakePushButton"
+- tapOn:
+    id: "debug.fakePushButton"
+- assertVisible:
+    id: "debug.crashButton"
+
+# 4. Scroll to FIRST-RUN (replayOnboardingButton)
+- scroll
+- waitForAnimationToEnd
+- assertVisible:
+    id: "debug.replayOnboardingButton"
+
+# 5. Scroll to FAILURE TRIGGERS (clearTriggers)
+- scroll
+- waitForAnimationToEnd
+- assertVisible:
+    id: "debug.clearTriggers"
+
+# 6. Scroll to RESET (resetButton)
+- scroll
+- waitForAnimationToEnd
+- scroll
+- waitForAnimationToEnd
+- assertVisible:
+    id: "debug.resetButton"

@@ -39,3 +39,12 @@ appId: app.frontrow.qa
     timeout: 5000
 - assertVisible:
     id: 'screen.events'
+
+# Wait for events list data to actually load before handing control
+# to downstream flows. Without this gate every flow that opens an
+# event detail has to race the React Query refetch triggered by
+# the e2e/setup deep link.
+- extendedWaitUntil:
+    visible:
+      id: 'events.item.evt_001'
+    timeout: 10000

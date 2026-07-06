@@ -1,0 +1,17 @@
+appId: app.frontrow.qa
+---
+- runFlow: ../_setup.yaml
+
+- tapOn:
+    id: 'tab.myTickets'
+- assertVisible:
+    id: 'screen.myTickets'
+
+- tapOn:
+    id: 'myTickets.swipeCancel.tkt_001'
+- assertVisible: 'Cancel ticket'
+- tapOn: 'Cancel ticket'
+
+- extendedWaitUntil:
+    visible: 'refund pending'
+    timeout: 5000

@@ -16,8 +16,8 @@ export const sharedConfig: Partial<Options.Testrunner> = {
   waitforTimeout: 10_000,
   connectionRetryTimeout: 90_000,
   connectionRetryCount: 2,
-  services: ['appium'],
-  appium: { args: { relaxedSecurity: true } },
+  services: [],
+  // Appium is managed externally (already running on port 4723)
   port: 4723,
   path: '/',
 };

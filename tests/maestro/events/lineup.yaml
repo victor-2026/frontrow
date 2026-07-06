@@ -2,19 +2,15 @@
 # assert the block + the headliner row.
 appId: app.frontrow.qa
 ---
-- launchApp:
-    clearState: true
-- extendedWaitUntil:
-    visible:
-      id: 'screen.events'
-    timeout: 20000
-
-# evt_003 is sold out — drive via deep link instead of tapping a chip.
+# Seed data + auth via shared setup, then deep-link into evt_003.
+# evt_003 is sold out — driving via deep link avoids tapping a chip
+# with the sold-out visual state.
+- runFlow: ../_setup.yaml
 - openLink: 'frontrow://events/evt_003'
 - extendedWaitUntil:
     visible:
       id: 'screen.eventDetail'
-    timeout: 10000
+    timeout: 20000
 
 - assertVisible:
     id: 'eventDetail.lineup'

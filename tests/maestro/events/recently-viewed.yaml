@@ -14,6 +14,12 @@ appId: app.frontrow.qa
 - assertNotVisible:
     id: 'events.recentlyViewedStrip'
 
+# Wait for events list data to load after the debug/reset deep link.
+- extendedWaitUntil:
+    visible:
+      id: 'events.item.evt_001'
+    timeout: 10000
+
 - tapOn:
     id: 'events.item.evt_001'
 - extendedWaitUntil:

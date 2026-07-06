@@ -3,8 +3,7 @@ appId: app.frontrow.qa
 ---
 - runFlow: ../_setup.yaml
 
-# Skip the scroll-to-IAP-section dance — the deep link sets the
-# outcome directly.
+# Set IAP outcome to Decline before the purchase flow starts.
 - openLink: 'frontrow://debug/iap/decline'
 
 - tapOn:
