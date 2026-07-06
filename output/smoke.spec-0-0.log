@@ -1,0 +1,22 @@
+2026-07-01T18:08:16.237Z INFO @wdio/local-runner: Run worker command: run
+2026-07-01T18:08:16.674Z INFO webdriver: Initiate new session using the WebDriver protocol
+2026-07-01T18:08:16.674Z INFO @wdio/utils: Connecting to existing driver at http://localhost:4723/
+2026-07-01T18:08:16.687Z INFO webdriver: [POST] http://localhost:4723/session
+2026-07-01T18:10:16.694Z ERROR webdriver: Error: WebDriverError: The operation was aborted due to timeout when running "http://localhost:4723/session" with method "POST"
+    at FetchRequest._libRequest (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/webdriver/build/node.js:2194:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async FetchRequest._request (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/webdriver/build/node.js:2220:20)
+    at async startWebDriverSession (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/webdriver/build/node.js:1357:16)
+    at async _WebDriver.newSession (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/webdriver/build/node.js:1779:41)
+    at async remote (/Users/victor/Projects/Mobile_1/frontrow/node_modules/webdriverio/build/node.js:10065:20)
+    at async Runner._startSession (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/@wdio/runner/build/index.js:836:24)
+    at async Runner._initSession (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/@wdio/runner/build/index.js:810:22)
+    at async Runner.run (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/@wdio/runner/build/index.js:711:16)
+2026-07-01T18:10:16.836Z ERROR @wdio/runner: Error: WebDriverError: The operation was aborted due to timeout when running "http://localhost:4723/session" with method "POST"
+    at startWebDriverSession (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/webdriver/build/node.js:1361:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async _WebDriver.newSession (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/webdriver/build/node.js:1779:41)
+    at async remote (/Users/victor/Projects/Mobile_1/frontrow/node_modules/webdriverio/build/node.js:10065:20)
+    at async Runner._startSession (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/@wdio/runner/build/index.js:836:24)
+    at async Runner._initSession (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/@wdio/runner/build/index.js:810:22)
+    at async Runner.run (file:///Users/victor/Projects/Mobile_1/frontrow/node_modules/@wdio/runner/build/index.js:711:16)

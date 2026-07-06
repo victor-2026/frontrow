@@ -1,0 +1,11 @@
+2026-07-01T18:08:14.463Z INFO @wdio/cli:launcher: Run onPrepare hook
+2026-07-01T18:08:14.474Z INFO @wdio/cli:launcher: Run onWorkerStart hook
+2026-07-01T18:08:14.475Z INFO @wdio/xvfb: XvfbManager.init() called
+2026-07-01T18:08:14.475Z INFO @wdio/xvfb: Xvfb not needed on current platform
+2026-07-01T18:08:14.475Z INFO @wdio/local-runner: Start worker 0-0 with arg: run tests/appium/wdio.conf.ts
+2026-07-01T18:08:14.487Z INFO @wdio/xvfb:ProcessFactory: xvfb-run not found, falling back to regular fork
+2026-07-01T18:08:14.487Z INFO @wdio/xvfb:ProcessFactory: ProcessFactory: shouldRun=false, isAvailable=false
+2026-07-01T18:08:14.487Z INFO @wdio/xvfb:ProcessFactory: Creating worker process with regular fork
+2026-07-01T18:10:17.009Z INFO @wdio/cli:launcher: Run onWorkerEnd hook
+2026-07-01T18:10:17.014Z INFO @wdio/local-runner: Shutting down spawned worker
+2026-07-01T18:10:17.267Z INFO @wdio/local-runner: Waiting for 0 to shut down gracefully

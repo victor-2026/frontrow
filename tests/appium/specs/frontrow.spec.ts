@@ -1,44 +1,41 @@
 import { expect, driver } from '@wdio/globals'
 
-import { byId, waitForId, tapId } from './helpers'
+import {
+  byId, waitForId, tapId, typeIntoId,
+  deepLink, skipOnboarding, scrollDown, ensureSignedInViaDeepLink
+} from './helpers'
 
 const BUNDLE_ID = 'app.frontrow.qa'
 
-async function deepLink(url: string) {
-  const caps = driver.capabilities as { platformName?: string }
-  if (caps.platformName === 'Android') {
-    await driver.execute('mobile: deepLink', { url, package: BUNDLE_ID })
-  } else {
-    await driver.execute('mobile: deepLink', { url })
-  }
-}
-
 async function setup() {
-  try {
-    await deepLink('frontrow://e2e/setup')
-    await waitForId('events.list', 15000)
-    return
-  } catch {}
-
-  await driver.terminateApp(BUNDLE_ID)
   await driver.activateApp(BUNDLE_ID)
-  await driver.pause(2000)
-  try {
-    await waitForId('onboarding.skipButton', 3000)
-    await tapId('onboarding.skipButton')
-    await driver.pause(500)
-  } catch {}
+  await driver.pause(3000)
+  await skipOnboarding()
   await deepLink('frontrow://e2e/setup')
-  await waitForId('events.list', 30000)
+  await driver.pause(3000)
+  try {
+    await tapId('tab.events', 5000)
+  } catch {}
+  try {
+    await waitForId('events.list', 20000)
+  } catch {
+    await skipOnboarding()
+    await ensureSignedInViaDeepLink()
+    try { await tapId('tab.events', 5000) } catch {}
+    await waitForId('events.list', 20000)
+  }
 }
 
 async function buyTicket() {
   await tapId('events.item.evt_001')
   expect(await byId('screen.eventDetail').isDisplayed()).toBe(true)
-  await tapId('eventDetail.buyButton')
+  try { await tapId('eventDetail.buyButton', 5000) } catch {
+    await scrollDown()
+    await tapId('eventDetail.buyButton')
+  }
   expect(await byId('screen.buyTicket').isDisplayed()).toBe(true)
   await tapId('buyTicket.payButton')
-  await waitForId('toast.message', 10000)
+  await waitForId('toast.message', 15000)
   expect(await byId('toast.message').getText()).toBe('Ticket purchased')
 }
 
@@ -58,18 +55,22 @@ async function typeInto(id: string, text: string) {
   try {
     await driver.performActions([{ type: 'key', id: 'keyboard', actions: pairs }])
   } catch {
-    await el.setValue(text)
+    try {
+      await el.setValue(text)
+    } catch {
+      await typeIntoId(id, text)
+    }
   }
   await driver.pause(300)
   try {
-    await tapId('buyTicket.quantityStepper')
+    await tapId('buyTicket.quantityStepper', 1000)
     await driver.pause(300)
   } catch {
-    try { await tapId('buyTicket.payButton') } catch {}
+    try { await tapId('buyTicket.payButton', 1000) } catch {}
   }
 }
 
-describe('FrontRow iOS — Appium', function () {
+describe('FrontRow — Appium (cross-platform)', function () {
   this.timeout(300_000)
   beforeEach(async () => { await setup() })
 
@@ -191,32 +192,32 @@ describe('FrontRow iOS — Appium', function () {
 
   describe('Profile Edit', () => {
     async function ensureSignedIn() {
-      await tapId('tab.profile')
       try {
+        await tapId('tab.profile')
         if (await byId('profile.signOutButton').isDisplayed()) return
       } catch {}
-      await waitForId('profile.signInButton', 15000)
-      await tapId('profile.signInButton')
-      await waitForId('login.submitButton', 10000)
-      await tapId('login.submitButton')
-      await waitForId('profile.signOutButton', 10000)
+      await ensureSignedInViaDeepLink()
+      await driver.pause(2000)
+      try { await tapId('tab.profile', 5000) } catch {}
     }
 
     async function typeBio(text: string) {
       const el = byId('editProfile.bioInput')
       await el.click()
       await driver.pause(500)
-      const pairs = text.split('').flatMap(c => [
-        { type: 'keyDown', value: c },
-        { type: 'keyUp', value: c },
-      ])
       try {
-        await driver.performActions([{ type: 'key', id: 'keyboard', actions: pairs }])
+        await driver.performActions([{
+          type: 'key', id: 'keyboard',
+          actions: text.split('').flatMap(c => [
+            { type: 'keyDown', value: c },
+            { type: 'keyUp', value: c },
+          ])
+        }])
       } catch {
         await el.setValue(text)
       }
       await driver.pause(300)
-      try { await tapId('editProfile.bioCharCount'); await driver.pause(300) } catch {}
+      try { await tapId('editProfile.bioCharCount', 2000); await driver.pause(300) } catch {}
     }
 
     it('signs in and shows editable bio field with character count', async () => {
@@ -235,7 +236,7 @@ describe('FrontRow iOS — Appium', function () {
 
       await tapId('editProfile.backButton')
       expect(await byId('editProfile.discardConfirmDialog').isDisplayed()).toBe(true)
-      await tapId('editProfile.discardConfirmNo')
+      await tapId('editProfile.discardConfirmNo', 3000)
       expect(await byId('editProfile.discardConfirmDialog').isDisplayed()).toBe(false)
       await waitForId('screen.editProfile', 5000)
     })
@@ -295,7 +296,7 @@ describe('FrontRow iOS — Appium', function () {
     it('shows refund policy section', async () => {
       await tapId('events.item.evt_001')
       expect(await byId('screen.eventDetail').isDisplayed()).toBe(true)
-      await driver.execute('mobile: swipe', { direction: 'up' })
+      await scrollDown()
       await waitForId('eventDetail.refundPolicy', 5000)
     })
   })

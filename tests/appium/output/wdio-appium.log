@@ -1,0 +1,65 @@
+[38;5;86m[HTTP][0m [37m-->[39m [37mPOST[39m [37m/session[39m [90m{"capabilities":{"alwaysMatch":{"platformName":"iOS","appium:deviceName":"iPhone 16e","appium:platformVersion":"26.3","appium:automationName":"XCUITest","appium:app":"/Users/victor/Library/Developer/Xcode/DerivedData/FrontRow-ezxyjzzilltjbogbnqogzybpwtkg/Build/Products/Debug-iphonesimulator/FrontRow.app","appium:noReset":false,"appium:fullReset":false},"firstMatch":[{}]}}[39m
+[38;5;130m[AppiumDriver@d6f4][0m Calling AppiumDriver.createSession() with args: [{"alwaysMatch":{"platformName":"iOS","appium:deviceName":"iPhone 16e","appium:platformVersion":"26.3","appium:automationName":"XCUITest","appium:app":"/Users/victor/Library/Developer/Xcode/DerivedData/FrontRow-ezxyjzzilltjbogbnqogzybpwtkg/Build/Products/Debug-iphonesimulator/FrontRow.app","appium:noReset":false,"appium:fullReset":false},"firstMatch":[{}]},{"alwaysMatch":{"platformName":"iOS","appium:deviceName":"iPhone 16e","appium:platformVersion":"26.3","appium:automationName":"XCUITest","appium:app":"/Users/victor/Library/Developer/Xcode/DerivedData/FrontRow-ezxyjzzilltjbogbnqogzybpwtkg/Build/Products/Debug-iphonesimulator/FrontRow.app","appium:noReset":false,"appium:fullReset":false},"firstMatch":[{}]},{"alwaysMatch":{"platformName":"iOS","appium:deviceName":"iPhone 16e","appium:platformVersion":"26.3","appium:automationName":"XCUITest","appium:app":"/Users/victor/Library/Developer/Xcode/DerivedData/FrontRow-ezxyjzzilltjbogbnqogzybpwtkg/Build/Products/Debug-iphonesimulator/FrontRow.app","appium:noRese...
+[38;5;130m[AppiumDriver@d6f4][0m Event 'newSessionRequested' logged at 1782826624407 (16:37:04 GMT+0300 (Moscow Standard Time))
+[38;5;112m[Appium][0m Attempting to find matching driver for automationName 'XCUITest' and platformName 'iOS'
+[38;5;112m[Appium][0m The 'xcuitest' driver was installed and matched caps.
+[38;5;112m[Appium][0m Will require it at /Users/victor/.appium/node_modules/appium-xcuitest-driver
+[38;5;112m[Appium][0m Requiring driver at /Users/victor/.appium/node_modules/appium-xcuitest-driver/build/lib/index.js
+[38;5;130m[AppiumDriver@d6f4][0m Appium v3.3.0 creating new XCUITestDriver (v11.0.0) session
+[38;5;130m[AppiumDriver@d6f4][0m Checking BaseDriver versions for Appium and XCUITestDriver
+[38;5;130m[AppiumDriver@d6f4][0m Appium's BaseDriver version is 10.3.0
+[38;5;130m[AppiumDriver@d6f4][0m XCUITestDriver's BaseDriver version is 10.3.0
+[38;5;93m[XCUITestDriver@86f0][0m 
+[38;5;93m[XCUITestDriver@86f0][0m Creating session with W3C capabilities: {
+  "alwaysMatch": {
+    "platformName": "iOS",
+    "appium:deviceName": "iPhone 16e",
+    "appium:platformVersion": "26.3",
+    "appium:automationName": "XCUITest",
+    "appium:app": "/Users/victor/Library/Developer/Xcode/DerivedData/FrontRow-ezxyjzzilltjbogbnqogzybpwtkg/Build/Products/Debug-iphonesimulator/FrontRow.app",
+    "appium:noReset": false,
+    "appium:fullReset": false
+  },
+  "firstMatch": [
+    {}
+  ]
+}
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Session created with session id: 6d1be476-2037-4e42-8f75-d5f66f88618f
+[38;5;219m[6d1be476][0m[38;5;135m[XCUITest][0m Current user: 'victor'
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m No real device udid has been provided in capabilities. Will select a matching simulator to run the test.
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m iOS SDK Version set to '26.2'
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Looking for an existing Simulator with platformName: iOS, platformVersion: 26.3, deviceName: iPhone 16e
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Constructing iOS simulator for Xcode version 26.3 with udid 'FD8F6288-6BC0-4761-B183-229813799045'
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Determining device to run tests on: udid: 'FD8F6288-6BC0-4761-B183-229813799045', real device: false
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Event 'xcodeDetailsRetrieved' logged at 1782826630948 (16:37:10 GMT+0300 (Moscow Standard Time))
+[38;5;219m[6d1be476][0m[38;5;123m[BaseDriver][0m Using local app '/Users/victor/Library/Developer/Xcode/DerivedData/FrontRow-ezxyjzzilltjbogbnqogzybpwtkg/Build/Products/Debug-iphonesimulator/FrontRow.app'
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Caching the manifest for app.frontrow.qa app from a file source using the key '2ac48040b19a555ec1542766640c80c84ae7ec6a'
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Event 'appConfigured' logged at 1782826630955 (16:37:10 GMT+0300 (Moscow Standard Time))
+[38;5;219m[6d1be476][0m[38;5;135m[XCUITest][0m Checking whether app '/Users/victor/Library/Developer/Xcode/DerivedData/FrontRow-ezxyjzzilltjbogbnqogzybpwtkg/Build/Products/Debug-iphonesimulator/FrontRow.app' is actually present on file system
+[38;5;219m[6d1be476][0m[38;5;135m[XCUITest][0m App is present
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m CFBundleIdentifier: "app.frontrow.qa"
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Event 'resetStarted' logged at 1782826630956 (16:37:10 GMT+0300 (Moscow Standard Time))
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Not scrubbing third party app in anticipation of uninstall
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Event 'resetComplete' logged at 1782826631426 (16:37:11 GMT+0300 (Moscow Standard Time))
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Using WDA path: '/Users/victor/.appium/node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent'
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Using WDA agent: '/Users/victor/.appium/node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent/WebDriverAgent.xcodeproj'
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Starting log capture for iOS Simulator with udid 'FD8F6288-6BC0-4761-B183-229813799045' via simctl using the following arguments 'log stream --style compact'
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Event 'logCaptureStarted' logged at 1782826633588 (16:37:13 GMT+0300 (Moscow Standard Time))
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Setting up simulator
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Setting preferences of FD8F6288-6BC0-4761-B183-229813799045 Simulator to {"ConnectHardwareKeyboard":false}
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Setting common Simulator preferences to {"RotateWindowWhenSignaledByGuest":true,"StartLastDeviceOnLaunch":false,"DetachOnWindowClose":false,"AttachBootedOnStart":true,"ConnectHardwareKeyboard":false,"PasteboardAutomaticSync":false}
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Updated FD8F6288-6BC0-4761-B183-229813799045 Simulator preferences at '/Users/victor/Library/Preferences/com.apple.iphonesimulator.plist' with {"RotateWindowWhenSignaledByGuest":true,"StartLastDeviceOnLaunch":false,"DetachOnWindowClose":false,"AttachBootedOnStart":true,"ConnectHardwareKeyboard":false,"PasteboardAutomaticSync":false,"DevicePreferences":{"FD8F6288-6BC0-4761-B183-229813799045":{"SimulatorExternalDisplay":2114,"ChromeTint":"","ConnectHardwareKeyboard":false}}}
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Got Simulator UI client PID: 42941
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Both Simulator with UDID 'FD8F6288-6BC0-4761-B183-229813799045' and the UI client are currently running
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Event 'simStarted' logged at 1782826634440 (16:37:14 GMT+0300 (Moscow Standard Time))
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Verifying application platform
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m CFBundleSupportedPlatforms: ["iPhoneSimulator"]
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m CFBundleExecutable: "FrontRow"
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Non-fat file: /Users/victor/Library/Developer/Xcode/DerivedData/FrontRow-ezxyjzzilltjbogbnqogzybpwtkg/Build/Products/Debug-iphonesimulator/FrontRow.app/FrontRow is architecture: x86_64
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Current process architecture: x86_64
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Is Apple Silicon CPU: false
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m App 'app.frontrow.qa' is already installed
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Reset requested. Removing app with id 'app.frontrow.qa' from the device
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Parsed BUILD_DIR configuration value: '/Users/victor/.appium/node_modules/appium-xcuitest-driver/node_modules/appium-webdriveragent/build'
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Got derived data root: '/Users/victor/.appium/node_modules/appium-xcuitest-driver/node_modules'
+[38;5;219m[6d1be476][0m[38;5;93m[XCUITestDriver@86f0][0m Installing '/Users/victor/Library/Developer/Xcode/DerivedData/FrontRow-ezxyjzzilltjbogbnqogzybpwtkg/Build/Products/Debug-iphonesimulator/FrontRow.app' on Simulator with UUID 'FD8F6288-6BC0-4761-B183-229813799045'...
