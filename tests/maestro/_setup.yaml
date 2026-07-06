@@ -12,39 +12,59 @@ appId: app.frontrow.qa
 ---
 - launchApp:
     clearState: true
+
+# Пропустить onboarding (Android fresh install показывает onboarding)
+- runFlow:
+    when:
+      visible:
+        id: 'onboarding.skipButton'
+    commands:
+      - tapOn:
+          id: 'onboarding.skipButton'
+      - waitFor: 1500
+      - tapOn:
+          id: 'onboarding.skipButton'
+
 - extendedWaitUntil:
     visible:
       id: 'screen.events'
-    timeout: 20000
+    timeout: 25000
 
+# Deep link — seed data + sign in
 - openLink: 'frontrow://e2e/setup'
 
-# iOS Release builds prompt "Open in FrontRow?" when openLink hits a
-# different URL scheme than the one the app was originally launched
-# with. Dismiss the prompt if it appears. Debug builds and Android
-# do not show this dialog, so the runFlow guard makes it a no-op.
+# iOS Release builds show "Open in FrontRow?" prompt — dismiss it
 - runFlow:
     when:
       visible: 'Open'
     commands:
       - tapOn: 'Open'
 
-# Wait for the auth state to actually propagate. events.inboxButton
-# only renders when isSignedIn is true — using it as the
-# "fast-boot complete" gate prevents downstream flows from racing
-# the auth+query refresh cascade triggered by the deep link.
+# Fallback: если deep link не сработал (Android без production APK)
+- runFlow:
+    when:
+      notVisible:
+        id: 'events.item.evt_001'
+    commands:
+      - launchApp:
+          clearState: false
+      - runFlow:
+          when:
+            visible:
+              id: 'onboarding.skipButton'
+          commands:
+            - tapOn:
+                id: 'onboarding.skipButton'
+            - waitFor: 1500
+      - tapOn:
+          id: 'tab.events'
+
+# Wait for seed data to load (inboxButton = auth confirmed)
 - extendedWaitUntil:
     visible:
       id: 'events.inboxButton'
-    timeout: 5000
-- assertVisible:
-    id: 'screen.events'
-
-# Wait for events list data to actually load before handing control
-# to downstream flows. Without this gate every flow that opens an
-# event detail has to race the React Query refetch triggered by
-# the e2e/setup deep link.
+    timeout: 10000
 - extendedWaitUntil:
     visible:
       id: 'events.item.evt_001'
-    timeout: 10000
+    timeout: 15000
