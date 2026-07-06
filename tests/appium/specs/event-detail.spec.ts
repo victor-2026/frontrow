@@ -1,42 +1,22 @@
 import { expect, driver } from '@wdio/globals'
 
-import { waitForId, tapId, byId } from './helpers'
+import { waitForId, tapId, byId, skipOnboarding, deepLink } from './helpers'
 
 const BUNDLE_ID = 'app.frontrow.qa'
 
-async function deepLink(url: string) {
-  const caps = driver.capabilities as { platformName?: string }
-  if (caps.platformName === 'Android') {
-    await driver.execute('mobile: deepLink', { url, package: BUNDLE_ID })
-  } else {
-    await driver.execute('mobile: deepLink', { url })
-  }
-}
-
 async function setup() {
-  try {
-    await deepLink('frontrow://e2e/setup')
-    await waitForId('events.list', 30000)
-    return
-  } catch {
-    // Fallback: restart and skip onboarding
-  }
-
-  await driver.terminateApp(BUNDLE_ID)
   await driver.activateApp(BUNDLE_ID)
-  await driver.pause(5000)
+  await driver.pause(3000)
+  await skipOnboarding()
+  await deepLink('frontrow://e2e/setup')
+  await driver.pause(3000)
+  try { await tapId('tab.events', 5000) } catch {}
   try {
-    await waitForId('onboarding.skipButton', 5000)
-    await tapId('onboarding.skipButton')
-    await driver.pause(1000)
-  } catch {}
-  try {
-    await deepLink('frontrow://e2e/setup')
-    await waitForId('events.list', 60000)
+    await waitForId('events.list', 30000)
   } catch {
-    await driver.terminateApp(BUNDLE_ID)
-    await driver.activateApp(BUNDLE_ID)
-    await waitForId('events.list', 60000)
+    await skipOnboarding()
+    try { await tapId('tab.events', 5000) } catch {}
+    await waitForId('events.list', 30000)
   }
 }
 

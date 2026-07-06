@@ -1,12 +1,23 @@
-import { expect } from '@wdio/globals'
+import { expect, driver } from '@wdio/globals'
 
-import { byId, waitForId, tapId, typeIntoId } from './helpers'
+import { byId, waitForId, tapId, typeIntoId, skipOnboarding, deepLink } from './helpers'
+
+const BUNDLE_ID = 'app.frontrow.qa'
 
 describe('Profile & Settings', () => {
   before(async () => {
-    await waitForId('screen.events')
-    await byId('tab.profile').click()
-    await waitForId('profile.signInButton')
+    await driver.activateApp(BUNDLE_ID)
+    await driver.pause(3000)
+    await skipOnboarding()
+    await deepLink('frontrow://e2e/setup')
+    await driver.pause(3000)
+    try { await tapId('tab.events', 5000) } catch {}
+    try { await waitForId('screen.events', 20000) } catch {
+      await skipOnboarding()
+      try { await tapId('tab.events', 5000) } catch {}
+    }
+    try { await tapId('tab.profile', 5000) } catch {}
+    await waitForId('profile.signInButton', 15000)
   })
 
   it('shows sign-in button before login', async () => {

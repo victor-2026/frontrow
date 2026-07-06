@@ -1,34 +1,34 @@
-import { browser, expect } from '@wdio/globals'
+import { expect, driver } from '@wdio/globals'
 
-import { waitForId, tapId, typeIntoId, byId } from './helpers'
+import { waitForId, tapId, typeIntoId, byId, skipOnboarding, deepLink } from './helpers'
 
 const BUNDLE_ID = 'app.frontrow.qa'
 
-async function restartApp() {
-  await browser.executeScript('mobile: terminateApp', [{ bundleId: BUNDLE_ID }])
-  await browser.executeScript('mobile: activateApp', [{ bundleId: BUNDLE_ID }])
-  await waitForId('tab.profile', 90000)
+async function activate() {
+  await driver.activateApp(BUNDLE_ID)
+  await driver.pause(3000)
+  await skipOnboarding()
+  await deepLink('frontrow://e2e/setup')
+  await driver.pause(2000)
 }
 
 async function ensureLoggedOut() {
-  try {
-    await byId('tab.profile').waitForDisplayed({ timeout: 2000 })
-  } catch {
-    // Tab bar hidden → restart app
-    await restartApp()
+  await activate()
+  try { await tapId('tab.profile', 5000) } catch {
+    await activate()
+    await tapId('tab.profile', 5000)
   }
-  await tapId('tab.profile')
   try {
-    const signOut = await byId('profile.signOutButton')
-    await signOut.waitForDisplayed({ timeout: 3000 })
-    await signOut.click()
+    await tapId('profile.signOutButton', 3000)
   } catch {}
-  await waitForId('profile.signInButton')
+  await waitForId('profile.signInButton', 15000)
 }
 
 describe('Auth (Appium)', () => {
   before(async () => {
-    await waitForId('tab.profile', 90000)
+    await activate()
+    try { await tapId('tab.profile', 5000) } catch {}
+    await waitForId('profile.signInButton', 30000)
   })
 
   beforeEach(async () => {
