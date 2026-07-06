@@ -29,9 +29,9 @@ export async function typeIntoId(id: string, text: string): Promise<void> {
 
 export async function deepLink(url: string, bundleId = 'app.frontrow.qa'): Promise<void> {
   if (_isAndroid) {
-    await driver.execute('mobile: deepLink', [{ url, package: bundleId }])
+    await driver.execute('mobile: deepLink', { url, package: bundleId })
   } else {
-    await driver.execute('mobile: deepLink', [{ url }])
+    await driver.execute('mobile: deepLink', { url })
   }
 }
 
