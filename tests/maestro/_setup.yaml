@@ -29,7 +29,7 @@ appId: app.frontrow.qa
       id: 'screen.events'
     timeout: 25000
 
-# Deep link — seed data + sign in
+# Deep link — seed data + sign in (iOS: works, Android: игнорируется)
 - openLink: 'frontrow://e2e/setup'
 
 # iOS Release builds show "Open in FrontRow?" prompt — dismiss it
@@ -39,29 +39,42 @@ appId: app.frontrow.qa
     commands:
       - tapOn: 'Open'
 
-# Fallback: если deep link не сработал (Android без production APK)
+# Fallback: если deep link не сработал (Android) — логинимся через UI
 - runFlow:
     when:
       notVisible:
         id: 'events.item.evt_001'
     commands:
-      - launchApp:
-          clearState: false
+      - tapOn:
+          id: 'tab.profile'
       - runFlow:
           when:
             visible:
-              id: 'onboarding.skipButton'
+              id: 'screen.profile'
           commands:
             - tapOn:
-                id: 'onboarding.skipButton'
+                id: 'profile.signInButton'
+            - runFlow:
+                when:
+                  visible:
+                    id: 'screen.login'
+                commands:
+                  - tapOn:
+                      id: 'login.submitButton'
+                  - extendedWaitUntil:
+                      visible:
+                        id: 'profile.signOutButton'
+                      timeout: 15000
       - tapOn:
           id: 'tab.events'
 
-# Wait for seed data to load (inboxButton = auth confirmed)
+# Wait for auth confirmed (inboxButton = signed in)
 - extendedWaitUntil:
     visible:
       id: 'events.inboxButton'
     timeout: 10000
+
+# Wait for any events to appear (real or seeded)
 - extendedWaitUntil:
     visible:
       id: 'events.item.evt_001'
