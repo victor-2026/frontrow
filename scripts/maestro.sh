@@ -49,7 +49,7 @@ if [[ "$PLATFORM" == "android" ]]; then
     echo "→ Android device: $DEVICE"
   fi
 else
-  DEVICE="${DEVICE:-$(xcrun simctl list devices booted | awk -F'[()]' '/Booted/{gsub(/^[ \t]+/, "", $2); print $2; exit}')}"
+  DEVICE="${DEVICE:-$(xcrun simctl list devices booted | awk '/Booted/{gsub(/^[ \t]+/, "", $0); gsub(/ *\(.*\)*/, "", $0); gsub(/ /, "-", $0); print; exit}')}"
   if [[ -z "$DEVICE" ]]; then
     echo "no iOS simulator booted (use Xcode or 'xcrun simctl boot <udid>')" >&2
     exit 1
