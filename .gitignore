@@ -46,11 +46,19 @@ android/app/build/
 android/.gradle/
 android/.idea/
 
+# generated android assets from expo build
+android/app/src/main/assets/
+android/app/src/main/res/drawable-*/
+android/app/src/main/res/raw/
+
 # test artifacts
+artifacts/
 coverage/
 .maestro/output/
 .appium/
 test-results/
+output/
+tests/appium/output/
 
 # editor
 .idea/
