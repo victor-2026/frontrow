@@ -21,7 +21,6 @@ appId: app.frontrow.qa
     commands:
       - tapOn:
           id: 'onboarding.skipButton'
-      - waitFor: 1500
       - tapOn:
           id: 'onboarding.skipButton'
 
@@ -55,7 +54,6 @@ appId: app.frontrow.qa
           commands:
             - tapOn:
                 id: 'onboarding.skipButton'
-            - waitFor: 1500
       - tapOn:
           id: 'tab.events'
 
