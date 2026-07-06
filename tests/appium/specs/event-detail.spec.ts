@@ -1,6 +1,6 @@
 import { expect, driver } from '@wdio/globals'
 
-import { waitForId, tapId, byId, skipOnboarding, deepLink } from './helpers'
+import { waitForId, tapId, byId, skipOnboarding } from './helpers'
 
 const BUNDLE_ID = 'app.frontrow.qa'
 
@@ -8,8 +8,6 @@ async function setup() {
   await driver.activateApp(BUNDLE_ID)
   await driver.pause(3000)
   await skipOnboarding()
-  await deepLink('frontrow://e2e/setup')
-  await driver.pause(3000)
   try { await tapId('tab.events', 5000) } catch {}
   try {
     await waitForId('events.list', 30000)

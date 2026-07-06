@@ -1,6 +1,6 @@
 import { expect, driver } from '@wdio/globals'
 
-import { waitForId, tapId, typeIntoId, byId, skipOnboarding, deepLink } from './helpers'
+import { waitForId, tapId, typeIntoId, byId, skipOnboarding } from './helpers'
 
 const BUNDLE_ID = 'app.frontrow.qa'
 
@@ -8,8 +8,6 @@ async function activate() {
   await driver.activateApp(BUNDLE_ID)
   await driver.pause(3000)
   await skipOnboarding()
-  await deepLink('frontrow://e2e/setup')
-  await driver.pause(2000)
 }
 
 async function ensureLoggedOut() {

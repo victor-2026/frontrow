@@ -2,7 +2,7 @@ import { expect, driver } from '@wdio/globals'
 
 import {
   byId, waitForId, tapId, typeIntoId,
-  deepLink, skipOnboarding, scrollDown, ensureSignedInViaDeepLink
+  skipOnboarding, scrollDown
 } from './helpers'
 
 const BUNDLE_ID = 'app.frontrow.qa'
@@ -11,8 +11,6 @@ async function setup() {
   await driver.activateApp(BUNDLE_ID)
   await driver.pause(3000)
   await skipOnboarding()
-  await deepLink('frontrow://e2e/setup')
-  await driver.pause(3000)
   try {
     await tapId('tab.events', 5000)
   } catch {}
@@ -20,7 +18,6 @@ async function setup() {
     await waitForId('events.list', 20000)
   } catch {
     await skipOnboarding()
-    await ensureSignedInViaDeepLink()
     try { await tapId('tab.events', 5000) } catch {}
     await waitForId('events.list', 20000)
   }
@@ -196,9 +193,12 @@ describe('FrontRow — Appium (cross-platform)', function () {
         await tapId('tab.profile')
         if (await byId('profile.signOutButton').isDisplayed()) return
       } catch {}
-      await ensureSignedInViaDeepLink()
-      await driver.pause(2000)
+      await skipOnboarding()
       try { await tapId('tab.profile', 5000) } catch {}
+      await tapId('profile.signInButton')
+      await waitForId('login.submitButton', 10000)
+      await tapId('login.submitButton')
+      await waitForId('profile.signOutButton', 10000)
     }
 
     async function typeBio(text: string) {
