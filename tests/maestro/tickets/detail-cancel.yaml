@@ -44,6 +44,7 @@ tags:
     timeout: 3000
 - tapOn:
     id: 'ticketDetail.cancelConfirmNo'
+# No wait needed — the dialog dismisses near-instantly
 - extendedWaitUntil:
     notVisible:
       id: 'ticketDetail.cancelConfirmDialog'
