@@ -49,7 +49,7 @@ if [[ "$PLATFORM" == "android" ]]; then
     echo "→ Android device: $DEVICE"
   fi
 else
-  DEVICE="${DEVICE:-$(xcrun simctl list devices booted | awk '/Booted/{gsub(/^[ \t]+/, "", $0); gsub(/ *\(.*\)*/, "", $0); gsub(/ /, "-", $0); print; exit}')}"
+  DEVICE="${DEVICE:-$(xcrun simctl list devices booted --json 2>/dev/null | python3 -c "import json,sys; d=json.load(sys.stdin); [print(v['udid']) for k,vl in d['devices'].items() for v in vl if v.get('state')=='Booted']" | head -1)}"
   if [[ -z "$DEVICE" ]]; then
     echo "no iOS simulator booted (use Xcode or 'xcrun simctl boot <udid>')" >&2
     exit 1
