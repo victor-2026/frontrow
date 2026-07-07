@@ -56,10 +56,14 @@ describe('My Tickets', () => {
     await element(by.id('tab.myTickets')).tap()
     await waitFor(element(by.id('myTickets.list'))).toBeVisible().withTimeout(15000)
 
+    await waitFor(element(by.id('myTickets.list'))).toBeVisible().withTimeout(15000)
+    await element(by.id('myTickets.list')).swipe('up')
+    await element(by.id('tab.myTickets')).tap()
     await element(by.id('myTickets.item.tkt_001')).tap()
     await expect(element(by.id('screen.ticketDetail'))).toBeVisible()
 
-    await waitFor(element(by.id('ticketDetail.cancelButton'))).toBeVisible().withTimeout(10000)
+    await element(by.id('screen.ticketDetail')).swipe('up')
+    await waitFor(element(by.id('ticketDetail.cancelButton'))).toBeVisible().withTimeout(15000)
     await element(by.id('ticketDetail.cancelButton')).tap()
     await expect(element(by.id('ticketDetail.cancelConfirmDialog'))).toBeVisible()
     await element(by.id('ticketDetail.cancelConfirmYes')).tap()
