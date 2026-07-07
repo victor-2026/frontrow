@@ -1,0 +1,17 @@
+# Sign out from an authenticated session, verify sign-in button reappears.
+appId: app.frontrow.qa
+---
+- runFlow: ../_setup.yaml
+
+- tapOn:
+    id: 'tab.profile'
+- assertVisible:
+    id: 'screen.profile'
+
+- tapOn:
+    id: 'profile.signOutButton'
+
+- extendedWaitUntil:
+    visible:
+      id: 'profile.signInButton'
+    timeout: 10000

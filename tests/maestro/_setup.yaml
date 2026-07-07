@@ -30,7 +30,10 @@ appId: app.frontrow.qa
     timeout: 25000
 
 # Deep link — seed data + sign in (iOS: works, Android: игнорируется)
-- openLink: 'frontrow://e2e/setup'
+- openLink:
+    link: 'frontrow://e2e/setup'
+    autoVerify: true
+    browser: false
 
 # iOS Release builds show "Open in FrontRow?" prompt — dismiss it
 - runFlow:
