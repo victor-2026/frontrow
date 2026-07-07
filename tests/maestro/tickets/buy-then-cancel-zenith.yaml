@@ -55,11 +55,24 @@ appId: app.frontrow.qa
     timeout: 5000
 - tapOn: 'Cancel ticket'
 
-- extendedWaitUntil:
-    visible:
-      id: 'ticketDetail.cancelConfirmDialog'
-    timeout: 3000
-- tapOn:
-    id: 'ticketDetail.cancelConfirmYes'
+# Confirm dialog — iOS: text, Android: testID (RN Modal)
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - extendedWaitUntil:
+          visible: 'Cancel ticket'
+          timeout: 5000
+      - tapOn: 'Cancel ticket'
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - extendedWaitUntil:
+          visible:
+            id: 'ticketDetail.cancelConfirmDialog'
+          timeout: 3000
+      - tapOn:
+          id: 'ticketDetail.cancelConfirmYes'
 
 - assertVisible: 'refund pending'
